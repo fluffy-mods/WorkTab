@@ -20,6 +20,10 @@ namespace Fluffy_Tabs
             MethodInfo cachePriorities_Fluffy = typeof( Detours_WorkSettings ).GetMethod( "_CacheWorkGiversInOrder", BindingFlags.Instance | BindingFlags.Public );
             Detours.TryDetourFromTo( cachePriorities_Vanilla, cachePriorities_Fluffy );
 
+            MethodInfo getPriority_Vanilla = typeof( Pawn_WorkSettings ).GetMethod( "GetPriority", BindingFlags.Instance | BindingFlags.Public );
+            MethodInfo getPriority_Fluffy = typeof( Detours_WorkSettings ).GetMethod( "_GetPriority", BindingFlags.Instance | BindingFlags.Public );
+            Detours.TryDetourFromTo( getPriority_Vanilla, getPriority_Fluffy );
+
             return true;
         }
 

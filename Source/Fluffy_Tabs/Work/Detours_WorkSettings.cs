@@ -25,6 +25,45 @@ namespace Fluffy_Tabs
         #region Methods
 
         /// <summary>
+        /// This method is used by vanilla to check if a pawns is assigned to a specific job for the right click menu.
+        /// Don't ask me why, since the right click menu iterates over workgiversInOrder, which ONLY includes enabled workgivers/types...
+        /// </summary>
+        /// <param name="w"></param>
+        /// <returns></returns>
+        public int _GetPriority( WorkTypeDef w )
+        {
+            Pawn pawn = pawnField.GetValue( this ) as Pawn;
+            int highest = 0;
+
+            if ( MapComponent_PawnPriorities.Instance.DwarfTherapistMode )
+            {
+                // we're working with workgivers, return highest priority of ANY workgiver in this type.
+                foreach( var workgiver in w.workGiversByPriority )
+                {
+                    int priority = pawn.workgiverPriorities().GetPriority( workgiver );
+                    if ( priority > 0 && highest == 0 || priority < highest )
+                        highest = priority;
+
+                    // stop if we can't get any higher
+                    if ( priority == 1 )
+                        break; 
+                }   
+            }
+            // if we're in worktype mode, simply get our local wt priority
+            else
+            {
+                highest = pawn.worktypePriorities().GetPriority( w );
+            }
+
+
+            if ( highest > 0 && !Find.PlaySettings.useWorkPriorities )
+            {
+                return 1;
+            }
+            return highest;
+        }
+
+        /// <summary>
         /// This method deviates from vanilla in that it also allows sorting pawns by player set workGIVER priorities
         /// </summary>
         public void _CacheWorkGiversInOrder()
