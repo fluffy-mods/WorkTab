@@ -181,6 +181,12 @@ namespace Fluffy_Tabs
 
             // clear current favourite
             currentFavourite = null;
+
+            // NOTE: This is extremely ugly - at this point there is really very little reason for pawns to have two priority trackers.
+            // TODO: Wrap worktypeTracker into workgiverTracker
+            // synchronize changes in worktype view to workgiver view.
+            foreach ( var workgiver in worktype.workGiversByPriority )
+                pawn.workgiverPriorities().SetPriority( workgiver, priority, hour );
         }
 
         public void SetPriority( WorkTypeDef worktype, int priority )
