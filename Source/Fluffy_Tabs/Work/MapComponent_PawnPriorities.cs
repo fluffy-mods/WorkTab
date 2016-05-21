@@ -13,15 +13,16 @@ namespace Fluffy_Tabs
     {
         #region Fields
 
+        // making everything static should solve our weird load issue, although it is cheating a bit.
         private static MapComponent_PawnPriorities _instance;
-        private bool _24Hours = true;
-        private bool _dwarfTherapistMode = false;
-        private int _hourOfDay = 0;
-        private bool _schedulerMode = false;
-        private Dictionary<Pawn, PawnWorkgiverPrioritiesTracker> _workgiverTrackers = new Dictionary<Pawn, PawnWorkgiverPrioritiesTracker>();
-        private List<PawnWorkgiverPrioritiesTracker> _workgiverTrackersScribe;
-        private Dictionary<Pawn, PawnWorktypePrioritiesTracker> _worktypeTrackers = new Dictionary<Pawn, PawnWorktypePrioritiesTracker>();
-        private List<PawnWorktypePrioritiesTracker> _worktypeTrackersScribe;
+        private static bool _24Hours = true;
+        private static bool _dwarfTherapistMode = false;
+        private static int _hourOfDay = 0;
+        private static bool _schedulerMode = false;
+        private static Dictionary<Pawn, PawnWorkgiverPrioritiesTracker> _workgiverTrackers = new Dictionary<Pawn, PawnWorkgiverPrioritiesTracker>();
+        private static List<PawnWorkgiverPrioritiesTracker> _workgiverTrackersScribe;
+        private static Dictionary<Pawn, PawnWorktypePrioritiesTracker> _worktypeTrackers = new Dictionary<Pawn, PawnWorktypePrioritiesTracker>();
+        private static List<PawnWorktypePrioritiesTracker> _worktypeTrackersScribe;
 
         #endregion Fields
 
