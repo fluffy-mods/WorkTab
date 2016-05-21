@@ -572,12 +572,12 @@ namespace Fluffy_Tabs
             Rect loPrio = new Rect( canvas );
             Rect hiPrio = new Rect( canvas );
             loPrio.width = hiPrio.width = canvas.width / 4f;
-            loPrio.x = canvas.width / 4f;
-            hiPrio.x = canvas.width / 2f;
+            hiPrio.x = canvas.width / 4f;
+            loPrio.x = canvas.width / 2f;
 
             // draw labels
-            Widgets.Label( loPrio, "FluffyTabs.LowPriorityLabel".Translate(), Color.grey, GameFont.Tiny, TextAnchor.MiddleCenter );
             Widgets.Label( hiPrio, "FluffyTabs.HighPriorityLabel".Translate(), Color.grey, GameFont.Tiny, TextAnchor.MiddleCenter );
+            Widgets.Label( loPrio, "FluffyTabs.LowPriorityLabel".Translate(), Color.grey, GameFont.Tiny, TextAnchor.MiddleCenter );
         }
 
         private void DrawTopButtons( Rect canvas )

@@ -8,8 +8,8 @@
 	<FluffyTabs.PrioritiesIntTip>Currently showing on/off priorities\n\nClick to switch to numeric priorities</FluffyTabs.PrioritiesIntTip>
 	<FluffyTabs.PrioritiesSchedulerTip>Currently showing scheduled priorities\n\nClick to switch to all-day priorities</FluffyTabs.PrioritiesSchedulerTip>
 	<FluffyTabs.PrioritiesAllDayTip>Currently showing all-day priorities\n\nClick to switch to scheduled priorities</FluffyTabs.PrioritiesAllDayTip>
-	<FluffyTabs.LowPriorityLabel>&lt;= lower priority</FluffyTabs.LowPriorityLabel>
-	<FluffyTabs.HighPriorityLabel>higher priority =&gt;</FluffyTabs.HighPriorityLabel>
+	<FluffyTabs.LowPriorityLabel>lower priority =&gt;</FluffyTabs.LowPriorityLabel>
+	<FluffyTabs.HighPriorityLabel>&lt;= higher priority</FluffyTabs.HighPriorityLabel>
 	<FluffyTabs.Name>Name</FluffyTabs.Name>
 	<FluffyTabs.NameColumnTip>Click to sort by name.\nRight-click to sort by game order.</FluffyTabs.NameColumnTip>
 	<FluffyTabs.WorkPrioritiesDisclaimer>The default work priorities window allows you to change default priorities of work types (cooking, constructing, etc.), and the activities within them (carry materials, build, etc.).\n\nDISCLAIMER:\n - It is entirely possible to bring your colony to a grinding halt by carelessly changing priorities. Use the button on the top right of this dialog to return to the vanilla default priorities.</FluffyTabs.WorkPrioritiesDisclaimer>
