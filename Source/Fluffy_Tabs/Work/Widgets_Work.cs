@@ -370,13 +370,9 @@ namespace Fluffy_Tabs
             {
                 string label;
                 if ( priority > 0 )
-                {
                     label = priority.ToString();
-                }
                 else
-                {
                     label = string.Empty;
-                }
 
                 Label( boxRect, label, ColorOfPriority( priority ), GameFont.Small, TextAnchor.MiddleCenter );
 
@@ -823,6 +819,6 @@ namespace Fluffy_Tabs
             GUI.color = Color.white;
         }
 
-        #endregion Methods
+#endregion Methods
     }
 }

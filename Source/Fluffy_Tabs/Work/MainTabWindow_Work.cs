@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
+using System.Reflection;
 
 namespace Fluffy_Tabs
 {
@@ -38,7 +39,16 @@ namespace Fluffy_Tabs
         private List<WorkGiverDef> _workgiversOrdered;
         private List<WorkTypeDef> _worktypesOrdered;
 
+        private MethodInfo _preDrawPawnRow;
+        private MethodInfo _postDrawPawnRow;
+
         #endregion Fields
+
+        public MainTabWindow_Work()
+        {
+            _preDrawPawnRow = typeof( MainTabWindow_PawnList ).GetMethod( "PreDrawPawnRow", BindingFlags.Instance | BindingFlags.NonPublic );
+            _postDrawPawnRow = typeof( MainTabWindow_PawnList ).GetMethod( "PostDrawPawnRow", BindingFlags.Instance | BindingFlags.NonPublic );
+        }
 
         #region Properties
 
@@ -254,7 +264,7 @@ namespace Fluffy_Tabs
 
             // draw column headers
             DrawColumnHeaders( headerRow );
-
+            
             // draw pawn rows
             DrawRows( contentArea );
 
@@ -264,6 +274,45 @@ namespace Fluffy_Tabs
             // draw scheduler if required
             if ( SchedulerMode )
                 DrawScheduler( new Rect( canvas.xMin + NameColumnWidth + StatusColumnWidth, canvas.yMax - SchedulerRowHeight, ActualWorkAreaWidth, SchedulerRowHeight ) );
+        }
+
+        /// <summary>
+        /// We have to override DrawRows because vanilla's Widgest.BeginScrollView() wrapper around GUI.BeginScrollView() breaks scrollwheel events for some portions of the contained area...
+        /// Annoyingly, that also means we have to use reflected calls to Pre- and PostDrawPawnRow.
+        /// </summary>
+        /// <param name="outRect"></param>
+        protected new void DrawRows( Rect outRect )
+        {
+            Rect viewRect = new Rect( 0f, 0f, outRect.width - 16f, (float)this.pawns.Count * 30f );
+            scrollPosition = GUI.BeginScrollView( outRect, scrollPosition, viewRect );
+            float num = 0f;
+            for ( int i = 0; i < this.pawns.Count; i++ )
+            {
+                Pawn p = this.pawns[i];
+                Rect rect = new Rect( 0f, num, viewRect.width, 30f );
+                if ( num - this.scrollPosition.y + 30f >= 0f && num - this.scrollPosition.y <= outRect.height )
+                {
+                    GUI.color = new Color( 1f, 1f, 1f, 0.2f );
+                    Verse.Widgets.DrawLineHorizontal( 0f, num, viewRect.width );
+                    GUI.color = Color.white;
+                    PreDrawPawnRow( rect, p );
+                    DrawPawnRow( rect, p );
+                    PostDrawPawnRow( rect, p );
+                }
+                num += 30f;
+            }
+            GUI.EndScrollView();
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        public void PreDrawPawnRow( Rect rect, Pawn p )
+        {
+            _preDrawPawnRow.Invoke( this, new object[] { rect, p } );
+        }
+
+        public void PostDrawPawnRow( Rect rect, Pawn p )
+        {
+            _postDrawPawnRow.Invoke( this, new object[] { rect, p } );
         }
 
         public void DrawScheduler( Rect canvas )
@@ -484,7 +533,7 @@ namespace Fluffy_Tabs
             // set up rects
             Rect row = new Rect( NameColumnWidth, canvas.yMin, DesiredWorkAreaWidth + StatusColumnWidth + FavouritesColumnWidth, canvas.height );
             Rect cell = new Rect( row.xMin, row.yMin, WorkColumnWidth, row.height );
-
+            
             // draw status cells
             Widgets.DrawStatusCell( cell, BoxSize * .8f, pawn );
             cell.x += WorkColumnWidth;
