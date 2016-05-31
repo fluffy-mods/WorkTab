@@ -54,11 +54,11 @@ namespace Fluffy_Tabs
         {
             get
             {
-                return MapComponent_PawnPriorities.Instance.DwarfTherapistMode;
+                return MapComponent_Priorities.Instance.DwarfTherapistMode;
             }
             set
             {
-                MapComponent_PawnPriorities.Instance.DwarfTherapistMode = value;
+                MapComponent_Priorities.Instance.DwarfTherapistMode = value;
             }
         }
 
@@ -124,11 +124,11 @@ namespace Fluffy_Tabs
         {
             get
             {
-                return MapComponent_PawnPriorities.Instance.SchedulerMode;
+                return MapComponent_Priorities.Instance.SchedulerMode;
             }
             set
             {
-                MapComponent_PawnPriorities.Instance.SchedulerMode = value;
+                MapComponent_Priorities.Instance.SchedulerMode = value;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Fluffy_Tabs
             set
             {
                 if ( Find.PlaySettings.useWorkPriorities != value )
-                    MapComponent_PawnPriorities.NotifyAll_PrioritiesChanged();
+                    MapComponent_Priorities.NotifyAll_PrioritiesChanged();
                 Find.PlaySettings.useWorkPriorities = value;
             }
         }
@@ -379,7 +379,7 @@ namespace Fluffy_Tabs
             _workgiversOrdered = null;
 
             // notify pawns that they should update
-            MapComponent_PawnPriorities.NotifyAll_PrioritiesChanged();
+            MapComponent_Priorities.NotifyAll_PrioritiesChanged();
         }
 
         public void SetFocusedHour( int hour, bool add )

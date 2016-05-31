@@ -14,12 +14,10 @@ namespace Fluffy_Tabs
         #region Fields
 
         public static int count = 0;
-
-        public bool dwarfTherapistMode;
+        
         public int ID;
         public string label;
-        public PawnWorkgiverPrioritiesTracker workgiverPriorities = new PawnWorkgiverPrioritiesTracker();
-        public PawnWorktypePrioritiesTracker worktypePriorities = new PawnWorktypePrioritiesTracker();
+        public PawnPrioritiesTracker workgiverPriorities = new PawnPrioritiesTracker();
         private Texture2D _icon;
         private string _iconpath;
 
@@ -33,17 +31,13 @@ namespace Fluffy_Tabs
             ID = count++;
         }
 
-        public WorkFavourite( Pawn pawn, string label, string iconpath, bool dwarfTherapistMode ) : this()
+        public WorkFavourite( Pawn pawn, string label, string iconpath ) : this()
         {
             this.label = label;
             this._icon = ContentFinder<Texture2D>.Get( iconpath );
             this._iconpath = iconpath;
-            this.dwarfTherapistMode = dwarfTherapistMode;
 
-            if ( dwarfTherapistMode )
-                workgiverPriorities = pawn.workgiverPriorities();
-            else
-                worktypePriorities = pawn.worktypePriorities();
+            workgiverPriorities = pawn.Priorities();
         }
 
         #endregion Constructors
@@ -70,7 +64,6 @@ namespace Fluffy_Tabs
             Scribe_Values.LookValue( ref ID, "ID" );
             Scribe_Values.LookValue( ref _iconpath, "iconpath" );
             Scribe_Deep.LookDeep( ref workgiverPriorities, "workgiverPriorities" );
-            Scribe_Deep.LookDeep( ref worktypePriorities, "worktypePriorities" );
         }
 
         public string GetUniqueLoadID()

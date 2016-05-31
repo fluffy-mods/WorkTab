@@ -31,21 +31,21 @@ namespace Fluffy_Tabs
             {
                 if ( !( pawn.story == null || pawn.story.WorkTypeIsDisabled( worktype ) ) )
                 {
-                    int cur = pawn.worktypePriorities().GetPriority( worktype, hours.First() );
+                    int cur = pawn.Priorities().GetPriority( worktype, hours.First() );
                     if ( !toggle && cur > 0 && cur < Settings.MaxPriority )
                     {
                         if ( scheduler )
-                            pawn.worktypePriorities().SetPriority( worktype, cur + 1, hours );
+                            pawn.Priorities().SetPriority( worktype, cur + 1, hours );
                         else
-                            pawn.worktypePriorities().SetPriority( worktype, cur + 1 );
+                            pawn.Priorities().SetPriority( worktype, cur + 1 );
                         valid = true;
                     }
                     if ( cur == Settings.MaxPriority || ( toggle && cur > 0 ) )
                     {
                         if ( scheduler )
-                            pawn.worktypePriorities().SetPriority( worktype, 0, hours );
+                            pawn.Priorities().SetPriority( worktype, 0, hours );
                         else
-                            pawn.worktypePriorities().SetPriority( worktype, 0 );
+                            pawn.Priorities().SetPriority( worktype, 0 );
                         valid = true;
                     }
                 }
@@ -66,21 +66,21 @@ namespace Fluffy_Tabs
             {
                 if ( pawn.CapableOf( workgiver ) )
                 {
-                    int cur = pawn.workgiverPriorities().GetPriority( workgiver, hours.First() );
+                    int cur = pawn.Priorities().GetPriority( workgiver, hours.First() );
                     if ( !toggle && cur > 0 && cur < Settings.MaxPriority )
                     {
                         if ( scheduler )
-                            pawn.workgiverPriorities().SetPriority( workgiver, cur + 1, hours );
+                            pawn.Priorities().SetPriority( workgiver, cur + 1, hours );
                         else
-                            pawn.workgiverPriorities().SetPriority( workgiver, cur + 1 );
+                            pawn.Priorities().SetPriority( workgiver, cur + 1 );
                         valid = true;
                     }
                     if ( cur == Settings.MaxPriority || ( toggle && cur > 0 ) )
                     {
                         if ( scheduler )
-                            pawn.workgiverPriorities().SetPriority( workgiver, 0, hours );
+                            pawn.Priorities().SetPriority( workgiver, 0, hours );
                         else
-                            pawn.workgiverPriorities().SetPriority( workgiver, 0 );
+                            pawn.Priorities().SetPriority( workgiver, 0 );
                         valid = true;
                     }
                 }
@@ -95,14 +95,14 @@ namespace Fluffy_Tabs
 
         public static void DecrementPriority( this Pawn pawn, WorkTypeDef worktype, bool toggle, bool scheduler, List<int> hours )
         {
-            var oldPrio = pawn.worktypePriorities().GetPriority( worktype, hours.First() );
+            var oldPrio = pawn.Priorities().GetPriority( worktype, hours.First() );
             var newPrio = toggle ? 0 : oldPrio < Settings.MaxPriority ? oldPrio + 1 : 0;
             if ( oldPrio != newPrio )
             {
                 if ( scheduler )
-                    pawn.worktypePriorities().SetPriority( worktype, newPrio, hours );
+                    pawn.Priorities().SetPriority( worktype, newPrio, hours );
                 else
-                    pawn.worktypePriorities().SetPriority( worktype, newPrio );
+                    pawn.Priorities().SetPriority( worktype, newPrio );
 
                 if ( toggle )
                     SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
@@ -113,15 +113,15 @@ namespace Fluffy_Tabs
 
         public static void DecrementPriority( this Pawn pawn, WorkGiverDef workgiver, bool toggle, bool scheduler, List<int> hours )
         {
-            var oldPrio = pawn.workgiverPriorities().GetPriority( workgiver, hours.First() );
+            var oldPrio = pawn.Priorities().GetPriority( workgiver, hours.First() );
             var newPrio = toggle ? 0 : oldPrio < Settings.MaxPriority ? oldPrio + 1 : 0;
 
             if ( oldPrio != newPrio )
             {
                 if ( scheduler )
-                    pawn.workgiverPriorities().SetPriority( workgiver, newPrio, hours );
+                    pawn.Priorities().SetPriority( workgiver, newPrio, hours );
                 else
-                    pawn.workgiverPriorities().SetPriority( workgiver, newPrio );
+                    pawn.Priorities().SetPriority( workgiver, newPrio );
 
                 if ( toggle )
                     SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
@@ -223,10 +223,10 @@ namespace Fluffy_Tabs
             if ( dwarfTherapistMode )
             {
                 // is there a preset assigned?
-                favourite = pawn.workgiverPriorities().currentFavourite;
+                favourite = pawn.Priorities().currentFavourite;
                 if ( favourite != null )
                 {
-                    icon = pawn.workgiverPriorities().currentFavourite.Icon;
+                    icon = pawn.Priorities().currentFavourite.Icon;
                     tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
                 }
             }
@@ -235,10 +235,10 @@ namespace Fluffy_Tabs
             else
             {
                 // is there a preset assigned?
-                favourite = pawn.worktypePriorities().currentFavourite;
+                favourite = pawn.Priorities().currentFavourite;
                 if ( favourite != null )
                 {
-                    icon = pawn.worktypePriorities().currentFavourite.Icon;
+                    icon = pawn.Priorities().currentFavourite.Icon;
                     tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
                 }
             }
@@ -256,14 +256,11 @@ namespace Fluffy_Tabs
             }
 
             // add options for assigning favourites
-            foreach ( var _favourite in MapComponent_Favourites.Instance.favourites.Where( fav => fav.dwarfTherapistMode == dwarfTherapistMode ) )
+            foreach ( var _favourite in MapComponent_Favourites.Instance.Favourites )
             {
                 options.Add( new FloatMenuOption( "FluffyTabs.AssignFavouriteX".Translate( _favourite.label ), delegate
                 {
-                    if ( dwarfTherapistMode )
-                        pawn.workgiverPriorities().AssignFavourite( _favourite );
-                    else
-                        pawn.worktypePriorities().AssignFavourite( _favourite );
+                    pawn.Priorities().AssignFavourite( _favourite );
                 } ) );
             }
 
@@ -361,14 +358,14 @@ namespace Fluffy_Tabs
             boxRect.center = cell.center;
 
             // draw background, handle tooltip
-            bool partiallyScheduled = pawn.workgiverPriorities().IsPartiallyScheduledFor( workgiver );
+            bool partiallyScheduled = pawn.Priorities().IsTimeDependent( workgiver );
             DrawWorkBoxBackground( boxRect, pawn, workgiver.workType, partiallyScheduled );
             TooltipHandler.TipRegion( boxRect, TipForPawnWorker( pawn, workgiver ) );
             if ( partiallyScheduled )
-                TooltipHandler.TipRegion( boxRect, pawn.workgiverPriorities().PartiallyScheduledTip( workgiver ) );
+                TooltipHandler.TipRegion( boxRect, pawn.Priorities().TimeDependentTip( workgiver ) );
 
             // handle label and interactions
-            int priority = pawn.workgiverPriorities().GetPriority( workgiver, hours.First() );
+            int priority = pawn.Priorities().GetPriority( workgiver, hours.First() );
             if ( Find.PlaySettings.useWorkPriorities )
             {
                 string label;
@@ -465,14 +462,14 @@ namespace Fluffy_Tabs
             boxRect.center = cell.center;
 
             // draw background, handle tooltip
-            bool partiallyScheduled = pawn.worktypePriorities().IsPartiallyScheduledFor( worktype );
+            bool partiallyScheduled = pawn.Priorities().IsTimeDependent( worktype );
             DrawWorkBoxBackground( boxRect, pawn, worktype, partiallyScheduled );
             TooltipHandler.TipRegion( boxRect, TipForPawnWorker( pawn, worktype ) );
             if ( partiallyScheduled )
-                TooltipHandler.TipRegion( boxRect, pawn.worktypePriorities().PartiallyScheduledTip( worktype ) );
+                TooltipHandler.TipRegion( boxRect, pawn.Priorities().TimeDependentTip( worktype ) );
 
             // handle label and interactions
-            int priority = pawn.worktypePriorities().GetPriority( worktype, hours.First() );
+            int priority = pawn.Priorities().GetPriority( worktype, hours.First() );
             if ( Find.PlaySettings.useWorkPriorities )
             {
                 string label;
@@ -560,7 +557,7 @@ namespace Fluffy_Tabs
 
         public static string FormatHour( this int hour )
         {
-            if ( MapComponent_PawnPriorities.Instance.TwentyFourHourMode )
+            if ( MapComponent_Priorities.Instance.TwentyFourHourMode )
                 return hour.ToString( "D2" ) + ":00";
             else
             {
@@ -583,22 +580,22 @@ namespace Fluffy_Tabs
             {
                 if ( !( pawn.story == null || pawn.story.WorkTypeIsDisabled( worktype ) ) )
                 {
-                    int cur = pawn.worktypePriorities().GetPriority( worktype, hours.First() );
+                    int cur = pawn.Priorities().GetPriority( worktype, hours.First() );
                     if ( cur > 1 )
                     {
                         if ( scheduler )
-                            pawn.worktypePriorities().SetPriority( worktype, cur - 1, hours );
+                            pawn.Priorities().SetPriority( worktype, cur - 1, hours );
                         else
-                            pawn.worktypePriorities().SetPriority( worktype, cur - 1 );
+                            pawn.Priorities().SetPriority( worktype, cur - 1 );
 
                         valid = true;
                     }
                     if ( cur == 0 )
                     {
                         if ( scheduler )
-                            pawn.worktypePriorities().SetPriority( worktype, start, hours );
+                            pawn.Priorities().SetPriority( worktype, start, hours );
                         else
-                            pawn.worktypePriorities().SetPriority( worktype, start );
+                            pawn.Priorities().SetPriority( worktype, start );
                         valid = true;
                     }
                 }
@@ -621,22 +618,22 @@ namespace Fluffy_Tabs
             {
                 if ( pawn.CapableOf( workgiver ) )
                 {
-                    int cur = pawn.workgiverPriorities().GetPriority( workgiver, hours.First() );
+                    int cur = pawn.Priorities().GetPriority( workgiver, hours.First() );
                     if ( cur > 1 )
                     {
                         if ( scheduler )
-                            pawn.workgiverPriorities().SetPriority( workgiver, cur - 1, hours );
+                            pawn.Priorities().SetPriority( workgiver, cur - 1, hours );
                         else
-                            pawn.workgiverPriorities().SetPriority( workgiver, cur - 1 );
+                            pawn.Priorities().SetPriority( workgiver, cur - 1 );
 
                         valid = true;
                     }
                     if ( cur == 0 )
                     {
                         if ( scheduler )
-                            pawn.workgiverPriorities().SetPriority( workgiver, start, hours );
+                            pawn.Priorities().SetPriority( workgiver, start, hours );
                         else
-                            pawn.workgiverPriorities().SetPriority( workgiver, start );
+                            pawn.Priorities().SetPriority( workgiver, start );
                         valid = true;
                     }
                 }
@@ -652,14 +649,14 @@ namespace Fluffy_Tabs
 
         public static void IncrementPriority( this Pawn pawn, WorkTypeDef worktype, bool toggle, bool scheduler, List<int> hours )
         {
-            var oldPrio = pawn.worktypePriorities().GetPriority( worktype, hours.First() );
+            var oldPrio = pawn.Priorities().GetPriority( worktype, hours.First() );
             var newPrio = toggle ? 1 : oldPrio > 0 ? oldPrio - 1 : Settings.MaxPriority;
             if ( oldPrio != newPrio )
             {
                 if ( scheduler )
-                    pawn.worktypePriorities().SetPriority( worktype, newPrio, hours );
+                    pawn.Priorities().SetPriority( worktype, newPrio, hours );
                 else
-                    pawn.worktypePriorities().SetPriority( worktype, newPrio );
+                    pawn.Priorities().SetPriority( worktype, newPrio );
 
                 if ( toggle )
                     SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
@@ -670,15 +667,15 @@ namespace Fluffy_Tabs
 
         public static void IncrementPriority( this Pawn pawn, WorkGiverDef workgiver, bool toggle, bool scheduler, List<int> hours )
         {
-            var oldPrio = pawn.workgiverPriorities().GetPriority( workgiver, hours.First() );
+            var oldPrio = pawn.Priorities().GetPriority( workgiver, hours.First() );
             var newPrio = toggle ? 1 : oldPrio > 0 ? oldPrio - 1 : Settings.MaxPriority;
 
             if ( oldPrio != newPrio )
             {
                 if ( scheduler )
-                    pawn.workgiverPriorities().SetPriority( workgiver, newPrio, hours );
+                    pawn.Priorities().SetPriority( workgiver, newPrio, hours );
                 else
-                    pawn.workgiverPriorities().SetPriority( workgiver, newPrio );
+                    pawn.Priorities().SetPriority( workgiver, newPrio );
 
                 if ( toggle )
                     SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
@@ -740,16 +737,11 @@ namespace Fluffy_Tabs
             return stringBuilder.ToString();
         }
 
-        public static PawnWorkgiverPrioritiesTracker workgiverPriorities( this Pawn pawn )
+        public static PawnPrioritiesTracker Priorities( this Pawn pawn )
         {
-            return MapComponent_PawnPriorities.Instance.WorkgiverTracker( pawn );
+            return MapComponent_Priorities.Instance.WorkgiverTracker( pawn );
         }
-
-        public static PawnWorktypePrioritiesTracker worktypePriorities( this Pawn pawn )
-        {
-            return MapComponent_PawnPriorities.Instance.WorktypeTracker( pawn );
-        }
-
+        
         private static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
         {
             foreach ( var capacity in workgiver.requiredCapacities )

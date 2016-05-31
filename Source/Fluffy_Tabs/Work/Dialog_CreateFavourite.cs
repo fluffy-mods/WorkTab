@@ -76,16 +76,16 @@ namespace Fluffy_Tabs
         private void ApplyAndClose()
         {
             // create favourite
-            WorkFavourite favourite = new WorkFavourite( pawn, label, "UI/Icons/Various/" + textureChooser.Choice.name, dwarfTherapistMode );
+            WorkFavourite favourite = new WorkFavourite( pawn, label, "UI/Icons/Various/" + textureChooser.Choice.name );
 
             // add to list
-            MapComponent_Favourites.Instance.favourites.Add( favourite );
+            MapComponent_Favourites.Instance.Add( favourite );
 
             // assign to pawn
             if ( dwarfTherapistMode )
-                pawn.workgiverPriorities().AssignFavourite( favourite );
+                pawn.Priorities().AssignFavourite( favourite );
             else
-                pawn.worktypePriorities().AssignFavourite( favourite );
+                pawn.Priorities().AssignFavourite( favourite );
 
             // done!
             Close();

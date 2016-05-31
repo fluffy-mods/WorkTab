@@ -33,34 +33,7 @@ namespace Fluffy_Tabs
         public int _GetPriority( WorkTypeDef w )
         {
             Pawn pawn = pawnField.GetValue( this ) as Pawn;
-            int highest = 0;
-
-            if ( MapComponent_PawnPriorities.Instance.DwarfTherapistMode )
-            {
-                // we're working with workgivers, return highest priority of ANY workgiver in this type.
-                foreach( var workgiver in w.workGiversByPriority )
-                {
-                    int priority = pawn.workgiverPriorities().GetPriority( workgiver );
-                    if ( priority > 0 && highest == 0 || priority < highest )
-                        highest = priority;
-
-                    // stop if we can't get any higher
-                    if ( priority == 1 )
-                        break; 
-                }   
-            }
-            // if we're in worktype mode, simply get our local wt priority
-            else
-            {
-                highest = pawn.worktypePriorities().GetPriority( w );
-            }
-
-
-            if ( highest > 0 && !Find.PlaySettings.useWorkPriorities )
-            {
-                return 1;
-            }
-            return highest;
+            return pawn.Priorities().GetPriority( w );
         }
 
         /// <summary>
@@ -74,44 +47,44 @@ namespace Fluffy_Tabs
             Pawn pawn = pawnField.GetValue( this ) as Pawn;
 
             // order workgivers
-            if ( MapComponent_PawnPriorities.Instance.DwarfTherapistMode )
+            if ( MapComponent_Priorities.Instance.DwarfTherapistMode )
             {
                 // sort by player set workgiver priorities => worktype order => workgiver order
-                allWorkgivers = allWorkgivers.Where( wg => pawn.workgiverPriorities().GetPriority( wg.def ) > 0 );
+                allWorkgivers = allWorkgivers.Where( wg => pawn.Priorities().GetPriority( wg.def ) > 0 );
 
                 if ( allWorkgivers.Any() )
                 {
                     allWorkgivers = allWorkgivers
-                        .OrderBy( wg => pawn.workgiverPriorities().GetPriority( wg.def ) )
+                        .OrderBy( wg => pawn.Priorities().GetPriority( wg.def ) )
                         .ThenByDescending( wg => wg.def.workType.naturalPriority )
                         .ThenByDescending( wg => wg.def.priorityInType ).ToList();
 
                     // lowest priority non-emergency job
-                    int maxEmergPrio = allWorkgivers.Where( wg => !wg.def.emergency ).Min( wg => pawn.workgiverPriorities().GetPriority( wg.def ) );
+                    int maxEmergPrio = allWorkgivers.Where( wg => !wg.def.emergency ).Min( wg => pawn.Priorities().GetPriority( wg.def ) );
 
                     // create lists of workgivers
-                    normalWorkgivers = allWorkgivers.Where( wg => !wg.def.emergency || pawn.workgiverPriorities().GetPriority( wg.def ) > maxEmergPrio ).ToList();
-                    emergencyWorkgivers = allWorkgivers.Where( wg => wg.def.emergency && pawn.workgiverPriorities().GetPriority( wg.def ) <= maxEmergPrio ).ToList();
+                    normalWorkgivers = allWorkgivers.Where( wg => !wg.def.emergency || pawn.Priorities().GetPriority( wg.def ) > maxEmergPrio ).ToList();
+                    emergencyWorkgivers = allWorkgivers.Where( wg => wg.def.emergency && pawn.Priorities().GetPriority( wg.def ) <= maxEmergPrio ).ToList();
                 }
             }
             else
             {
                 // sort by player set worktype priorities => worktype order => workgiver order
-                allWorkgivers = allWorkgivers.Where( wg => pawn.worktypePriorities().GetPriority( wg.def.workType ) > 0 );
+                allWorkgivers = allWorkgivers.Where( wg => pawn.Priorities().GetPriority( wg.def.workType ) > 0 );
 
                 if ( allWorkgivers.Any() )
                 {
                     allWorkgivers = allWorkgivers
-                        .OrderBy( wg => pawn.worktypePriorities().GetPriority( wg.def.workType ) )
+                        .OrderBy( wg => pawn.Priorities().GetPriority( wg.def.workType ) )
                         .ThenByDescending( wg => wg.def.workType.naturalPriority )
                         .ThenByDescending( wg => wg.def.priorityInType ).ToList();
 
                     // lowest priority non-emergency job
-                    int maxEmergPrio = allWorkgivers.Where( wg => !wg.def.emergency ).Min( wg => pawn.worktypePriorities().GetPriority( wg.def.workType ) );
+                    int maxEmergPrio = allWorkgivers.Where( wg => !wg.def.emergency ).Min( wg => pawn.Priorities().GetPriority( wg.def.workType ) );
 
                     // create lists of workgivers
-                    normalWorkgivers = allWorkgivers.Where( wg => !wg.def.emergency || pawn.worktypePriorities().GetPriority( wg.def.workType ) > maxEmergPrio ).ToList();
-                    emergencyWorkgivers = allWorkgivers.Where( wg => wg.def.emergency && pawn.worktypePriorities().GetPriority( wg.def.workType ) <= maxEmergPrio ).ToList();
+                    normalWorkgivers = allWorkgivers.Where( wg => !wg.def.emergency || pawn.Priorities().GetPriority( wg.def.workType ) > maxEmergPrio ).ToList();
+                    emergencyWorkgivers = allWorkgivers.Where( wg => wg.def.emergency && pawn.Priorities().GetPriority( wg.def.workType ) <= maxEmergPrio ).ToList();
                 }
             }
 

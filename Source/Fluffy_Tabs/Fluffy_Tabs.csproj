@@ -57,13 +57,12 @@
     <Compile Include="Work\MapComponent_Favourites.cs" />
     <Compile Include="Work\MapComponent_NaturalPriorities.cs" />
     <Compile Include="Work\MapComponent_PawnPriorities.cs" />
-    <Compile Include="Work\PawnWorkgiverPrioritiesTracker.cs" />
+    <Compile Include="Work\PawnPrioritiesTracker.cs" />
     <Compile Include="Core\Widgets_UI.cs" />
     <Compile Include="Work\MainTabWindow_Work.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Resources.cs" />
     <Compile Include="Core\Settings.cs" />
-    <Compile Include="Work\PawnWorktypePrioritiesTracker.cs" />
     <Compile Include="Work\SpecialInjector_DetourPawnPriorities.cs" />
     <Compile Include="Work\Widgets_Work.cs" />
     <Compile Include="Work\WorkFavourite.cs" />

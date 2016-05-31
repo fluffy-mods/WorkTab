@@ -13,7 +13,7 @@ namespace Fluffy_Tabs
     {
         #region Fields
 
-        public List<WorkFavourite> favourites = new List<WorkFavourite>();
+        private static List<WorkFavourite> _favourites = new List<WorkFavourite>();
         private static MapComponent_Favourites _instance;
 
         #endregion Fields
@@ -40,15 +40,22 @@ namespace Fluffy_Tabs
             }
         }
 
+        public List<WorkFavourite> Favourites => _favourites;
+
         #endregion Properties
 
         #region Methods
+
+        public void Add( WorkFavourite favourite )
+        {
+            _favourites.Add( favourite );
+        }
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-            Scribe_Collections.LookList( ref favourites, "favourites", LookMode.Deep );
+            Scribe_Collections.LookList( ref _favourites, "favourites", LookMode.Deep );
         }
 
         #endregion Methods

@@ -9,38 +9,36 @@ using Verse;
 
 namespace Fluffy_Tabs
 {
-    public class MapComponent_PawnPriorities : MapComponent
+    public class MapComponent_Priorities : MapComponent
     {
         #region Fields
 
         // making everything static should solve our weird load issue, although it is cheating a bit.
-        private static MapComponent_PawnPriorities _instance;
+        private static MapComponent_Priorities _instance;
         private static bool _24Hours = true;
         private static bool _dwarfTherapistMode = false;
         private static int _hourOfDay = 0;
         private static bool _schedulerMode = false;
-        private static Dictionary<Pawn, PawnWorkgiverPrioritiesTracker> _workgiverTrackers = new Dictionary<Pawn, PawnWorkgiverPrioritiesTracker>();
-        private static List<PawnWorkgiverPrioritiesTracker> _workgiverTrackersScribe;
-        private static Dictionary<Pawn, PawnWorktypePrioritiesTracker> _worktypeTrackers = new Dictionary<Pawn, PawnWorktypePrioritiesTracker>();
-        private static List<PawnWorktypePrioritiesTracker> _worktypeTrackersScribe;
+        private static Dictionary<Pawn, PawnPrioritiesTracker> _trackers = new Dictionary<Pawn, PawnPrioritiesTracker>();
+        private static List<PawnPrioritiesTracker> _trackersScribeHelper;
 
         #endregion Fields
 
         #region Properties
 
-        public static MapComponent_PawnPriorities Instance
+        public static MapComponent_Priorities Instance
         {
             get
             {
                 // try to get from game list.
                 if ( _instance == null )
-                    _instance = Find.Map.components.FirstOrDefault( comp => comp is MapComponent_PawnPriorities ) as MapComponent_PawnPriorities;
+                    _instance = Find.Map.components.FirstOrDefault( comp => comp is MapComponent_Priorities ) as MapComponent_Priorities;
 
                 // not found, create new one
                 if ( _instance == null )
                 {
                     // create instance
-                    _instance = new MapComponent_PawnPriorities();
+                    _instance = new MapComponent_Priorities();
 
                     // inject into game
                     Find.Map.components.Add( _instance );
@@ -91,19 +89,16 @@ namespace Fluffy_Tabs
             // scribe only the actual trackers, since pawns don't want to be saved in dicts
             if ( Scribe.mode == LoadSaveMode.Saving )
             {
-                _workgiverTrackersScribe = _workgiverTrackers.Values.ToList();
-                _worktypeTrackersScribe = _worktypeTrackers.Values.ToList();
+                _trackersScribeHelper = _trackers.Values.ToList();
             }
 
             // do the scribing
-            Scribe_Collections.LookList( ref _workgiverTrackersScribe, "workgiverPriorities", LookMode.Deep );
-            Scribe_Collections.LookList( ref _worktypeTrackersScribe, "worktypePriorities", LookMode.Deep );
+            Scribe_Collections.LookList( ref _trackersScribeHelper, "workgiverPriorities", LookMode.Deep );
 
             // reconstruct the full dict, drop null pawns (these were probably leftovers from killed or otherwise no longer available pawns).
             if ( Scribe.mode == LoadSaveMode.PostLoadInit )
             {
-                _workgiverTrackers = _workgiverTrackersScribe.Where( t => t.pawn != null ).ToDictionary( k => k.pawn, v => v );
-                _worktypeTrackers = _worktypeTrackersScribe.Where( t => t.pawn != null ).ToDictionary( k => k.pawn, v => v );
+                _trackers = _trackersScribeHelper.Where( t => t.pawn != null ).ToDictionary( k => k.pawn, v => v );
             }
         }
 
@@ -117,18 +112,11 @@ namespace Fluffy_Tabs
             }
         }
 
-        public PawnWorkgiverPrioritiesTracker WorkgiverTracker( Pawn pawn )
+        public PawnPrioritiesTracker WorkgiverTracker( Pawn pawn )
         {
-            if ( !_workgiverTrackers.ContainsKey( pawn ) )
-                _workgiverTrackers.Add( pawn, new PawnWorkgiverPrioritiesTracker( pawn ) );
-            return _workgiverTrackers[pawn];
-        }
-
-        public PawnWorktypePrioritiesTracker WorktypeTracker( Pawn pawn )
-        {
-            if ( !_worktypeTrackers.ContainsKey( pawn ) )
-                _worktypeTrackers.Add( pawn, new PawnWorktypePrioritiesTracker( pawn ) );
-            return _worktypeTrackers[pawn];
+            if ( !_trackers.ContainsKey( pawn ) )
+                _trackers.Add( pawn, new PawnPrioritiesTracker( pawn ) );
+            return _trackers[pawn];
         }
 
         #endregion Methods
