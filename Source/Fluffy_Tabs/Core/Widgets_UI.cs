@@ -38,7 +38,7 @@ namespace Fluffy_Tabs
             return new Rect( rect.xMax, rect.yMax - rect.width, rect.height, rect.width );
         }
 
-        public static bool ImageButton( ref Vector2 curPos, Direction direction, Texture2D texture, string tooltip, float iconSize = Settings.IconSize, float margin = Settings.Margin )
+        public static bool ButtonImage( ref Vector2 curPos, Direction direction, Texture2D texture, string tooltip, float iconSize = Settings.IconSize, float margin = Settings.Margin )
         {
             // offset for position if going left or up
             if ( direction == Direction.Left )
@@ -47,7 +47,7 @@ namespace Fluffy_Tabs
                 curPos.y -= iconSize;
 
             // draw button
-            bool wasClicked = ImageButton( new Rect( curPos.x, curPos.y, iconSize, iconSize ), texture, tooltip );
+            bool wasClicked = ButtonImage( new Rect( curPos.x, curPos.y, iconSize, iconSize ), texture, tooltip );
 
             // update position for next button
             if ( direction == Direction.Up )
@@ -62,10 +62,10 @@ namespace Fluffy_Tabs
             return wasClicked;
         }
 
-        public static bool ImageButton( Rect canvas, Texture2D texture, string tooltip )
+        public static bool ButtonImage( Rect canvas, Texture2D texture, string tooltip )
         {
             TooltipHandler.TipRegion( canvas, tooltip );
-            return Verse.Widgets.ImageButton( canvas, texture );
+            return Verse.Widgets.ButtonImage( canvas, texture );
         }
 
         public static void Label( Rect canvas, string text, Color color, string tip = "" )

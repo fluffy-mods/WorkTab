@@ -40,7 +40,7 @@ namespace Fluffy_Tabs
             var worktypes = DefDatabase<WorkTypeDef>.AllDefsListForReading;
             for ( int i = 0; i < worktypes.Count; i++ )
             {
-                WorktypeColors[worktypes[i]] = ColorHelper.HSVtoRGB( 1f / worktypes.Count * i, 1f, 1f );
+                WorktypeColors[worktypes[i]] = Color.HSVToRGB( 1f / worktypes.Count * i, 1f, 1f );
             }
 
             // initialize job icon paths

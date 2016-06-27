@@ -48,7 +48,7 @@ namespace Fluffy_Tabs
 
         #region Properties
 
-        public override Vector2 InitialWindowSize
+        public override Vector2 InitialSize
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Fluffy_Tabs
             Text.Font = GameFont.Small;
 
             // reset button
-            if ( Widgets.ImageButton( resetRect, Resources.ResetButton, "FluffyTabs.ResetPrioritiesTip".Translate() ) )
+            if ( Widgets.ButtonImage( resetRect, Resources.ResetButton, "FluffyTabs.ResetPrioritiesTip".Translate() ) )
             {
                 MapComponent_NaturalPriorities.ResetPriorities();
 
@@ -267,7 +267,7 @@ namespace Fluffy_Tabs
             cur.x -= _margin;
 
             // return click for selecting stuff.
-            return Verse.Widgets.InvisibleButton( buttonRect );
+            return Verse.Widgets.ButtonInvisible( buttonRect );
         }
 
         public void DrawSortButtons( Rect rect, bool active, WorkTypeDef workType, WorkGiverDef workGiver = null )
@@ -319,7 +319,7 @@ namespace Fluffy_Tabs
 
             if ( active && !top )
             {
-                if ( Widgets.ImageButton( topRect, Resources.TopArrow, "FluffyTabs.SortTop".Translate() ) )
+                if ( Widgets.ButtonImage( topRect, Resources.TopArrow, "FluffyTabs.SortTop".Translate() ) )
                 {
                     if ( isWorkType )
                     {
@@ -330,7 +330,7 @@ namespace Fluffy_Tabs
                         Top( workType, workGiver );
                     }
                 }
-                if ( Widgets.ImageButton( upRect, Resources.UpArrow, "FluffyTabs.SortUp".Translate() ) )
+                if ( Widgets.ButtonImage( upRect, Resources.UpArrow, "FluffyTabs.SortUp".Translate() ) )
                 {
                     if ( isWorkType )
                     {
@@ -354,7 +354,7 @@ namespace Fluffy_Tabs
 
             if ( active && !bottom )
             {
-                if ( Widgets.ImageButton( downRect, Resources.DownArrow, "FluffyTabs.SortDown".Translate() ) )
+                if ( Widgets.ButtonImage( downRect, Resources.DownArrow, "FluffyTabs.SortDown".Translate() ) )
                 {
                     if ( isWorkType )
                     {
@@ -365,7 +365,7 @@ namespace Fluffy_Tabs
                         Down( workType, workGiver );
                     }
                 }
-                if ( Widgets.ImageButton( bottomRect, Resources.BottomArrow, "FluffyTabs.SortBottom".Translate() ) )
+                if ( Widgets.ButtonImage( bottomRect, Resources.BottomArrow, "FluffyTabs.SortBottom".Translate() ) )
                 {
                     if ( isWorkType )
                     {

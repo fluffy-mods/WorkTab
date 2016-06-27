@@ -264,7 +264,7 @@ namespace Fluffy_Tabs
                 } ) );
             }
 
-            if ( Widgets.ImageButton( iconRect, icon, tip ) )
+            if ( Widgets.ButtonImage( iconRect, icon, tip ) )
                 Find.WindowStack.Add( new FloatMenu( options ) );
         }
 
@@ -276,25 +276,41 @@ namespace Fluffy_Tabs
             TooltipHandler.TipRegion( cell, pawn.needs.mood.GetTipString() );
 
             // if currently broken, we can be done early
-            if ( pawn.mindState.mentalStateHandler?.CurStateDef?.stateType == MentalStateType.Hard )
+            if ( pawn.mindState.mentalStateHandler?.CurStateDef != null )
             {
-                GUI.color = Color.red;
-                GUI.DrawTexture( iconRect, Resources.MoodBroken );
-                GUI.color = Color.white;
-                return;
-            }
-            if ( pawn.mindState.mentalStateHandler?.CurStateDef?.stateType == MentalStateType.Soft )
-            {
-                GUI.color = Color.yellow;
+                Color stateColor;
+
+                switch ( pawn.mindState.mentalStateHandler.CurStateDef.category )
+                {
+                    case MentalStateCategory.Aggro:
+                        stateColor = Color.red;
+                        break;
+                    case MentalStateCategory.Sad:
+                        stateColor = Color.cyan;
+                        break;
+                    case MentalStateCategory.Panic:
+                        stateColor = new Color( .4f, .008f, .235f );
+                        break;
+                    case MentalStateCategory.Misc:
+                    case MentalStateCategory.Indulgent:
+                    case MentalStateCategory.Undefined:
+                        stateColor = new Color( 207 / 256f, 83 / 256f, 0f );
+                        break;
+                    default:
+                        stateColor = Color.white;
+                        break;
+                }
+                GUI.color = stateColor;
                 GUI.DrawTexture( iconRect, Resources.MoodBroken );
                 GUI.color = Color.white;
                 return;
             }
 
+
             // current level
             var mood = pawn.needs.mood.CurLevelPercentage;
-            var hardBreak = pawn.mindState.mentalStateStarter.StartHardMentalStateThreshold;
-            var softBreak = pawn.mindState.mentalStateStarter.StartSoftMentalStateThreshold;
+            var hardBreak = pawn.mindState.mentalBreaker.BreakThresholdExtreme;
+            var softBreak = pawn.mindState.mentalBreaker.BreakThresholdMinor;
 
             // color and icon
             Color color;
