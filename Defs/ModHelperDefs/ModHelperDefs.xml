@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <ModHelperDef>
-        <defName>Fluffy_Tabs</defName>
-        <ModName>Fluffy Tabs</ModName>
-        <minCCLVersion>0.13.1.1</minCCLVersion>
+    <CommunityCoreLibrary.ModHelperDef>
+        <defName>Fluffy_WorkTab</defName>
+        <ModName>Work Tab</ModName>
+        <minCCLVersion>0.14.0</minCCLVersion>
         <SpecialInjectors>
             <li>Fluffy_Tabs.SpecialInjector_DetourWorkSettings</li>
         </SpecialInjectors>
-    </ModHelperDef>
+    </CommunityCoreLibrary.ModHelperDef>
 </Defs>
