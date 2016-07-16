@@ -41,6 +41,7 @@ namespace Fluffy_Tabs
 
         private MethodInfo _preDrawPawnRow;
         private MethodInfo _postDrawPawnRow;
+        private FieldInfo _pawnListDirty;
 
         #endregion Fields
 
@@ -48,6 +49,7 @@ namespace Fluffy_Tabs
         {
             _preDrawPawnRow = typeof( MainTabWindow_PawnList ).GetMethod( "PreDrawPawnRow", BindingFlags.Instance | BindingFlags.NonPublic );
             _postDrawPawnRow = typeof( MainTabWindow_PawnList ).GetMethod( "PostDrawPawnRow", BindingFlags.Instance | BindingFlags.NonPublic );
+            _pawnListDirty = typeof( MainTabWindow_PawnList ).GetField( "pawnListDirty", BindingFlags.Instance | BindingFlags.NonPublic );
         }
 
         #region Properties
@@ -102,7 +104,7 @@ namespace Fluffy_Tabs
         {
             get
             {
-                Vector2 requestedTabSize = this.RequestedTabSize;
+                Vector2 requestedTabSize = RequestedTabSize;
                 if ( requestedTabSize.x > (float)Screen.width )
                 {
                     // limit to screen width
@@ -283,14 +285,19 @@ namespace Fluffy_Tabs
         /// <param name="outRect"></param>
         protected new void DrawRows( Rect outRect )
         {
-            Rect viewRect = new Rect( 0f, 0f, outRect.width - 16f, (float)this.pawns.Count * 30f );
+            // have to use reflection to get to the private dirty field. 
+            // we could directly call BuildPawnList in the SortBy method, but that would bypass Notify_PawnListChanged - and ignore changes in colonist count, etc.
+            if ( (bool)_pawnListDirty.GetValue( this ) )
+                BuildPawnList();
+
+            Rect viewRect = new Rect( 0f, 0f, outRect.width - 16f, (float)pawns.Count * 30f );
             scrollPosition = GUI.BeginScrollView( outRect, scrollPosition, viewRect );
             float num = 0f;
-            for ( int i = 0; i < this.pawns.Count; i++ )
+            for ( int i = 0; i < pawns.Count; i++ )
             {
-                Pawn p = this.pawns[i];
+                Pawn p = pawns[i];
                 Rect rect = new Rect( 0f, num, viewRect.width, 30f );
-                if ( num - this.scrollPosition.y + 30f >= 0f && num - this.scrollPosition.y <= outRect.height )
+                if ( num - scrollPosition.y + 30f >= 0f && num - scrollPosition.y <= outRect.height )
                 {
                     GUI.color = new Color( 1f, 1f, 1f, 0.2f );
                     Verse.Widgets.DrawLineHorizontal( 0f, num, viewRect.width );
@@ -464,6 +471,9 @@ namespace Fluffy_Tabs
 
         public void SortBy( SortMode mode, WorkTypeDef worktype )
         {
+#if DEBUG
+            Log.Message( "Work Tab :: Changing order :: " + _sortMode + " -> " +  mode  );
+#endif
             if ( _sortMode != mode )
             {
                 _sortMode = mode;
@@ -492,6 +502,7 @@ namespace Fluffy_Tabs
 
         protected override void BuildPawnList()
         {
+            _pawnListDirty.SetValue( this, false );
             pawns = Find.MapPawns.FreeColonists.ToList();
 
             if ( !pawns.Any() )
