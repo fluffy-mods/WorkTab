@@ -57,6 +57,7 @@
     <Compile Include="Work\MapComponent_Favourites.cs" />
     <Compile Include="Work\MapComponent_NaturalPriorities.cs" />
     <Compile Include="Work\MapComponent_PawnPriorities.cs" />
+    <Compile Include="Work\ModConfigurationMenu.cs" />
     <Compile Include="Work\PawnPrioritiesTracker.cs" />
     <Compile Include="Core\Widgets_UI.cs" />
     <Compile Include="Work\MainTabWindow_Work.cs" />

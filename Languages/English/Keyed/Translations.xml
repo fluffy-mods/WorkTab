@@ -40,7 +40,16 @@
 	<FluffyTabs.DeleteFavouriteX>Delete {0}</FluffyTabs.DeleteFavouriteX>
 	<FluffyTabs.DefaultFavouriteLabel>Favourite</FluffyTabs.DefaultFavouriteLabel>
 
-
+	<FluffyTabs.ColorCodedPassions>Colour coded passions</FluffyTabs.ColorCodedPassions>
+	<FluffyTabs.ColorCodedPassionsTip>Should passion icons be colour coded?</FluffyTabs.ColorCodedPassionsTip>
+	<FluffyTabs.24HourMode>24 hour mode</FluffyTabs.24HourMode>
+	<FluffyTabs.24HourModeTip>Should times be shown in 12h (noon/9p.m.) or 24h (12:00, 21:00) mode?</FluffyTabs.24HourModeTip>
+	<FluffyTabs.MaxPriority>Levels of priority</FluffyTabs.MaxPriority>
+	<FluffyTabs.MaxPriorityTip>How many levels of priority should we use? (Limited to between 4 and 9)</FluffyTabs.MaxPriorityTip>
+	<midnight>midnight</midnight>
+	<noon>noon</noon>
+	<FluffyTabs.SchedulerWholeDay>Select whole day</FluffyTabs.SchedulerWholeDay>
+	<FluffyTabs.SchedulerCurrentTimeOnly>Select current hour</FluffyTabs.SchedulerCurrentTimeOnly>
 
 	<!-- 0: label, 1: modeup, 2: modedown, 3: description -->
 	<FluffyTabs.WorktypeHeaderTip>{0}\n\nClick to sort by skill\nShift-left-click to {1} for all\nShift-right-click to {2} for all\n\n{3}</FluffyTabs.WorktypeHeaderTip>
