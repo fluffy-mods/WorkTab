@@ -75,5 +75,13 @@ namespace Fluffy_Tabs
 
         //    Widgets.Label( labelRect, label );
         //}
+        public void Remove( WorkFavourite favourite )
+        {
+            // remove from list
+            _favourites.Remove( favourite );
+            
+            // remove from assigned pawns
+            MapComponent_Priorities.Instance.Notify_FavouriteDeleted( favourite );
+        }
     }
 }

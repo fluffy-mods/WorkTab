@@ -37,6 +37,7 @@
 	<FluffyTabs.AssignFavouriteX>Assign {0}</FluffyTabs.AssignFavouriteX>
 	<FluffyTabs.ClickToAssignOrCreateFavourite>Click to assign or create new favourite</FluffyTabs.ClickToAssignOrCreateFavourite>
 	<FluffyTabs.CreateNewFavouriteTitle>Create new favourite</FluffyTabs.CreateNewFavouriteTitle>
+	<FluffyTabs.DeleteFavouriteX>Delete {0}</FluffyTabs.DeleteFavouriteX>
 	<FluffyTabs.DefaultFavouriteLabel>Favourite</FluffyTabs.DefaultFavouriteLabel>
 
 

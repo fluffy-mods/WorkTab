@@ -218,29 +218,18 @@ namespace Fluffy_Tabs
             WorkFavourite favourite;
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             string tip = "";
-
-            // stuff for DT mode
-            if ( dwarfTherapistMode )
+            
+            // is there a preset assigned?
+            favourite = pawn.Priorities().currentFavourite;
+            if ( favourite != null )
             {
-                // is there a preset assigned?
-                favourite = pawn.Priorities().currentFavourite;
-                if ( favourite != null )
-                {
-                    icon = pawn.Priorities().currentFavourite.Icon;
-                    tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
-                }
-            }
+                // tip for current favourite
+                icon = favourite.Icon;
+                tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
 
-            // 'vanilla' mode
-            else
-            {
-                // is there a preset assigned?
-                favourite = pawn.Priorities().currentFavourite;
-                if ( favourite != null )
-                {
-                    icon = pawn.Priorities().currentFavourite.Icon;
-                    tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
-                }
+                // option to delete current favourite
+                options.Add( new FloatMenuOption( "FluffyTabs.DeleteFavouriteX".Translate( favourite.label ),
+                                                  delegate { MapComponent_Favourites.Instance.Remove( favourite ); } ) );
             }
 
             // no favourite, add option to create one
@@ -258,6 +247,8 @@ namespace Fluffy_Tabs
             // add options for assigning favourites
             foreach ( var _favourite in MapComponent_Favourites.Instance.Favourites )
             {
+                if ( _favourite == favourite )
+                    continue;
                 options.Add( new FloatMenuOption( "FluffyTabs.AssignFavouriteX".Translate( _favourite.label ), delegate
                 {
                     pawn.Priorities().AssignFavourite( _favourite );
