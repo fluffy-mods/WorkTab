@@ -42,9 +42,9 @@ namespace Fluffy_Tabs
 
             // draw icon and buttons
             GUI.DrawTexture( iconRect, Choice );
-            if ( Widgets.ImageButton( backButtonRect, Resources.LeftArrow, "FluffyTabs.TextureChooser.Previous".Translate() ) )
+            if ( Widgets.ButtonImage( backButtonRect, Resources.LeftArrow, "FluffyTabs.TextureChooser.Previous".Translate() ) )
                 Previous();
-            if ( Widgets.ImageButton( forwardButtonRect, Resources.RightArrow, "FluffyTabs.TextureChooser.Next".Translate() ) )
+            if ( Widgets.ButtonImage( forwardButtonRect, Resources.RightArrow, "FluffyTabs.TextureChooser.Next".Translate() ) )
                 Next();
 
             // highlight

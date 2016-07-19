@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Community Core Library">
@@ -45,7 +45,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -57,6 +57,7 @@
     <Compile Include="Work\MapComponent_Favourites.cs" />
     <Compile Include="Work\MapComponent_NaturalPriorities.cs" />
     <Compile Include="Work\MapComponent_PawnPriorities.cs" />
+    <Compile Include="Work\ModConfigurationMenu.cs" />
     <Compile Include="Work\PawnPrioritiesTracker.cs" />
     <Compile Include="Core\Widgets_UI.cs" />
     <Compile Include="Work\MainTabWindow_Work.cs" />

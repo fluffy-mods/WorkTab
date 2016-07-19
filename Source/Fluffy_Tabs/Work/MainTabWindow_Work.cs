@@ -41,6 +41,7 @@ namespace Fluffy_Tabs
 
         private MethodInfo _preDrawPawnRow;
         private MethodInfo _postDrawPawnRow;
+        private FieldInfo _pawnListDirty;
 
         #endregion Fields
 
@@ -48,6 +49,7 @@ namespace Fluffy_Tabs
         {
             _preDrawPawnRow = typeof( MainTabWindow_PawnList ).GetMethod( "PreDrawPawnRow", BindingFlags.Instance | BindingFlags.NonPublic );
             _postDrawPawnRow = typeof( MainTabWindow_PawnList ).GetMethod( "PostDrawPawnRow", BindingFlags.Instance | BindingFlags.NonPublic );
+            _pawnListDirty = typeof( MainTabWindow_PawnList ).GetField( "pawnListDirty", BindingFlags.Instance | BindingFlags.NonPublic );
         }
 
         #region Properties
@@ -98,11 +100,11 @@ namespace Fluffy_Tabs
             }
         }
 
-        public override Vector2 InitialWindowSize
+        public override Vector2 InitialSize
         {
             get
             {
-                Vector2 requestedTabSize = this.RequestedTabSize;
+                Vector2 requestedTabSize = RequestedTabSize;
                 if ( requestedTabSize.x > (float)Screen.width )
                 {
                     // limit to screen width
@@ -126,7 +128,7 @@ namespace Fluffy_Tabs
             {
                 return new Vector2(
                     ExtraWidth + DesiredWorkAreaWidth,
-                    2 * WindowPadding + ColumnHeaderRowHeight + _margin + _topRowHeight + pawns.Count * PawnRowHeight + SchedulerRowHeight );
+                    2 * Margin + ColumnHeaderRowHeight + _margin + _topRowHeight + pawns.Count * PawnRowHeight + SchedulerRowHeight );
             }
         }
 
@@ -159,7 +161,7 @@ namespace Fluffy_Tabs
         {
             get
             {
-                if ( currentWindowRect.width >= RequestedTabSize.x )
+                if ( windowRect.width >= RequestedTabSize.x )
                 {
                     return new IntVec2( 0, WorkColumnCount );
                 }
@@ -208,7 +210,7 @@ namespace Fluffy_Tabs
             }
         }
 
-        private float ActualWorkAreaWidth => currentWindowRect.width - ExtraWidth;
+        private float ActualWorkAreaWidth => windowRect.width - ExtraWidth;
 
         private float BoxMargin => DwarfTherapistMode ? 2f : 8f;
 
@@ -216,7 +218,7 @@ namespace Fluffy_Tabs
 
         private float DesiredWorkAreaWidth => WorkColumnCount * WorkColumnWidth;
 
-        private float ExtraWidth => WindowPadding * 2 + NameColumnWidth + StatusColumnWidth + FavouritesColumnWidth + 4 * Settings.Margin;
+        private float ExtraWidth => Margin * 2 + NameColumnWidth + StatusColumnWidth + FavouritesColumnWidth + 4 * Settings.Margin;
 
         private float FavouritesColumnWidth => WorkColumnWidth;
 
@@ -251,7 +253,7 @@ namespace Fluffy_Tabs
             contentArea.yMin = headerRow.yMax;
 
             // if we required extra horizontal space, we'll need to explicitly make some space for the horizontal scrollbar
-            if ( RequestedTabSize.x > currentWindowRect.width )
+            if ( RequestedTabSize.x > windowRect.width )
                 contentArea.yMax -= 16f;
 
             // if we're using the scheduler, make some room for the timebar
@@ -283,14 +285,19 @@ namespace Fluffy_Tabs
         /// <param name="outRect"></param>
         protected new void DrawRows( Rect outRect )
         {
-            Rect viewRect = new Rect( 0f, 0f, outRect.width - 16f, (float)this.pawns.Count * 30f );
+            // have to use reflection to get to the private dirty field. 
+            // we could directly call BuildPawnList in the SortBy method, but that would bypass Notify_PawnListChanged - and ignore changes in colonist count, etc.
+            if ( (bool)_pawnListDirty.GetValue( this ) )
+                BuildPawnList();
+
+            Rect viewRect = new Rect( 0f, 0f, outRect.width - 16f, (float)pawns.Count * 30f );
             scrollPosition = GUI.BeginScrollView( outRect, scrollPosition, viewRect );
             float num = 0f;
-            for ( int i = 0; i < this.pawns.Count; i++ )
+            for ( int i = 0; i < pawns.Count; i++ )
             {
-                Pawn p = this.pawns[i];
+                Pawn p = pawns[i];
                 Rect rect = new Rect( 0f, num, viewRect.width, 30f );
-                if ( num - this.scrollPosition.y + 30f >= 0f && num - this.scrollPosition.y <= outRect.height )
+                if ( num - scrollPosition.y + 30f >= 0f && num - scrollPosition.y <= outRect.height )
                 {
                     GUI.color = new Color( 1f, 1f, 1f, 0.2f );
                     Verse.Widgets.DrawLineHorizontal( 0f, num, viewRect.width );
@@ -329,7 +336,7 @@ namespace Fluffy_Tabs
             // something selected, click icon to go to full day
             if ( _focusedHours != null &&
                 _focusedHours.Count > 0 &&
-                Widgets.ImageButton( buttonRect, Resources.Priorities_WholeDay, "FluffyTabs.SchedulerWholeDay".Translate() ) )
+                Widgets.ButtonImage( buttonRect, Resources.Priorities_WholeDay, "FluffyTabs.SchedulerWholeDay".Translate() ) )
             {
                 _focusedHours = null;
                 TempFocusFullDay = true;
@@ -338,13 +345,13 @@ namespace Fluffy_Tabs
             // nothing selected, click icon toggle between full day and current hour
             if ( ( _focusedHours == null || _focusedHours.Count == 0 ) &&
                  TempFocusFullDay == true &&
-                 Widgets.ImageButton( buttonRect, Resources.ClockNow, "FluffyTabs.SchedulerCurrentTimeOnly".Translate() ) )
+                 Widgets.ButtonImage( buttonRect, Resources.ClockNow, "FluffyTabs.SchedulerCurrentTimeOnly".Translate() ) )
             {
                 TempFocusFullDay = false;
             }
             if ( ( _focusedHours == null || _focusedHours.Count == 0 ) &&
                  TempFocusFullDay == false &&
-                 Widgets.ImageButton( buttonRect, Resources.Priorities_WholeDay, "FluffyTabs.SchedulerWholeDay".Translate() ) )
+                 Widgets.ButtonImage( buttonRect, Resources.Priorities_WholeDay, "FluffyTabs.SchedulerWholeDay".Translate() ) )
             {
                 TempFocusFullDay = true;
             }
@@ -464,6 +471,9 @@ namespace Fluffy_Tabs
 
         public void SortBy( SortMode mode, WorkTypeDef worktype )
         {
+#if DEBUG
+            Log.Message( "Work Tab :: Changing order :: " + _sortMode + " -> " +  mode  );
+#endif
             if ( _sortMode != mode )
             {
                 _sortMode = mode;
@@ -492,6 +502,7 @@ namespace Fluffy_Tabs
 
         protected override void BuildPawnList()
         {
+            _pawnListDirty.SetValue( this, false );
             pawns = Find.MapPawns.FreeColonists.ToList();
 
             if ( !pawns.Any() )
@@ -566,16 +577,16 @@ namespace Fluffy_Tabs
             Rect nameHeaderRect = new Rect( canvas.xMin, canvas.yMin, NameColumnWidth, canvas.height );
             Widgets.Label( nameHeaderRect, "FluffyTabs.Name".Translate(), TextAnchor.LowerCenter, "FluffyTabs.NameColumnTip".Translate() );
             Verse.Widgets.DrawHighlightIfMouseover( nameHeaderRect );
-            if ( Verse.Widgets.InvisibleButton( nameHeaderRect ) )
+            if ( Verse.Widgets.ButtonInvisible( nameHeaderRect ) )
                 HandleNameColumnInteractions();
 
             // prepare for drawing icons ( at bottom - icon size )
             Vector2 offset = new Vector2( NameColumnWidth + BoxMargin / 2f, canvas.yMax - BoxSize - BoxMargin / 2f );
 
             // status column headers
-            if ( Widgets.ImageButton( ref offset, Direction.Right, Resources.Cog, "FluffyTabs.CurrentJobColumnTip".Translate(), BoxSize, BoxMargin ) )
+            if ( Widgets.ButtonImage( ref offset, Direction.Right, Resources.Cog, "FluffyTabs.CurrentJobColumnTip".Translate(), BoxSize, BoxMargin ) )
                 SortBy( SortMode.Activity, null );
-            if ( Widgets.ImageButton( ref offset, Direction.Right, Resources.MoodContent, "FluffyTabs.CurrentMoodColumnTip".Translate(), BoxSize, BoxMargin ) )
+            if ( Widgets.ButtonImage( ref offset, Direction.Right, Resources.MoodContent, "FluffyTabs.CurrentMoodColumnTip".Translate(), BoxSize, BoxMargin ) )
                 SortBy( SortMode.Mood, null );
 
             // set offset y to top
@@ -597,7 +608,7 @@ namespace Fluffy_Tabs
 
         private void DrawColumnScrollbar( Rect canvas )
         {
-            if ( currentWindowRect.width < RequestedTabSize.x )
+            if ( windowRect.width < RequestedTabSize.x )
             {
                 var scrollpos = GUI.HorizontalScrollbar( canvas, _horizontalScrollPos * WorkColumnWidth, ActualWorkAreaWidth, 0f, DesiredWorkAreaWidth );
                 _horizontalScrollPos = Mathf.RoundToInt( scrollpos / WorkColumnWidth );
@@ -635,42 +646,42 @@ namespace Fluffy_Tabs
             Vector2 curPos = new Vector2( canvas.xMax, canvas.yMin );
 
             //// open natural priority changer (left-right ordering)
-            //if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Wrench, "FluffyTabs.WorkNaturalPrioritiesTip".Translate() ) )
+            //if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Wrench, "FluffyTabs.WorkNaturalPrioritiesTip".Translate() ) )
             //    Find.WindowStack.Add( new Dialog_NaturalPriorities( this ) );
 
             // button for changing between worktype and workgiver modes
             if ( DwarfTherapistMode )
             {
-                if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Priorities_Workgivers, "FluffyTabs.PrioritiesWorktypesTip".Translate() ) )
+                if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Priorities_Workgivers, "FluffyTabs.PrioritiesWorktypesTip".Translate() ) )
                     DwarfTherapistMode = false;
             }
             else
             {
-                if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Priorities_Worktypes, "FluffyTabs.PrioritiesWorkgiversTip".Translate() ) )
+                if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Priorities_Worktypes, "FluffyTabs.PrioritiesWorkgiversTip".Translate() ) )
                     DwarfTherapistMode = true;
             }
 
             // button for toggling scheduler mode
             if ( SchedulerMode )
             {
-                if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Priorities_Scheduler, "FluffyTabs.PrioritiesSchedulerTip".Translate() ) )
+                if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Priorities_Scheduler, "FluffyTabs.PrioritiesSchedulerTip".Translate() ) )
                     SchedulerMode = false;
             }
             else
             {
-                if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Priorities_WholeDay, "FluffyTabs.PrioritiesAllDayTip".Translate() ) )
+                if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Priorities_WholeDay, "FluffyTabs.PrioritiesAllDayTip".Translate() ) )
                     SchedulerMode = true;
             }
 
             // button for changing between manual and simple workSettings
             if ( NumericMode )
             {
-                if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Priorities_Int, "FluffyTabs.PrioritiesToggleTip".Translate() ) )
+                if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Priorities_Int, "FluffyTabs.PrioritiesToggleTip".Translate() ) )
                     NumericMode = false;
             }
             else
             {
-                if ( Widgets.ImageButton( ref curPos, Direction.Left, Resources.Priorities_Toggle, "FluffyTabs.PrioritiesIntTip".Translate() ) )
+                if ( Widgets.ButtonImage( ref curPos, Direction.Left, Resources.Priorities_Toggle, "FluffyTabs.PrioritiesIntTip".Translate() ) )
                     NumericMode = true;
             }
         }

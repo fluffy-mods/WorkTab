@@ -218,29 +218,18 @@ namespace Fluffy_Tabs
             WorkFavourite favourite;
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             string tip = "";
-
-            // stuff for DT mode
-            if ( dwarfTherapistMode )
+            
+            // is there a preset assigned?
+            favourite = pawn.Priorities().currentFavourite;
+            if ( favourite != null )
             {
-                // is there a preset assigned?
-                favourite = pawn.Priorities().currentFavourite;
-                if ( favourite != null )
-                {
-                    icon = pawn.Priorities().currentFavourite.Icon;
-                    tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
-                }
-            }
+                // tip for current favourite
+                icon = favourite.Icon;
+                tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
 
-            // 'vanilla' mode
-            else
-            {
-                // is there a preset assigned?
-                favourite = pawn.Priorities().currentFavourite;
-                if ( favourite != null )
-                {
-                    icon = pawn.Priorities().currentFavourite.Icon;
-                    tip += "FluffyTabs.CurrentFavourite".Translate( favourite.label );
-                }
+                // option to delete current favourite
+                options.Add( new FloatMenuOption( "FluffyTabs.DeleteFavouriteX".Translate( favourite.label ),
+                                                  delegate { MapComponent_Favourites.Instance.Remove( favourite ); } ) );
             }
 
             // no favourite, add option to create one
@@ -258,13 +247,15 @@ namespace Fluffy_Tabs
             // add options for assigning favourites
             foreach ( var _favourite in MapComponent_Favourites.Instance.Favourites )
             {
+                if ( _favourite == favourite )
+                    continue;
                 options.Add( new FloatMenuOption( "FluffyTabs.AssignFavouriteX".Translate( _favourite.label ), delegate
                 {
                     pawn.Priorities().AssignFavourite( _favourite );
                 } ) );
             }
 
-            if ( Widgets.ImageButton( iconRect, icon, tip ) )
+            if ( Widgets.ButtonImage( iconRect, icon, tip ) )
                 Find.WindowStack.Add( new FloatMenu( options ) );
         }
 
@@ -276,25 +267,41 @@ namespace Fluffy_Tabs
             TooltipHandler.TipRegion( cell, pawn.needs.mood.GetTipString() );
 
             // if currently broken, we can be done early
-            if ( pawn.mindState.mentalStateHandler?.CurStateDef?.stateType == MentalStateType.Hard )
+            if ( pawn.mindState.mentalStateHandler?.CurStateDef != null )
             {
-                GUI.color = Color.red;
-                GUI.DrawTexture( iconRect, Resources.MoodBroken );
-                GUI.color = Color.white;
-                return;
-            }
-            if ( pawn.mindState.mentalStateHandler?.CurStateDef?.stateType == MentalStateType.Soft )
-            {
-                GUI.color = Color.yellow;
+                Color stateColor;
+
+                switch ( pawn.mindState.mentalStateHandler.CurStateDef.category )
+                {
+                    case MentalStateCategory.Aggro:
+                        stateColor = Color.red;
+                        break;
+                    case MentalStateCategory.Sad:
+                        stateColor = Color.cyan;
+                        break;
+                    case MentalStateCategory.Panic:
+                        stateColor = new Color( .4f, .008f, .235f );
+                        break;
+                    case MentalStateCategory.Misc:
+                    case MentalStateCategory.Indulgent:
+                    case MentalStateCategory.Undefined:
+                        stateColor = new Color( 207 / 256f, 83 / 256f, 0f );
+                        break;
+                    default:
+                        stateColor = Color.white;
+                        break;
+                }
+                GUI.color = stateColor;
                 GUI.DrawTexture( iconRect, Resources.MoodBroken );
                 GUI.color = Color.white;
                 return;
             }
 
+
             // current level
             var mood = pawn.needs.mood.CurLevelPercentage;
-            var hardBreak = pawn.mindState.mentalStateStarter.StartHardMentalStateThreshold;
-            var softBreak = pawn.mindState.mentalStateStarter.StartSoftMentalStateThreshold;
+            var hardBreak = pawn.mindState.mentalBreaker.BreakThresholdExtreme;
+            var softBreak = pawn.mindState.mentalBreaker.BreakThresholdMinor;
 
             // color and icon
             Color color;

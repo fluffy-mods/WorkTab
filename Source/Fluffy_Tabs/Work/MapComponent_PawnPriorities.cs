@@ -112,6 +112,13 @@ namespace Fluffy_Tabs
             }
         }
 
+        public void Notify_FavouriteDeleted( WorkFavourite favourite )
+        {
+            foreach ( var tracker in _trackers )
+                if ( tracker.Value.currentFavourite == favourite )
+                    tracker.Value.currentFavourite = null;
+        }
+
         public PawnPrioritiesTracker WorkgiverTracker( Pawn pawn )
         {
             if ( !_trackers.ContainsKey( pawn ) )

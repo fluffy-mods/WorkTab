@@ -40,7 +40,7 @@ namespace Fluffy_Tabs
             var worktypes = DefDatabase<WorkTypeDef>.AllDefsListForReading;
             for ( int i = 0; i < worktypes.Count; i++ )
             {
-                WorktypeColors[worktypes[i]] = ColorHelper.HSVtoRGB( 1f / worktypes.Count * i, 1f, 1f );
+                WorktypeColors[worktypes[i]] = Color.HSVToRGB( 1f / worktypes.Count * i, 1f, 1f );
             }
 
             // initialize job icon paths
@@ -75,7 +75,7 @@ namespace Fluffy_Tabs
                 if ( label.NullOrEmpty() )
                 {
                     label = workgiver.verb.CapitalizeFirst();
-                    Log.Warning( "FluffyTabs :: No label was set for WorkGiverDef " + workgiver.defName + " please inform the author of " + Find_Extensions.ModByDef( workgiver ).name + "." );
+                    Log.Warning( "FluffyTabs :: No label was set for WorkGiverDef " + workgiver.defName + " please inform the author of " + Find_Extensions.ModByDef( workgiver ).Name + "." );
                 }
 
                 // if description is empty, try decoding the defname

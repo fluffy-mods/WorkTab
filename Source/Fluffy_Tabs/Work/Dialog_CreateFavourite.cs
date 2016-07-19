@@ -35,7 +35,7 @@ namespace Fluffy_Tabs
 
         #region Properties
 
-        public override Vector2 InitialWindowSize => _size;
+        public override Vector2 InitialSize => _size;
 
         #endregion Properties
 
@@ -59,9 +59,9 @@ namespace Fluffy_Tabs
             curPos.y += 36f;
 
             // ok/cancel buttons.
-            if ( Verse.Widgets.TextButton( new Rect( curPos.x, curPos.y, ( canvas.width - Settings.Margin ) / 2f, 30f ), "Cancel".Translate() ) )
+            if ( Verse.Widgets.ButtonText( new Rect( curPos.x, curPos.y, ( canvas.width - Settings.Margin ) / 2f, 30f ), "Cancel".Translate() ) )
                 Close();
-            if ( Verse.Widgets.TextButton( new Rect( curPos.x + ( canvas.width + Settings.Margin ) / 2f, curPos.y, ( canvas.width - Settings.Margin ) / 2f, 30f ), "OK".Translate() ) )
+            if ( Verse.Widgets.ButtonText( new Rect( curPos.x + ( canvas.width + Settings.Margin ) / 2f, curPos.y, ( canvas.width - Settings.Margin ) / 2f, 30f ), "OK".Translate() ) )
                 ApplyAndClose();
 
             // set height
@@ -70,7 +70,7 @@ namespace Fluffy_Tabs
 
         public override void WindowUpdate()
         {
-            currentWindowRect.height = _size.y + WindowPadding * 2;
+            windowRect.height = _size.y + Margin * 2;
         }
 
         private void ApplyAndClose()
