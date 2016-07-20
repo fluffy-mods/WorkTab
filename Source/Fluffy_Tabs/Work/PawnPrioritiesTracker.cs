@@ -33,6 +33,11 @@ namespace Fluffy_Tabs
         {
             this.pawn = pawn;
 
+            InitPriorityCache();
+        }
+
+        private void InitPriorityCache()
+        {
             // create list of work priorities, and initialize with default settings (logic lifted from Pawn_WorkSettings.EnableAndInitialize() )
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
             {
@@ -60,7 +65,9 @@ namespace Fluffy_Tabs
                 }
 
                 // disable story-disabled types
-                foreach ( var worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading.Where( wtd => pawn.story.WorkTypeIsDisabled( wtd ) ) )
+                foreach (
+                    var worktype in
+                        DefDatabase<WorkTypeDef>.AllDefsListForReading.Where( wtd => pawn.story.WorkTypeIsDisabled( wtd ) ) )
                 {
                     foreach ( var workgiver in worktype.workGiversByPriority )
                         priorities[hour][workgiver] = 0;
@@ -114,7 +121,20 @@ namespace Fluffy_Tabs
 
         public int GetPriority( WorkGiverDef workgiver, int hour )
         {
-            return Find.PlaySettings.useWorkPriorities ? priorities[hour][workgiver] : priorities[hour][workgiver] > 0 ? 1 : 0;
+            try
+            {
+                return Find.PlaySettings.useWorkPriorities ? priorities[hour][workgiver] : priorities[hour][workgiver] > 0 ? 1 : 0;
+            }
+            catch ( ArgumentOutOfRangeException )
+            {
+                // workgiver-priority defmap is really just and ordered list indexed by a dynamically generated workgiver index int
+                // if the number of workgivers increases, this means errors.
+                Messages.Message( "WorkGiver database corrupted, resetting priorities for " + pawn.NameStringShort + ". Did you add mods during the game?", MessageSound.SeriousAlert );
+                priorities = new List<DefMap<WorkGiverDef, int>>();
+                InitPriorityCache();
+
+                throw;
+            }
         }
 
         public int GetPriority( WorkTypeDef worktype, int hour = -1 )
