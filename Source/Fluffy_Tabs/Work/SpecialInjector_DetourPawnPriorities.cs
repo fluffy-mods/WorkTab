@@ -24,6 +24,10 @@ namespace Fluffy_Tabs
             MethodInfo getPriority_Fluffy = typeof( Detours_WorkSettings ).GetMethod( "_GetPriority", BindingFlags.Instance | BindingFlags.Public );
             Detours.TryDetourFromTo( getPriority_Vanilla, getPriority_Fluffy );
 
+            MethodInfo setPriority_Vanilla = typeof( Pawn_WorkSettings ).GetMethod( "SetPriority", BindingFlags.Instance | BindingFlags.Public );
+            MethodInfo setPriority_Fluffy = typeof( Detours_WorkSettings ).GetMethod( "_SetPriority", BindingFlags.Instance | BindingFlags.Public );
+            Detours.TryDetourFromTo( setPriority_Vanilla, setPriority_Fluffy );
+
             return true;
         }
 
