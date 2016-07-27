@@ -37,6 +37,19 @@ namespace Fluffy_Tabs
         }
 
         /// <summary>
+        /// This detours the vanilla SetPriority method to the Work Tabs priorities, thus ensuring that rogue vanilla or modded code is applied to this mod's priorities. 
+        /// 
+        /// NOTE: These priorities are NOT kept around in the vanilla tracker, so after disabling this mod you may run into some issues. (looking at you, craftable robots).
+        /// </summary>
+        /// <param name="w"></param>
+        /// <param name="priority"></param>
+        public void _SetPriority( WorkTypeDef w, int priority )
+        {
+            Pawn pawn = pawnField.GetValue( this ) as Pawn;
+            pawn.Priorities().SetPriority( w, priority );
+        }
+
+        /// <summary>
         /// This method deviates from vanilla in that it also allows sorting pawns by player set workGIVER priorities
         /// </summary>
         public void _CacheWorkGiversInOrder()

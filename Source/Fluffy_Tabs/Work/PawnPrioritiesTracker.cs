@@ -224,6 +224,10 @@ namespace Fluffy_Tabs
 
             // clear current favourite
             currentFavourite = null;
+
+            // notify pawn that he might have to stop current job
+            if ( priority == 0 && hour == GenDate.HourOfDay )
+                pawn.mindState.Notify_WorkPriorityDisabled( workgiver.workType );
         }
 
         public void SetPriority( WorkTypeDef worktype, int priority, int hour )
