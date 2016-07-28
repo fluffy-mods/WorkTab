@@ -38,39 +38,26 @@ namespace Fluffy_Tabs
 
         private void InitPriorityCache()
         {
-            // create list of work priorities, and initialize with default settings (logic lifted from Pawn_WorkSettings.EnableAndInitialize() )
+            // initialize from vanilla priorities.
+            var vanillaPriorities = Detours_WorkSettings.GetVanillaPriorities( pawn );
+
+            // loop over hours
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
             {
+
+                // create map for this hour
                 priorities.Add( new DefMap<WorkGiverDef, int>() );
 
-                // for up to six 'best' worktypes, enable
-                int count = 1;
-                foreach ( var worktype in DefDatabase<WorkTypeDef>
-                    .AllDefsListForReading
-                    .Where( wtd => !wtd.alwaysStartActive && !pawn.story.WorkTypeIsDisabled( wtd ) )
-                    .OrderByDescending( wtd => pawn.skills.AverageOfRelevantSkillsFor( wtd ) ) )
+                // loop over worktypes
+                foreach ( WorkTypeDef worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )
                 {
-                    foreach ( var workgiver in worktype.workGiversByPriority )
-                        priorities[hour][workgiver] = 3;
+                    int priority = vanillaPriorities[worktype];
 
-                    if ( count++ > 6 )
-                        break;
-                }
-
-                // enable all always enabled types
-                foreach ( var worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading.Where( wtd => wtd.alwaysStartActive ) )
-                {
-                    foreach ( var workgiver in worktype.workGiversByPriority )
-                        priorities[hour][workgiver] = 3;
-                }
-
-                // disable story-disabled types
-                foreach (
-                    var worktype in
-                        DefDatabase<WorkTypeDef>.AllDefsListForReading.Where( wtd => pawn.story.WorkTypeIsDisabled( wtd ) ) )
-                {
-                    foreach ( var workgiver in worktype.workGiversByPriority )
-                        priorities[hour][workgiver] = 0;
+                    // loop over workgivers in type
+                    foreach ( WorkGiverDef workgiver in worktype.workGiversByPriority )
+                    {
+                        priorities[hour][workgiver] = priority;
+                    }
                 }
             }
 
@@ -244,6 +231,9 @@ namespace Fluffy_Tabs
 
         public void SetPriority( WorkTypeDef worktype, int priority )
         {
+            // propagate to vanilla
+            Detours_WorkSettings.SetVanillaPriority( pawn, worktype, priority );
+
             foreach ( var workgiver in worktype.workGiversByPriority )
                 SetPriority( workgiver, priority );
         }

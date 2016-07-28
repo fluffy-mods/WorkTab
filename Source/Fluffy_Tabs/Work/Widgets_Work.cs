@@ -742,7 +742,7 @@ namespace Fluffy_Tabs
 
         public static PawnPrioritiesTracker Priorities( this Pawn pawn )
         {
-            return MapComponent_Priorities.Instance.WorkgiverTracker( pawn );
+            return MapComponent_Priorities.Instance?.WorkgiverTracker( pawn );
         }
         
         private static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )

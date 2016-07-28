@@ -33,7 +33,7 @@ namespace Fluffy_Tabs
         public int _GetPriority( WorkTypeDef w )
         {
             Pawn pawn = pawnField.GetValue( this ) as Pawn;
-            return pawn.Priorities().GetPriority( w );
+            return pawn.Priorities()?.GetPriority( w ) ?? 0; // return 0 if no tracker was found
         }
 
         /// <summary>
@@ -46,7 +46,40 @@ namespace Fluffy_Tabs
         public void _SetPriority( WorkTypeDef w, int priority )
         {
             Pawn pawn = pawnField.GetValue( this ) as Pawn;
-            pawn.Priorities().SetPriority( w, priority );
+            
+
+            // set priority in work tab's priority list
+            if (pawn.Priorities() != null)
+                pawn.Priorities().SetPriority( w, priority );
+            // if not available, make sure that changes ARE propagated to vanilla
+            else
+                SetVanillaPriority( pawn, w, priority );
+        }
+
+        internal static void SetVanillaPriority( Pawn pawn, WorkTypeDef workTypeDef, int priority )
+        {
+            // get value
+            DefMap<WorkTypeDef, int> priorities = GetVanillaPriorities( pawn );
+
+            // cop out on issues
+            if ( priorities == null )
+            {
+                Log.Warning( "Vanilla priorities for " + pawn.LabelShort + " not found." );
+                return;
+            }
+
+            // update
+            priorities[workTypeDef] = priority;
+
+            // write back TODO: figure out if this is needed, or if we're modifying by reference (which I suspect is the case).
+            prioritiesField.SetValue( pawn, priorities );
+        }
+
+        internal static DefMap<WorkTypeDef, int> GetVanillaPriorities( Pawn pawn )
+        {
+            if ( pawn?.workSettings == null )
+                return null;
+            return prioritiesField.GetValue( pawn.workSettings ) as DefMap<WorkTypeDef, int>;
         }
 
         /// <summary>
