@@ -30,6 +30,10 @@ namespace Fluffy_Tabs
         {
             get
             {
+                // return null if called too damn early
+                if ( Find.Map == null )
+                    return null;
+
                 // try to get from game list.
                 if ( _instance == null )
                     _instance = Find.Map.components.FirstOrDefault( comp => comp is MapComponent_Priorities ) as MapComponent_Priorities;
