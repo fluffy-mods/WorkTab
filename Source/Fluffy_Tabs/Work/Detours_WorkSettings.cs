@@ -33,13 +33,12 @@ namespace Fluffy_Tabs
         public int _GetPriority( WorkTypeDef w )
         {
             Pawn pawn = pawnField.GetValue( this ) as Pawn;
+
             return pawn.Priorities()?.GetPriority( w ) ?? 0; // return 0 if no tracker was found
         }
 
         /// <summary>
         /// This detours the vanilla SetPriority method to the Work Tabs priorities, thus ensuring that rogue vanilla or modded code is applied to this mod's priorities. 
-        /// 
-        /// NOTE: These priorities are NOT kept around in the vanilla tracker, so after disabling this mod you may run into some issues. (looking at you, craftable robots).
         /// </summary>
         /// <param name="w"></param>
         /// <param name="priority"></param>
@@ -47,7 +46,6 @@ namespace Fluffy_Tabs
         {
             Pawn pawn = pawnField.GetValue( this ) as Pawn;
             
-
             // set priority in work tab's priority list
             if (pawn.Priorities() != null)
                 pawn.Priorities().SetPriority( w, priority );
@@ -70,9 +68,6 @@ namespace Fluffy_Tabs
 
             // update
             priorities[workTypeDef] = priority;
-
-            // write back TODO: figure out if this is needed, or if we're modifying by reference (which I suspect is the case).
-            prioritiesField.SetValue( pawn, priorities );
         }
 
         internal static DefMap<WorkTypeDef, int> GetVanillaPriorities( Pawn pawn )
