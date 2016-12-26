@@ -1,5 +1,3 @@
-using CommunityCoreLibrary;
-using CommunityCoreLibrary.ColorPicker;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -75,7 +73,8 @@ namespace Fluffy_Tabs
                 if ( label.NullOrEmpty() )
                 {
                     label = workgiver.verb.CapitalizeFirst();
-                    Log.Warning( "FluffyTabs :: No label was set for WorkGiverDef " + workgiver.defName + " please inform the author of " + Find_Extensions.ModByDef( workgiver ).Name + "." );
+                    // TODO: Find replacement for ModByDef
+                    //Log.Warning( "FluffyTabs :: No label was set for WorkGiverDef " + workgiver.defName + " please inform the author of " + Find_Extensions.ModByDef( workgiver ).Name + "." );
                 }
 
                 // if description is empty, try decoding the defname

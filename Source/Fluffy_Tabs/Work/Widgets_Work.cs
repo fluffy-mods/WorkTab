@@ -1,4 +1,3 @@
-using CommunityCoreLibrary;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -229,7 +228,7 @@ namespace Fluffy_Tabs
 
                 // option to delete current favourite
                 options.Add( new FloatMenuOption( "FluffyTabs.DeleteFavouriteX".Translate( favourite.label ),
-                                                  delegate { MapComponent_Favourites.Instance.Remove( favourite ); } ) );
+                                                  delegate { WorldObject_Favourites.Get.Remove( favourite ); } ) );
             }
 
             // no favourite, add option to create one
@@ -245,7 +244,7 @@ namespace Fluffy_Tabs
             }
 
             // add options for assigning favourites
-            foreach ( var _favourite in MapComponent_Favourites.Instance.Favourites )
+            foreach ( var _favourite in WorldObject_Favourites.Get.Favourites )
             {
                 if ( _favourite == favourite )
                     continue;
@@ -560,7 +559,7 @@ namespace Fluffy_Tabs
 
         public static string FormatHour( this int hour )
         {
-            if ( MapComponent_Priorities.Instance.TwentyFourHourMode )
+            if ( WorldObject_Priorities.Instance.TwentyFourHourMode )
                 return hour.ToString( "D2" ) + ":00";
             else
             {
@@ -742,7 +741,7 @@ namespace Fluffy_Tabs
 
         public static PawnPrioritiesTracker Priorities( this Pawn pawn )
         {
-            return MapComponent_Priorities.Instance?.WorkgiverTracker( pawn );
+            return WorldObject_Priorities.Instance?.WorkgiverTracker( pawn );
         }
         
         private static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )

@@ -1,4 +1,3 @@
-using CommunityCoreLibrary;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -79,13 +78,10 @@ namespace Fluffy_Tabs
             WorkFavourite favourite = new WorkFavourite( pawn, label, "UI/Icons/Various/" + textureChooser.Choice.name );
 
             // add to list
-            MapComponent_Favourites.Instance.Add( favourite );
+            WorldObject_Favourites.Get.Add( favourite );
 
             // assign to pawn
-            if ( dwarfTherapistMode )
-                pawn.Priorities().AssignFavourite( favourite );
-            else
-                pawn.Priorities().AssignFavourite( favourite );
+            pawn.Priorities().AssignFavourite( favourite );
 
             // done!
             Close();

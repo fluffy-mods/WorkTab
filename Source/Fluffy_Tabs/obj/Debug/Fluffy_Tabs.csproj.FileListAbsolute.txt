@@ -1,3 +1,8 @@
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Fluffy_WorkTab\Source\Fluffy_Tabs\obj\Debug\Fluffy_Tabs.csprojResolveAssemblyReference.cache
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Fluffy_WorkTab\Source\Fluffy_Tabs\obj\Debug\Fluffy_Tabs.dll
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Fluffy_WorkTab\Assemblies\Fluffy_Tabs.dll
+C:\Users\karel\Dropbox\Other\RW_Mods\Fluffy Mods\Fluffy_Tabs\Source\Fluffy_Tabs\obj\Debug\Fluffy_Tabs.csprojResolveAssemblyReference.cache
+C:\Users\karel\Dropbox\Other\RW_Mods\Fluffy Mods\Fluffy_Tabs\Source\Fluffy_Tabs\obj\Debug\Fluffy_Tabs.dll
+C:\Users\karel\Dropbox\Other\RW_Mods\Fluffy Mods\WorkTab\Source\Fluffy_Tabs\obj\Debug\Fluffy_Tabs.csprojResolveAssemblyReference.cache
+C:\Users\karel\Dropbox\Other\RW_Mods\Fluffy Mods\WorkTab\Source\Fluffy_Tabs\obj\Debug\Fluffy_Tabs.dll
+C:\Users\karel\Dropbox\Other\RW_Mods\Fluffy Mods\WorkTab\Assemblies\Fluffy_Tabs.dll

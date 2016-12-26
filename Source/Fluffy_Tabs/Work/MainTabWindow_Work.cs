@@ -1,4 +1,3 @@
-using CommunityCoreLibrary;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -66,11 +65,11 @@ namespace Fluffy_Tabs
         {
             get
             {
-                return MapComponent_Priorities.Instance.DwarfTherapistMode;
+                return WorldObject_Priorities.Instance.DwarfTherapistMode;
             }
             set
             {
-                MapComponent_Priorities.Instance.DwarfTherapistMode = value;
+                WorldObject_Priorities.Instance.DwarfTherapistMode = value;
             }
         }
 
@@ -78,21 +77,22 @@ namespace Fluffy_Tabs
         {
             get
             {
+                var localTime = GenLocalDate.HourOfDay( Find.VisibleMap );
                 if ( _focusedHours == null || _focusedHours.Count == 0 )
                 {
-                    if ( _tempFocusedHours == null || _tempFocusedHoursFor != GenDate.HourOfDay )
+                    if ( _tempFocusedHours == null || _tempFocusedHoursFor != localTime )
                     {
                         _tempFocusedHours = new List<int>();
-                        _tempFocusedHours.Add( GenDate.HourOfDay );
+                        _tempFocusedHours.Add( localTime );
                         if ( TempFocusFullDay )
                         {
                             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
                             {
-                                if ( hour != GenDate.HourOfDay )
+                                if ( hour != localTime )
                                     _tempFocusedHours.Add( hour );
                             }
                         }
-                        _tempFocusedHoursFor = GenDate.HourOfDay;
+                        _tempFocusedHoursFor = localTime;
                     }
                     return _tempFocusedHours;
                 }
@@ -136,11 +136,11 @@ namespace Fluffy_Tabs
         {
             get
             {
-                return MapComponent_Priorities.Instance.SchedulerMode;
+                return WorldObject_Priorities.Instance.SchedulerMode;
             }
             set
             {
-                MapComponent_Priorities.Instance.SchedulerMode = value;
+                WorldObject_Priorities.Instance.SchedulerMode = value;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Fluffy_Tabs
             set
             {
                 if ( Find.PlaySettings.useWorkPriorities != value )
-                    MapComponent_Priorities.NotifyAll_PrioritiesChanged();
+                    WorldObject_Priorities.NotifyAll_PrioritiesChanged();
                 Find.PlaySettings.useWorkPriorities = value;
             }
         }
@@ -402,7 +402,7 @@ namespace Fluffy_Tabs
                 }
 
                 // if this is currently the 'main' timeslot, and not the actual time, draw an eye
-                if ( hour == FocusedHours.FirstOrDefault() && hour != GenDate.HourOfDay )
+                if ( hour == FocusedHours.FirstOrDefault() && hour != GenLocalDate.HourOfDay( Find.VisibleMap ) )
                 {
                     Rect eyeRect = new Rect( hourRect.center.x - timeIndicatorSize * 1/2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1/6f, timeIndicatorSize, timeIndicatorSize );
                     GUI.DrawTexture( eyeRect, Resources.PinEye );
@@ -423,19 +423,9 @@ namespace Fluffy_Tabs
             Widgets.Label( labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter );
 
             // draw current time indicator
-            float curTimeX = GenDate.CurrentDayPercent * canvas.width;
+            float curTimeX = GenLocalDate.DayPercent( Find.VisibleMap ) * canvas.width;
             Rect curTimeRect = new Rect( canvas.xMin + curTimeX - timeIndicatorSize * 1/2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1/6f, timeIndicatorSize, timeIndicatorSize );
             GUI.DrawTexture( curTimeRect, Resources.PinClock );
-        }
-
-        public void Notify_NaturalPrioritiesChanged()
-        {
-            // reset list so it gets rebuild
-            _worktypesOrdered = null;
-            _workgiversOrdered = null;
-
-            // notify pawns that they should update
-            MapComponent_Priorities.NotifyAll_PrioritiesChanged();
         }
 
         public void SetFocusedHour( int hour, bool add )
@@ -503,7 +493,7 @@ namespace Fluffy_Tabs
         protected override void BuildPawnList()
         {
             _pawnListDirty.SetValue( this, false );
-            pawns = Find.MapPawns.FreeColonists.ToList();
+            pawns = Find.VisibleMap.mapPawns.FreeColonists.ToList();
 
             if ( !pawns.Any() )
                 return;

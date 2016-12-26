@@ -1,4 +1,3 @@
-using CommunityCoreLibrary;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -103,7 +102,7 @@ namespace Fluffy_Tabs
 
         public int GetPriority( WorkGiverDef workgiver )
         {
-            return GetPriority( workgiver, GenDate.HourOfDay );
+            return GetPriority( workgiver, GenLocalDate.HourOfDay( pawn.Map ) );
         }
 
         public int GetPriority( WorkGiverDef workgiver, int hour )
@@ -128,7 +127,7 @@ namespace Fluffy_Tabs
         {
             // get current hour if left default
             if ( hour < 0 )
-                hour = GenDate.HourOfDay;
+                hour = GenLocalDate.HourOfDay( pawn.Map );
 
             // get workgiver priorities
             var _priorities = worktype.workGiversByPriority.Select( wg => GetPriority( wg, hour ) );
@@ -213,7 +212,7 @@ namespace Fluffy_Tabs
             currentFavourite = null;
 
             // notify pawn that he might have to stop current job
-            if ( priority == 0 && hour == GenDate.HourOfDay )
+            if ( priority == 0 && hour == GenLocalDate.HourOfDay( pawn.Map ) )
                 pawn.mindState.Notify_WorkPriorityDisabled( workgiver.workType );
         }
 
