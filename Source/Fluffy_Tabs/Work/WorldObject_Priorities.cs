@@ -29,7 +29,6 @@ namespace Fluffy_Tabs
         {
             get
             {
-                // return null if called too damn early
                 if ( _instance == null )
                     _instance = UtilityWorldObjectManager.GetUtilityWorldObject<WorldObject_Priorities>();
 
@@ -70,6 +69,8 @@ namespace Fluffy_Tabs
 
         public override void ExposeData()
         {
+            base.ExposeData();
+
             // scribe per-game settings
             Scribe_Values.LookValue( ref _dwarfTherapistMode, "DwarfTherapistMode", false );
             Scribe_Values.LookValue( ref _24Hours, "TwentyFourHourClock", true );
