@@ -21,7 +21,6 @@ namespace Fluffy_Tabs
             {
                 // if cache is null, get instance from HugsLib
                 if ( _instance == null )
-                    // TODO: Get instance from HugsLib
                     _instance = UtilityWorldObjectManager.GetUtilityWorldObject<WorldObject_Favourites>();
 
                 return _instance;

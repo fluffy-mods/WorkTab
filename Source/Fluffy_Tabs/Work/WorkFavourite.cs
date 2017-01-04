@@ -1,3 +1,4 @@
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -31,7 +32,13 @@ namespace Fluffy_Tabs
             this._icon = ContentFinder<Texture2D>.Get( iconpath );
             this._iconpath = iconpath;
 
-            workgiverPriorities = pawn.Priorities();
+            // create new tracker (copies from vanilla, so doesn't include workgiver level priorities).
+            workgiverPriorities = new PawnPrioritiesTracker( pawn );
+
+            // populate all workgiver priorities
+            for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
+                foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
+                    workgiverPriorities.SetPriority( workgiver, pawn.Priorities().GetPriority( workgiver, hour ), hour );
         }
 
         #endregion Constructors
