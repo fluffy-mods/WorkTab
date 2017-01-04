@@ -1,10 +1,6 @@
-using RimWorld;
-using System;
+using HugsLib.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using HugsLib.Utils;
-using UnityEngine;
 using Verse;
 
 namespace Fluffy_Tabs
@@ -13,10 +9,13 @@ namespace Fluffy_Tabs
     {
         #region Fields
 
+        private static bool _24Hours = true;
+
+        private static bool _dwarfTherapistMode = false;
+
         // making everything static should solve our weird load issue, although it is cheating a bit.
         private static WorldObject_Priorities _instance;
-        private static bool _24Hours = true;
-        private static bool _dwarfTherapistMode = false;
+
         private static bool _schedulerMode = false;
         private static Dictionary<Pawn, PawnPrioritiesTracker> _trackers = new Dictionary<Pawn, PawnPrioritiesTracker>();
         private static List<PawnPrioritiesTracker> _trackersScribeHelper;
@@ -91,7 +90,7 @@ namespace Fluffy_Tabs
                 _trackers = _trackersScribeHelper.Where( t => t.pawn != null ).ToDictionary( k => k.pawn, v => v );
             }
         }
-        
+
         public void Notify_FavouriteDeleted( WorkFavourite favourite )
         {
             foreach ( var tracker in _trackers )

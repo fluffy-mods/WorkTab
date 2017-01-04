@@ -2,12 +2,11 @@
 // Detours_WorkSettings.cs
 // 2016-12-21
 
+using HugsLib.Source.Detour;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HugsLib.Source.Detour;
-using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Fluffy_Tabs
@@ -19,15 +18,19 @@ namespace Fluffy_Tabs
         public static FieldInfo pawnField = typeof( Pawn_WorkSettings ).GetField( "pawn",
                                                                                   BindingFlags.Instance |
                                                                                   BindingFlags.NonPublic );
+
         public static FieldInfo prioritiesField = typeof( Pawn_WorkSettings ).GetField( "priorities",
                                                                                         BindingFlags.Instance |
                                                                                         BindingFlags.NonPublic );
+
         public static FieldInfo workgiversDirtyField = typeof( Pawn_WorkSettings ).GetField( "workGiversDirty",
                                                                                              BindingFlags.Instance |
                                                                                              BindingFlags.NonPublic );
+
         public static FieldInfo workgiversEmergencyField =
             typeof( Pawn_WorkSettings ).GetField( "workGiversInOrderEmerg",
                                                   BindingFlags.Instance | BindingFlags.NonPublic );
+
         public static FieldInfo workgiversNormalField = typeof( Pawn_WorkSettings ).GetField(
                                                                                              "workGiversInOrderNormal",
                                                                                              BindingFlags.Instance |
@@ -43,7 +46,7 @@ namespace Fluffy_Tabs
         /// </summary>
         /// <param name="w"></param>
         /// <returns></returns>
-        [DetourMethod( typeof(Pawn_WorkSettings), "GetPriority")]
+        [DetourMethod( typeof( Pawn_WorkSettings ), "GetPriority" )]
         public int _GetPriority( WorkTypeDef w )
         {
             var pawn = pawnField.GetValue( this ) as Pawn;
@@ -52,7 +55,7 @@ namespace Fluffy_Tabs
         }
 
         /// <summary>
-        /// This detours the vanilla SetPriority method to the Work Tabs priorities, thus ensuring that rogue vanilla or modded code is applied to this mod's priorities. 
+        /// This detours the vanilla SetPriority method to the Work Tabs priorities, thus ensuring that rogue vanilla or modded code is applied to this mod's priorities.
         /// </summary>
         /// <param name="w"></param>
         /// <param name="priority"></param>
@@ -96,7 +99,7 @@ namespace Fluffy_Tabs
         /// <summary>
         /// This method deviates from vanilla in that it also allows sorting pawns by player set workGIVER priorities
         /// </summary>
-        [DetourMethod(typeof(Pawn_WorkSettings), "CacheWorkGiversInOrder")]
+        [DetourMethod( typeof( Pawn_WorkSettings ), "CacheWorkGiversInOrder" )]
         public void _CacheWorkGiversInOrder()
         {
             IEnumerable<WorkGiver> allWorkgivers =
@@ -104,67 +107,33 @@ namespace Fluffy_Tabs
             var normalWorkgivers = new List<WorkGiver>();
             var emergencyWorkgivers = new List<WorkGiver>();
             var pawn = pawnField.GetValue( this ) as Pawn;
+            
+            // sort by player set workgiver priorities => worktype order => workgiver order
+            allWorkgivers = allWorkgivers.Where( wg => pawn.Priorities().GetPriority( wg.def ) > 0 );
 
-            // order workgivers
-            if ( WorldObject_Priorities.Instance.DwarfTherapistMode )
+            if ( allWorkgivers.Any() )
             {
-                // sort by player set workgiver priorities => worktype order => workgiver order
-                allWorkgivers = allWorkgivers.Where( wg => pawn.Priorities().GetPriority( wg.def ) > 0 );
+                allWorkgivers = allWorkgivers
+                    .OrderBy( wg => pawn.Priorities().GetPriority( wg.def ) )
+                    .ThenByDescending( wg => wg.def.workType.naturalPriority )
+                    .ThenByDescending( wg => wg.def.priorityInType ).ToList();
 
-                if ( allWorkgivers.Any() )
-                {
-                    allWorkgivers = allWorkgivers
-                        .OrderBy( wg => pawn.Priorities().GetPriority( wg.def ) )
-                        .ThenByDescending( wg => wg.def.workType.naturalPriority )
-                        .ThenByDescending( wg => wg.def.priorityInType ).ToList();
+                // lowest priority non-emergency job
+                int maxEmergPrio =
+                    allWorkgivers.Where( wg => !wg.def.emergency )
+                                 .Min( wg => pawn.Priorities().GetPriority( wg.def ) );
 
-                    // lowest priority non-emergency job
-                    int maxEmergPrio =
-                        allWorkgivers.Where( wg => !wg.def.emergency )
-                                     .Min( wg => pawn.Priorities().GetPriority( wg.def ) );
-
-                    // create lists of workgivers
-                    normalWorkgivers =
-                        allWorkgivers.Where(
-                                            wg =>
-                                            !wg.def.emergency || pawn.Priorities().GetPriority( wg.def ) > maxEmergPrio )
-                                     .ToList();
-                    emergencyWorkgivers =
-                        allWorkgivers.Where(
-                                            wg =>
-                                            wg.def.emergency && pawn.Priorities().GetPriority( wg.def ) <= maxEmergPrio )
-                                     .ToList();
-                }
-            }
-            else
-            {
-                // sort by player set worktype priorities => worktype order => workgiver order
-                allWorkgivers = allWorkgivers.Where( wg => pawn.Priorities().GetPriority( wg.def.workType ) > 0 );
-
-                if ( allWorkgivers.Any() )
-                {
-                    allWorkgivers = allWorkgivers
-                        .OrderBy( wg => pawn.Priorities().GetPriority( wg.def.workType ) )
-                        .ThenByDescending( wg => wg.def.workType.naturalPriority )
-                        .ThenByDescending( wg => wg.def.priorityInType ).ToList();
-
-                    // lowest priority non-emergency job
-                    int maxEmergPrio =
-                        allWorkgivers.Where( wg => !wg.def.emergency )
-                                     .Min( wg => pawn.Priorities().GetPriority( wg.def.workType ) );
-
-                    // create lists of workgivers
-                    normalWorkgivers =
-                        allWorkgivers.Where(
-                                            wg =>
-                                            !wg.def.emergency ||
-                                            pawn.Priorities().GetPriority( wg.def.workType ) > maxEmergPrio ).ToList();
-                    emergencyWorkgivers =
-                        allWorkgivers.Where(
-                                            wg =>
-                                            wg.def.emergency &&
-                                            pawn.Priorities().GetPriority( wg.def.workType ) <= maxEmergPrio ).ToList();
-                }
+                // create lists of workgivers
+                normalWorkgivers =
+                    allWorkgivers.Where(
+                                        wg =>
+                                        !wg.def.emergency || pawn.Priorities().GetPriority( wg.def ) > maxEmergPrio )
+                                 .ToList();
+                emergencyWorkgivers =
+                    allWorkgivers.Where(
+                                        wg =>
+                                        wg.def.emergency && pawn.Priorities().GetPriority( wg.def ) <= maxEmergPrio )
+                                 .ToList();
             }
 
             // update cached lists of workgivers

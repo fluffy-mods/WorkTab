@@ -1,11 +1,9 @@
 using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 using Verse.Sound;
 
 namespace Fluffy_Tabs
@@ -217,7 +215,7 @@ namespace Fluffy_Tabs
             WorkFavourite favourite;
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             string tip = "";
-            
+
             // is there a preset assigned?
             favourite = pawn.Priorities().currentFavourite;
             if ( favourite != null )
@@ -228,7 +226,8 @@ namespace Fluffy_Tabs
 
                 // option to delete current favourite
                 options.Add( new FloatMenuOption( "FluffyTabs.DeleteFavouriteX".Translate( favourite.label ),
-                                                  delegate { WorldObject_Favourites.Get.Remove( favourite ); } ) );
+                                                  delegate
+                                                  { WorldObject_Favourites.Get.Remove( favourite ); } ) );
             }
 
             // no favourite, add option to create one
@@ -275,17 +274,21 @@ namespace Fluffy_Tabs
                     case MentalStateCategory.Aggro:
                         stateColor = Color.red;
                         break;
+
                     case MentalStateCategory.Sad:
                         stateColor = Color.cyan;
                         break;
+
                     case MentalStateCategory.Panic:
                         stateColor = new Color( .4f, .008f, .235f );
                         break;
+
                     case MentalStateCategory.Misc:
                     case MentalStateCategory.Indulgent:
                     case MentalStateCategory.Undefined:
                         stateColor = new Color( 207 / 256f, 83 / 256f, 0f );
                         break;
+
                     default:
                         stateColor = Color.white;
                         break;
@@ -295,7 +298,6 @@ namespace Fluffy_Tabs
                 GUI.color = Color.white;
                 return;
             }
-
 
             // current level
             var mood = pawn.needs.mood.CurLevelPercentage;
@@ -686,6 +688,11 @@ namespace Fluffy_Tabs
             }
         }
 
+        public static PawnPrioritiesTracker Priorities( this Pawn pawn )
+        {
+            return WorldObject_Priorities.Instance?.WorkgiverTracker( pawn );
+        }
+
         public static TipSignal TipForPawnWorker( Pawn pawn, WorkGiverDef workgiver )
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -739,11 +746,6 @@ namespace Fluffy_Tabs
             return stringBuilder.ToString();
         }
 
-        public static PawnPrioritiesTracker Priorities( this Pawn pawn )
-        {
-            return WorldObject_Priorities.Instance?.WorkgiverTracker( pawn );
-        }
-        
         private static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
         {
             foreach ( var capacity in workgiver.requiredCapacities )
@@ -825,6 +827,6 @@ namespace Fluffy_Tabs
             GUI.color = Color.white;
         }
 
-#endregion Methods
+        #endregion Methods
     }
 }

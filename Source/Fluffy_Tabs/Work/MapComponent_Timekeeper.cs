@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
 namespace Fluffy_Tabs
 {
     public class MapComponent_Timekeeper : MapComponent
     {
+        #region Fields
 
         private int _hourOfDay;
-        public MapComponent_Timekeeper( Map map ) : base( map ) {}
+
+        #endregion Fields
+
+        #region Constructors
+
+        public MapComponent_Timekeeper( Map map ) : base( map )
+        {
+        }
+
+        #endregion Constructors
 
         #region Overrides of MapComponent
 
@@ -29,6 +35,6 @@ namespace Fluffy_Tabs
                 pawn.workSettings.Notify_UseWorkPrioritiesChanged();
         }
 
-        #endregion
+        #endregion Overrides of MapComponent
     }
 }

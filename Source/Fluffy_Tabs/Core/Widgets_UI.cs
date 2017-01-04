@@ -1,8 +1,6 @@
-using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -19,23 +17,6 @@ namespace Fluffy_Tabs
     public static partial class Widgets
     {
         #region Methods
-
-        public static void DrawBackground( Rect canvas, Color color, float opacity = -1f )
-        {
-            if ( opacity >= 0f && opacity <= 1f )
-                color.a = opacity;
-
-            var oldColor = GUI.color;
-            GUI.color = color;
-            GUI.DrawTexture( canvas, Resources.Solid );
-            GUI.color = oldColor;
-        }
-
-        // switch width/height, keep lower left corner the same
-        public static Rect Flip( this Rect rect )
-        {
-            return new Rect( rect.xMax, rect.yMax - rect.width, rect.height, rect.width );
-        }
 
         public static bool ButtonImage( ref Vector2 curPos, Direction direction, Texture2D texture, string tooltip, float iconSize = Settings.IconSize, float margin = Settings.Margin )
         {
@@ -65,6 +46,23 @@ namespace Fluffy_Tabs
         {
             TooltipHandler.TipRegion( canvas, tooltip );
             return Verse.Widgets.ButtonImage( canvas, texture );
+        }
+
+        public static void DrawBackground( Rect canvas, Color color, float opacity = -1f )
+        {
+            if ( opacity >= 0f && opacity <= 1f )
+                color.a = opacity;
+
+            var oldColor = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture( canvas, Resources.Solid );
+            GUI.color = oldColor;
+        }
+
+        // switch width/height, keep lower left corner the same
+        public static Rect Flip( this Rect rect )
+        {
+            return new Rect( rect.xMax, rect.yMax - rect.width, rect.height, rect.width );
         }
 
         public static void Label( Rect canvas, string text, Color color, string tip = "" )

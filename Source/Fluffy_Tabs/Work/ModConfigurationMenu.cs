@@ -12,7 +12,7 @@
 //    public class ModConfigurationMenu_Work : ModConfigurationMenu
 //    {
 //        LabeledInput_IntClamped max_priority = new LabeledInput_IntClamped( Settings.MaxPriority, "FluffyTabs.MaxPriority".Translate(), new IntRange(4,9), "FluffyTabs.MaxPriorityTip".Translate() );
-        
+
 //        public override float DoWindowContents( Rect rect )
 //        {
 //            // maximum priority
@@ -40,7 +40,7 @@
 //        {
 //            Scribe_Values.LookValue( ref Settings.ColorCodedPassions, "ColorCodedPassions", true );
 //            Scribe_Values.LookValue( ref Settings.MaxPriority, "MaxPriority", 9 );
-            
+
 //            // 24 hour mode is saved in MapComp_Priorities.
 //        }
 //    }

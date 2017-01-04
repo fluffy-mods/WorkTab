@@ -1,11 +1,5 @@
-using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using HugsLib.Utils;
-using RimWorld.Planet;
-using UnityEngine;
+using System.Collections.Generic;
 using Verse;
 
 namespace Fluffy_Tabs
@@ -53,12 +47,12 @@ namespace Fluffy_Tabs
         }
 
         #endregion Methods
-        
+
         public void Remove( WorkFavourite favourite )
         {
             // remove from list
             _favourites.Remove( favourite );
-            
+
             // remove from assigned pawns
             WorldObject_Priorities.Instance.Notify_FavouriteDeleted( favourite );
         }

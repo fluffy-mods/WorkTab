@@ -2,8 +2,6 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 using Verse;
 
 namespace Fluffy_Tabs
@@ -27,7 +25,7 @@ namespace Fluffy_Tabs
         /// For scribe only!
         /// </summary>
         public PawnPrioritiesTracker() { }
-        
+
         public PawnPrioritiesTracker( Pawn pawn )
         {
             this.pawn = pawn;
@@ -43,7 +41,6 @@ namespace Fluffy_Tabs
             // loop over hours
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
             {
-
                 // create map for this hour
                 priorities.Add( new DefMap<WorkGiverDef, int>() );
 
@@ -135,7 +132,7 @@ namespace Fluffy_Tabs
             // if any priority is not 0, select highest (lowest) priority
             if ( _priorities?.Count() > 0 && _priorities.Any( prio => prio != 0 ) )
                 return _priorities.Where( prio => prio > 0 ).Min();
-            else 
+            else
                 return 0;
         }
 
@@ -193,7 +190,7 @@ namespace Fluffy_Tabs
         {
             return "FluffyTabs.TimeDependentWorktypeTip".Translate();
         }
-                
+
         public void SetPriority( WorkGiverDef workgiver, int priority, int hour )
         {
             if ( pawn.story.WorkTypeIsDisabled( workgiver.workType ) )

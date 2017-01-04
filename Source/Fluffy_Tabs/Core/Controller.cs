@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HugsLib;
+﻿using HugsLib;
 using Verse;
 
 namespace Fluffy_Tabs
@@ -15,9 +11,9 @@ namespace Fluffy_Tabs
         {
             base.MapLoaded( map );
 
-            // make sure each loaded map has our timekeeper component 
+            // make sure each loaded map has our timekeeper component
             // this will inject the component into existing save games.
-            if (map.GetComponent<MapComponent_Timekeeper>() == null)
+            if ( map.GetComponent<MapComponent_Timekeeper>() == null )
                 map.components.Add( new MapComponent_Timekeeper( map ) );
         }
     }

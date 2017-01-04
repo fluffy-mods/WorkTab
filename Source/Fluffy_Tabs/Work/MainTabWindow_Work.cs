@@ -1,11 +1,9 @@
 using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using UnityEngine;
 using Verse;
-using System.Reflection;
 
 namespace Fluffy_Tabs
 {
@@ -266,7 +264,7 @@ namespace Fluffy_Tabs
 
             // draw column headers
             DrawColumnHeaders( headerRow );
-            
+
             // draw pawn rows
             DrawRows( contentArea );
 
@@ -285,7 +283,7 @@ namespace Fluffy_Tabs
         /// <param name="outRect"></param>
         protected new void DrawRows( Rect outRect )
         {
-            // have to use reflection to get to the private dirty field. 
+            // have to use reflection to get to the private dirty field.
             // we could directly call BuildPawnList in the SortBy method, but that would bypass Notify_PawnListChanged - and ignore changes in colonist count, etc.
             if ( (bool)_pawnListDirty.GetValue( this ) )
                 BuildPawnList();
@@ -326,12 +324,12 @@ namespace Fluffy_Tabs
         {
             // split the available area into rects. bottom 2/3's are used for 'buttons', with text for times.
             float hourWidth = canvas.width / GenDate.HoursPerDay;
-            float barheight = canvas.height * 2/3f;
-            float timeIndicatorSize = canvas.height * 2/3f;
+            float barheight = canvas.height * 2 / 3f;
+            float timeIndicatorSize = canvas.height * 2 / 3f;
             Rect hourRect = new Rect( canvas.xMin, canvas.yMax - barheight, hourWidth, barheight );
 
             // draw buttons
-            Rect buttonRect = new Rect( canvas.xMax + Settings.Margin * 2 + ( FavouritesColumnWidth - timeIndicatorSize ) * 1/2f, canvas.yMin + ( canvas.height - timeIndicatorSize ) * 2/3f, timeIndicatorSize, timeIndicatorSize );
+            Rect buttonRect = new Rect( canvas.xMax + Settings.Margin * 2 + ( FavouritesColumnWidth - timeIndicatorSize ) * 1 / 2f, canvas.yMin + ( canvas.height - timeIndicatorSize ) * 2 / 3f, timeIndicatorSize, timeIndicatorSize );
 
             // something selected, click icon to go to full day
             if ( _focusedHours != null &&
@@ -358,7 +356,7 @@ namespace Fluffy_Tabs
 
             // draw first tick
             GUI.color = Color.grey;
-            Verse.Widgets.DrawLineVertical( hourRect.xMin, hourRect.yMin + hourRect.height * 1/2f, hourRect.height * 1/2f );
+            Verse.Widgets.DrawLineVertical( hourRect.xMin, hourRect.yMin + hourRect.height * 1 / 2f, hourRect.height * 1 / 2f );
 
             // draw horizontal line ( y - 1 because canvas gets clipped on bottom )
             Verse.Widgets.DrawLineHorizontal( canvas.xMin, canvas.yMax - 1, canvas.width );
@@ -372,19 +370,19 @@ namespace Fluffy_Tabs
             {
                 // print major tick
                 GUI.color = Color.grey;
-                Verse.Widgets.DrawLineVertical( hourRect.xMax, hourRect.yMin + hourRect.height * 1/2f, hourRect.height * 1/2f );
+                Verse.Widgets.DrawLineVertical( hourRect.xMax, hourRect.yMin + hourRect.height * 1 / 2f, hourRect.height * 1 / 2f );
 
                 // print minor ticks
-                Verse.Widgets.DrawLineVertical( hourRect.xMin + hourRect.width * 1/4f, hourRect.yMin + hourRect.height * 3/4f, hourRect.height * 1/4f );
-                Verse.Widgets.DrawLineVertical( hourRect.xMin + hourRect.width * 2/4f, hourRect.yMin + hourRect.height * 3/4f, hourRect.height * 1/4f );
-                Verse.Widgets.DrawLineVertical( hourRect.xMin + hourRect.width * 3/4f, hourRect.yMin + hourRect.height * 3/4f, hourRect.height * 1/4f );
+                Verse.Widgets.DrawLineVertical( hourRect.xMin + hourRect.width * 1 / 4f, hourRect.yMin + hourRect.height * 3 / 4f, hourRect.height * 1 / 4f );
+                Verse.Widgets.DrawLineVertical( hourRect.xMin + hourRect.width * 2 / 4f, hourRect.yMin + hourRect.height * 3 / 4f, hourRect.height * 1 / 4f );
+                Verse.Widgets.DrawLineVertical( hourRect.xMin + hourRect.width * 3 / 4f, hourRect.yMin + hourRect.height * 3 / 4f, hourRect.height * 1 / 4f );
                 GUI.color = Color.white;
 
                 // create and draw labelrect - only for every other tick if we're not in dwarf therapist mode
                 if ( DwarfTherapistMode || hour % 2 == 0 )
                 {
                     label = hour.FormatHour();
-                    labelRect = new Rect( 0f, canvas.yMin + canvas.height * 1/3f, label.NoWrapWidth(), canvas.height * 2/3f );
+                    labelRect = new Rect( 0f, canvas.yMin + canvas.height * 1 / 3f, label.NoWrapWidth(), canvas.height * 2 / 3f );
                     labelRect.x = hourRect.xMin - labelRect.width / 2f;
                     Widgets.Label( labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter );
                 }
@@ -404,7 +402,7 @@ namespace Fluffy_Tabs
                 // if this is currently the 'main' timeslot, and not the actual time, draw an eye
                 if ( hour == FocusedHours.FirstOrDefault() && hour != GenLocalDate.HourOfDay( Find.VisibleMap ) )
                 {
-                    Rect eyeRect = new Rect( hourRect.center.x - timeIndicatorSize * 1/2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1/6f, timeIndicatorSize, timeIndicatorSize );
+                    Rect eyeRect = new Rect( hourRect.center.x - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize );
                     GUI.DrawTexture( eyeRect, Resources.PinEye );
                 }
 
@@ -418,13 +416,13 @@ namespace Fluffy_Tabs
 
             // draw final label
             label = 0.FormatHour();
-            labelRect = new Rect( 0f, canvas.yMin + canvas.height * 1/3f, label.NoWrapWidth(), canvas.height * 2/3f );
+            labelRect = new Rect( 0f, canvas.yMin + canvas.height * 1 / 3f, label.NoWrapWidth(), canvas.height * 2 / 3f );
             labelRect.x = hourRect.xMin - labelRect.width / 2f;
             Widgets.Label( labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter );
 
             // draw current time indicator
             float curTimeX = GenLocalDate.DayPercent( Find.VisibleMap ) * canvas.width;
-            Rect curTimeRect = new Rect( canvas.xMin + curTimeX - timeIndicatorSize * 1/2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1/6f, timeIndicatorSize, timeIndicatorSize );
+            Rect curTimeRect = new Rect( canvas.xMin + curTimeX - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize );
             GUI.DrawTexture( curTimeRect, Resources.PinClock );
         }
 
@@ -462,7 +460,7 @@ namespace Fluffy_Tabs
         public void SortBy( SortMode mode, WorkTypeDef worktype )
         {
 #if DEBUG
-            Log.Message( "Work Tab :: Changing order :: " + _sortMode + " -> " +  mode  );
+            Log.Message( "Work Tab :: Changing order :: " + _sortMode + " -> " + mode );
 #endif
             if ( _sortMode != mode )
             {
@@ -534,7 +532,7 @@ namespace Fluffy_Tabs
             // set up rects
             Rect row = new Rect( NameColumnWidth, canvas.yMin, DesiredWorkAreaWidth + StatusColumnWidth + FavouritesColumnWidth, canvas.height );
             Rect cell = new Rect( row.xMin, row.yMin, WorkColumnWidth, row.height );
-            
+
             // draw status cells
             Widgets.DrawStatusCell( cell, BoxSize * .8f, pawn );
             cell.x += WorkColumnWidth;

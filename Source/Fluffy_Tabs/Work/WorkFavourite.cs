@@ -1,8 +1,3 @@
-using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -13,7 +8,7 @@ namespace Fluffy_Tabs
         #region Fields
 
         public static int count = 0;
-        
+
         public int ID;
         public string label;
         public PawnPrioritiesTracker workgiverPriorities = new PawnPrioritiesTracker();

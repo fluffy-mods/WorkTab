@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-
-using RimWorld;
-using Verse;
 using UnityEngine;
+using Verse;
 
 namespace Fluffy_Tabs
 {
     public class TextureChooser
     {
-        readonly Texture2D[] options;
-        int curIndex;
+        private readonly Texture2D[] options;
+        private int curIndex;
 
         public Texture2D Choice => options[curIndex];
 
@@ -51,7 +46,7 @@ namespace Fluffy_Tabs
                 Verse.Widgets.DrawHighlightIfMouseover( canvas );
 
             // scrowheel selection
-            if (Mouse.IsOver( canvas) && Event.current.type == EventType.ScrollWheel )
+            if ( Mouse.IsOver( canvas ) && Event.current.type == EventType.ScrollWheel )
             {
                 if ( Event.current.delta.y > 0f )
                     Next();
@@ -61,12 +56,12 @@ namespace Fluffy_Tabs
             }
         }
 
-        void Next()
+        private void Next()
         {
             curIndex = ( curIndex + 1 ) % options.Count();
         }
 
-        void Previous()
+        private void Previous()
         {
             curIndex--;
             if ( curIndex < 0 )

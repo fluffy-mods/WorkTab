@@ -1,8 +1,5 @@
 using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -56,7 +53,7 @@ namespace Fluffy_Tabs
                 string label;
                 string description;
 
-                if ( workgiver.workType.workGiversByPriority.Count < 2 )
+                if ( workgiver.workType.workGiversByPriority.Count == 1 )
                 // only one workgiver in type, use type label & description.
                 {
                     label = workgiver.workType.labelShort.CapitalizeFirst();
