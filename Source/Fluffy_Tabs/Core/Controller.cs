@@ -1,4 +1,5 @@
 ﻿using HugsLib;
+using HugsLib.Utils;
 using Verse;
 
 namespace Fluffy_Tabs

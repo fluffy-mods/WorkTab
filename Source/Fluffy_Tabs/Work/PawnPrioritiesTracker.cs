@@ -2,6 +2,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace Fluffy_Tabs
@@ -48,20 +49,13 @@ namespace Fluffy_Tabs
                 foreach ( WorkTypeDef worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )
                 {
                     int priority = vanillaPriorities[worktype];
-
-                    // loop over workgivers in type
-                    foreach ( WorkGiverDef workgiver in worktype.workGiversByPriority )
-                    {
-                        priorities[hour][workgiver] = priority;
-                    }
+                    SetPriority( worktype, priority, hour );
                 }
             }
 
             // set partial scheduled cache dirty
             foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
-            {
                 _cacheDirty[workgiver] = true;
-            }
         }
 
         #endregion Constructors
@@ -191,40 +185,65 @@ namespace Fluffy_Tabs
             return "FluffyTabs.TimeDependentWorktypeTip".Translate();
         }
 
+        /// <summary>
+        /// Set priority for workgiver and hour of day.
+        /// 
+        /// All the various overloads eventually call this method to set priorities on a workgiver level.
+        /// </summary>
+        /// <param name="workgiver"></param>
+        /// <param name="priority"></param>
+        /// <param name="hour"></param>
         public void SetPriority( WorkGiverDef workgiver, int priority, int hour )
         {
-            if ( pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
-                return;
-
+            // check if pawn is allowed to do this job
+            if ( priority > 0 && pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
+                Log.Error( $"tried to enable work {workgiver.workType.defName} for {pawn.NameStringShort}, who is incapable of said work." );
+            
             // change priority
             priorities[hour][workgiver] = priority;
-
-            // notify pawn to recache it's work order
-            pawn.workSettings.Notify_UseWorkPrioritiesChanged();
-
+            
             // mark our partially scheduled cache dirty.
             _cacheDirty[workgiver] = true;
 
             // clear current favourite
             currentFavourite = null;
 
+            // notify pawn to recache it's work order
+            pawn.workSettings.Notify_UseWorkPrioritiesChanged();
+
             // notify pawn that he might have to stop current job
-            if ( priority == 0 && hour == GenLocalDate.HourOfDay( pawn.Map ) )
+            if ( pawn.Spawned && priority == 0 && hour == GenLocalDate.HourOfDay( pawn.Map ) )
                 pawn.mindState.Notify_WorkPriorityDisabled( workgiver.workType );
         }
 
+        /// <summary>
+        ///  Set priority for all workgivers in worktype for hour of day.
+        /// </summary>
+        /// <param name="worktype"></param>
+        /// <param name="priority"></param>
+        /// <param name="hour"></param>
         public void SetPriority( WorkTypeDef worktype, int priority, int hour )
         {
             foreach ( var workgiver in worktype.workGiversByPriority )
                 SetPriority( workgiver, priority, hour );
         }
 
+        /// <summary>
+        /// Set priority for workgiver for all hours of day.
+        /// </summary>
+        /// <param name="workgiver"></param>
+        /// <param name="priority"></param>
         public void SetPriority( WorkGiverDef workgiver, int priority )
         {
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
                 SetPriority( workgiver, priority, hour );
         }
-
+        
+        /// <summary>
+        /// Set priority of all workgivers in worktype for all hours of the day.
+        /// </summary>
+        /// <param name="worktype"></param>
+        /// <param name="priority"></param>
         public void SetPriority( WorkTypeDef worktype, int priority )
         {
             // propagate to vanilla
@@ -234,12 +253,24 @@ namespace Fluffy_Tabs
                 SetPriority( workgiver, priority );
         }
 
+        /// <summary>
+        /// Set priority of workgiver for multiple hours of day.
+        /// </summary>
+        /// <param name="workgiver"></param>
+        /// <param name="priority"></param>
+        /// <param name="hours"></param>
         public void SetPriority( WorkGiverDef workgiver, int priority, List<int> hours )
         {
             foreach ( int hour in hours )
                 SetPriority( workgiver, priority, hour );
         }
 
+        /// <summary>
+        /// Set priority of all workgivers in worktype for multiple hours of day.
+        /// </summary>
+        /// <param name="worktype"></param>
+        /// <param name="priority"></param>
+        /// <param name="hours"></param>
         public void SetPriority( WorkTypeDef worktype, int priority, List<int> hours )
         {
             foreach ( var workgiver in worktype.workGiversByPriority )
