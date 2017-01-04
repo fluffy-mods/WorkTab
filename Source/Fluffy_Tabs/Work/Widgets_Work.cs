@@ -388,12 +388,18 @@ namespace Fluffy_Tabs
                 {
                     if ( ( Event.current.type == EventType.MouseDown && Event.current.button == 0 ) || ( Event.current.type == EventType.ScrollWheel && Event.current.delta.y < 0f ) )
                     {
-                        pawn.IncrementPriority( workgiver, false, scheduler, hours );
+                        if (Event.current.shift)
+                            pawn.IncrementPriority( workgiver.workType, false, scheduler, hours);
+                        else
+                            pawn.IncrementPriority( workgiver, false, scheduler, hours );
                         Event.current.Use();
                     }
                     if ( ( Event.current.type == EventType.MouseDown && Event.current.button == 1 ) || ( Event.current.type == EventType.ScrollWheel && Event.current.delta.y > 0f ) )
                     {
-                        pawn.DecrementPriority( workgiver, false, scheduler, hours );
+                        if (Event.current.shift)
+                            pawn.DecrementPriority( workgiver.workType, false, scheduler, hours );
+                        else 
+                            pawn.DecrementPriority( workgiver, false, scheduler, hours );
                         Event.current.Use();
                     }
                 }
