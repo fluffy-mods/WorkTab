@@ -291,7 +291,7 @@ namespace Fluffy_Tabs
                 // stop condition
                 if ( curpriority != priority && start >= 0 )
                 {
-                    tip += start.FormatHour() + " - " + 0.FormatHour();
+                    tip += start.FormatHour() + " - " + hour.FormatHour();
                     if ( Find.PlaySettings.useWorkPriorities )
                         tip += " (" + priority + ")";
                     tip += "\n";
