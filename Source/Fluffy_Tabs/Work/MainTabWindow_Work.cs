@@ -394,10 +394,17 @@ namespace Fluffy_Tabs
                 if ( Mouse.IsOver( hourRect ) )
                 {
                     if ( Input.GetMouseButton( 0 ) )
-                        SetFocusedHour( hour, true );
+                        SetFocusedHour( hour, true, Event.current.shift );
+                        
                     if ( Input.GetMouseButton( 1 ) )
                         SetFocusedHour( hour, false );
                 }
+
+                // handle tooltip
+                var currentlySelectedString = FocusedHours.Contains( hour )
+                                                  ? "FluffyTabs.Selected".Translate()
+                                                  : "FluffyTabs.NotSelected".Translate();
+                TooltipHandler.TipRegion( hourRect, "FluffyTabs.SchedulerHourTip".Translate( hour.FormatHour(), ( ( hour + 1 % GenDate.HoursPerDay).FormatHour() ), currentlySelectedString ) );
 
                 // if this is currently the 'main' timeslot, and not the actual time, draw an eye
                 if ( hour == FocusedHours.FirstOrDefault() && hour != GenLocalDate.HourOfDay( Find.VisibleMap ) )
@@ -426,11 +433,15 @@ namespace Fluffy_Tabs
             GUI.DrawTexture( curTimeRect, Resources.PinClock );
         }
 
-        public void SetFocusedHour( int hour, bool add )
+        public void SetFocusedHour( int hour, bool add, bool replace = false )
         {
             // copy from temp ( whole day ) if not exists
             if ( _focusedHours == null || _focusedHours.Count == 0 )
                 _focusedHours = new List<int>( _tempFocusedHours );
+
+            // if replacing, clear out current focus first
+            if ( replace )
+                _focusedHours.Clear();
 
             // adding
             if ( add )
