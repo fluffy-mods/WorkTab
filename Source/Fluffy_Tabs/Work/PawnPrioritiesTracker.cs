@@ -52,10 +52,6 @@ namespace Fluffy_Tabs
                     SetPriority( worktype, priority, hour );
                 }
             }
-
-            // set partial scheduled cache dirty
-            foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
-                _cacheDirty[workgiver] = true;
         }
 
         #endregion Constructors
@@ -65,13 +61,9 @@ namespace Fluffy_Tabs
         public void AssignFavourite( WorkFavourite favourite )
         {
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
-            {
                 foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
-                {
                     if ( !pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
-                        priorities[hour][workgiver] = favourite.workgiverPriorities.priorities[hour][workgiver];
-                }
-            }
+                        SetPriority( workgiver, hour, favourite.workgiverPriorities.priorities[hour][workgiver] );
             currentFavourite = favourite;
         }
 
@@ -83,12 +75,8 @@ namespace Fluffy_Tabs
 
             // clear tip cache so it gets rebuild after load
             if ( Scribe.mode == LoadSaveMode.PostLoadInit )
-            {
                 foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
-                {
                     _cacheDirty[workgiver] = true;
-                }
-            }
         }
 
         public int GetPriority( WorkGiverDef workgiver )
@@ -205,13 +193,14 @@ namespace Fluffy_Tabs
             // check if pawn is allowed to do this job
             if ( priority > 0 && pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
                 Log.Error( $"tried to enable work {workgiver.workType.defName} for {pawn.NameStringShort}, who is incapable of said work." );
-            
+
+            // mark our partially scheduled cache dirty if changed
+            if ( priority != priorities[hour][workgiver] )
+                _cacheDirty[workgiver] = true;
+
             // change priority
             priorities[hour][workgiver] = priority;
             
-            // mark our partially scheduled cache dirty.
-            _cacheDirty[workgiver] = true;
-
             // clear current favourite
             currentFavourite = null;
 
