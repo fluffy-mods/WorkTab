@@ -189,7 +189,7 @@ namespace Fluffy_Tabs
 
         public string TimeDependentTip( WorkTypeDef worktype )
         {
-            return "FluffyTabs.TimeDependentWorktypeTip".Translate();
+            return "FluffyTabs.XIsPartiallyScheduledForY".Translate( pawn.NameStringShort, worktype.label );
         }
 
         /// <summary>

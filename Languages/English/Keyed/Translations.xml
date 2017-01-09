@@ -25,6 +25,7 @@
 	<FluffyTabs.CurrentMoodColumnTip>Current mood\n\nClick to sort by mood</FluffyTabs.CurrentMoodColumnTip>
 	<FluffyTabs.FavouriteButtonTip>Create/set favourites</FluffyTabs.FavouriteButtonTip>
 	<FluffyTabs.XIsScheduledForY>{0} is scheduled for {1} at:\n</FluffyTabs.XIsScheduledForY>
+	<FluffyTabs.XIsPartiallyScheduledForY>{0} is partially scheduled for {1}</FluffyTabs.XIsPartiallyScheduledForY>
 	<FluffyTabs.ClearTimeSelection>{0} click to select whole day</FluffyTabs.ClearTimeSelection>
 	<FluffyTabs.CreateFavouritesDialogTitle>Create favourite</FluffyTabs.CreateFavouritesDialogTitle>
 	<FluffyTabs.CreateFavouritesDialog>Create a new favourite from the current work settings of {0}.</FluffyTabs.CreateFavouritesDialog>
