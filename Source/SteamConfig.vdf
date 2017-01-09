@@ -40,10 +40,13 @@ All current and past versions of this mod can be downloaded from [url=https://gi
 This mod is licensed under the Creative Commons [url=http://creativecommons.org/licenses/by-nc-sa/4.0/]by-nc-sa 4.0 Int[/url] license.
 
 [h1]Version[/h1]
-This is version v0.16.1.2
+This is version v0.16.1.3
 
 "
-  "changenote" "Russian translation (#26)"
+  "changenote" "allow changing worktype priorities in dwarf therapist view
+fix favourite handling
+improve detection and logging of setting disabled priorities
+always apply workgiver level priorities."
   "publishedfileid" "725219116"
 }
 

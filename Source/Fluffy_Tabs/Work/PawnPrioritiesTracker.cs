@@ -117,8 +117,15 @@ namespace Fluffy_Tabs
         public int GetPriority( WorkTypeDef worktype, int hour = -1 )
         {
             // get current hour if left default
-            if ( hour < 0 )
+            // check if pawn has a registered Map we can use for the local time (99%) of cases.
+            if ( hour < 0 && pawn?.Map != null )
                 hour = GenLocalDate.HourOfDay( pawn.Map );
+            // if not, try use the visible map
+            if ( hour < 0 && Find.VisibleMap != null )
+                hour = GenLocalDate.HourOfDay( Find.VisibleMap );
+            // if that still didnt work (before game init), fall back to 0.
+            if ( hour < 0 )
+                hour = 0;
 
             // get workgiver priorities
             var _priorities = worktype.workGiversByPriority.Select( wg => GetPriority( wg, hour ) );
