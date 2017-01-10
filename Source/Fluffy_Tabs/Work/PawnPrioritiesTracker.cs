@@ -63,7 +63,7 @@ namespace Fluffy_Tabs
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
                 foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                     if ( !pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
-                        SetPriority( workgiver, hour, favourite.workgiverPriorities.priorities[hour][workgiver] );
+                        SetPriority( workgiver, favourite.workgiverPriorities.priorities[hour][workgiver], hour );
             currentFavourite = favourite;
         }
 

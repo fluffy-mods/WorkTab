@@ -28,7 +28,7 @@ With great power comes great responsibility. The default priorities of tasks wit
 Finally, there will never be an ‘autolabor’ mode where a mod sets priorities for you. Due to the way the AI is handled (e.g. pawns actively look for work, instead of there being a ‘bulletin board’ of jobs that need doing), it’s not feasible to get the complete list of work that needs doing that would be needed to make this a reality, without extreme overhead and loads of special excpetion coding.
 
 [h1]Contributors[/h1]
-Bronytamin Russian translation
+Bronytamin Russian translation Eric Swanson
 
 [h1]Think you found a bug?[/h1]
 Please read [url=http://steamcommunity.com/sharedfiles/filedetails/?id=725234314]this guide[/url] before creating a bug report, and then create a bug report [url=https://github.com/FluffierThanThou/WorkTab/issues]here[/url]
@@ -40,13 +40,14 @@ All current and past versions of this mod can be downloaded from [url=https://gi
 This mod is licensed under the Creative Commons [url=http://creativecommons.org/licenses/by-nc-sa/4.0/]by-nc-sa 4.0 Int[/url] license.
 
 [h1]Version[/h1]
-This is version v0.16.1.5
+This is version v0.16.1.6
 
 "
   "changenote" "Add shift-click to select only single hour in scheduler.
 Mark time dependent tooltip cache dirty on applying favourites
 Fix translation key for partially scheduled worktypes
-Check if pawn Map field is initialized before using it to determine local time"
+Check if pawn Map field is initialized before using it to determine local time
+Show the end hour in time-dependent tooltip (#27)"
   "publishedfileid" "725219116"
 }
 
