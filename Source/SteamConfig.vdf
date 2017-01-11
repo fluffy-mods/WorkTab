@@ -40,14 +40,10 @@ All current and past versions of this mod can be downloaded from [url=https://gi
 This mod is licensed under the Creative Commons [url=http://creativecommons.org/licenses/by-nc-sa/4.0/]by-nc-sa 4.0 Int[/url] license.
 
 [h1]Version[/h1]
-This is version v0.16.1.6
+This is version v0.16.1.7
 
 "
-  "changenote" "Add shift-click to select only single hour in scheduler.
-Mark time dependent tooltip cache dirty on applying favourites
-Fix translation key for partially scheduled worktypes
-Check if pawn Map field is initialized before using it to determine local time
-Show the end hour in time-dependent tooltip (#27)"
+  "changenote" "Fixed snafu with assigning hours to priorities"
   "publishedfileid" "725219116"
 }
 
