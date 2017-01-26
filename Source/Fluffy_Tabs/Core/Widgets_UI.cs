@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
@@ -107,20 +108,20 @@ namespace Fluffy_Tabs
             Text.Font = oldFont;
             Text.Anchor = oldAnchor;
         }
-
+        
         public static void LabelVertical( Rect canvas, string label, Color color, GameFont font, TextAnchor anchor, string tip = "" )
         {
             // rotate 270 degrees around lower right of canvas.
-            GUIUtility.RotateAroundPivot( 270, new Vector2( canvas.xMax, canvas.yMax ) );
-
+            GUIUtility.RotateAroundPivot( 270, new Vector2( canvas.xMax, canvas.yMax ) * Prefs.UIScale );
+            
             // flip canvas
             var rotatedCanvas = canvas.Flip();
-
+            
             // write label
             Label( rotatedCanvas, label, color, font, anchor, tip );
 
             // reset rotation
-            GUI.matrix = Matrix4x4.identity;
+            GUI.matrix = Matrix4x4.TRS( new Vector3( 0f, 0f, 0f ), Quaternion.identity, new Vector3( Prefs.UIScale, Prefs.UIScale, Prefs.UIScale ) );
         }
 
         public static float NoWrapWidth( this string text )

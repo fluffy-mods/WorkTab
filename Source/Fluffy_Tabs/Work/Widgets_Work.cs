@@ -357,7 +357,7 @@ namespace Fluffy_Tabs
             DrawBackground( cell, Settings.WorktypeColors[workgiver.workType], Settings.WorkgiverColorOpacity );
 
             // bug out if pawn can't do this type of work
-            if ( pawn.story == null || pawn.story.WorkTypeIsDisabled( workgiver.workType ) || !pawn.CapableOf( workgiver ) )
+            if ( !pawn.CapableOf( workgiver ))
                 return;
 
             // create and position rect
@@ -464,7 +464,7 @@ namespace Fluffy_Tabs
         public static void DrawWorkBoxFor( WorkTypeDef worktype, Rect cell, Pawn pawn, bool scheduler, List<int> hours )
         {
             // bug out if pawn can't do this type of work
-            if ( pawn.story == null || pawn.story.WorkTypeIsDisabled( worktype ) )
+            if ( !pawn.CapableOf( worktype ) )
                 return;
 
             // create and position rect
@@ -588,7 +588,7 @@ namespace Fluffy_Tabs
 
             foreach ( Pawn pawn in pawns )
             {
-                if ( !( pawn.story == null || pawn.story.WorkTypeIsDisabled( worktype ) ) )
+                if ( pawn.CapableOf( worktype ) )
                 {
                     int cur = pawn.Priorities().GetPriority( worktype, hours.First() );
                     if ( cur > 1 )
@@ -752,13 +752,24 @@ namespace Fluffy_Tabs
             return stringBuilder.ToString();
         }
 
-        private static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
+        public static bool CapableOf( this Pawn pawn, WorkTypeDef worktype )
         {
+            // check backstory
+            return ( !pawn.story?.WorkTypeIsDisabled( worktype ) ) ?? true;
+        }
+
+        public static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
+        {
+            // check backstory
+            if ( !pawn.CapableOf( workgiver.workType ) )
+                return false;
+
+            // check health
             foreach ( var capacity in workgiver.requiredCapacities )
-            {
                 if ( !pawn.health.capacities.CapableOf( capacity ) )
                     return false;
-            }
+            
+            // checks out!
             return true;
         }
 

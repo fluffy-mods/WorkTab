@@ -119,7 +119,7 @@ namespace Fluffy_Tabs
             var _priorities = worktype.workGiversByPriority.Select( wg => GetPriority( wg, hour ) );
 
             // if any priority is not 0, select highest (lowest) priority
-            if ( _priorities?.Count() > 0 && _priorities.Any( prio => prio != 0 ) )
+            if ( _priorities.Any() && _priorities.Any( prio => prio != 0 ) )
                 return _priorities.Where( prio => prio > 0 ).Min();
             else
                 return 0;
@@ -191,8 +191,13 @@ namespace Fluffy_Tabs
         public void SetPriority( WorkGiverDef workgiver, int priority, int hour )
         {
             // check if pawn is allowed to do this job
-            if ( priority > 0 && pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
+            if ( priority > 0 && !pawn.CapableOf( workgiver ) )
+            {
                 Log.Error( $"tried to enable work {workgiver.workType.defName} for {pawn.NameStringShort}, who is incapable of said work." );
+                
+                // force to 0
+                priority = 0;
+            }
 
             // mark our partially scheduled cache dirty if changed
             if ( priority != priorities[hour][workgiver] )

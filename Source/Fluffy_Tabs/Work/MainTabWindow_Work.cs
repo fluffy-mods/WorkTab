@@ -103,18 +103,18 @@ namespace Fluffy_Tabs
             get
             {
                 Vector2 requestedTabSize = RequestedTabSize;
-                if ( requestedTabSize.x > (float)Screen.width )
+                if ( requestedTabSize.x > (float)UI.screenWidth )
                 {
                     // limit to screen width
-                    requestedTabSize.x = (float)Screen.width;
+                    requestedTabSize.x = (float)UI.screenWidth;
 
                     // add some extra height for horizontal scrollbar
                     requestedTabSize.y += 16f;
                 }
-                if ( requestedTabSize.y > (float)( Screen.height - 35 ) )
+                if ( requestedTabSize.y > (float)( UI.screenHeight - 35 ) )
                 {
                     // limit to screen height - space for bottom menu bar
-                    requestedTabSize.y = (float)( Screen.height - 35 );
+                    requestedTabSize.y = (float)( UI.screenHeight - 35 );
                 }
                 return requestedTabSize;
             }
@@ -240,7 +240,7 @@ namespace Fluffy_Tabs
 
             // initial setup stuff ( size & position )
             base.DoWindowContents( canvas );
-
+            
             // set up rects
             Rect topRow = new Rect( canvas );
             topRow.height = _topRowHeight;
@@ -249,7 +249,7 @@ namespace Fluffy_Tabs
             headerRow.height = ColumnHeaderRowHeight;
             Rect contentArea = new Rect( canvas );
             contentArea.yMin = headerRow.yMax;
-
+            
             // if we required extra horizontal space, we'll need to explicitly make some space for the horizontal scrollbar
             if ( RequestedTabSize.x > windowRect.width )
                 contentArea.yMax -= 16f;
@@ -610,7 +610,7 @@ namespace Fluffy_Tabs
             if ( windowRect.width < RequestedTabSize.x )
             {
                 var scrollpos = GUI.HorizontalScrollbar( canvas, _horizontalScrollPos * WorkColumnWidth, ActualWorkAreaWidth, 0f, DesiredWorkAreaWidth );
-                _horizontalScrollPos = Mathf.RoundToInt( scrollpos / WorkColumnWidth );
+                _horizontalScrollPos = Mathf.CeilToInt( scrollpos / WorkColumnWidth );
 
                 if ( Mouse.IsOver( canvas ) && Event.current.type == EventType.ScrollWheel )
                 {
@@ -697,10 +697,7 @@ namespace Fluffy_Tabs
             rect.y += ( i % 2 == 1 ) ? height : 0f;
 
             // draw worktype.labelShort
-            Widgets.Label(
-                rect,
-                worktype.labelShort,
-                TextAnchor.MiddleCenter,
+            Widgets.Label( rect, worktype.labelShort, TextAnchor.MiddleCenter,
                "FluffyTabs.WorktypeHeaderTip".Translate( worktype.labelShort, LabelUp, LabelDown, worktype.description ) );
 
             // handle interactions
