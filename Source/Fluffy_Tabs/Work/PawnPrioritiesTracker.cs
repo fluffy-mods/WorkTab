@@ -88,7 +88,17 @@ namespace Fluffy_Tabs
         {
             try
             {
-                return Find.PlaySettings.useWorkPriorities ? priorities[hour][workgiver] : priorities[hour][workgiver] > 0 ? 1 : 0;
+                var priority = Find.PlaySettings.useWorkPriorities ? priorities[hour][workgiver] : priorities[hour][workgiver] > 0 ? 1 : 0;
+                if ( !pawn.CapableOf( workgiver ) && priority > 0 )
+                {
+                    // log it
+                    Log.Error( $"Found priority {priority} for a pawn incapable of {workgiver.defName}. Did you add/change mods without starting a new game?" );
+
+                    // force priority back to 0.
+                    priority = 0;
+                    SetPriority( workgiver, 0, hour );
+                }
+                return priority;
             }
             catch ( ArgumentOutOfRangeException )
             {
