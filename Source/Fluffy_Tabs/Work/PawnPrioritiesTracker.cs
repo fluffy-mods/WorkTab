@@ -2,8 +2,10 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HugsLib.Utils;
 using UnityEngine;
 using Verse;
+using static Fluffy_Tabs.Controller;
 
 namespace Fluffy_Tabs
 {
@@ -17,6 +19,9 @@ namespace Fluffy_Tabs
         private DefMap<WorkGiverDef, bool> _timeDependentCache = new DefMap<WorkGiverDef, bool>();
         private Dictionary<WorkGiverDef, string> _timeDependentTipCache = new Dictionary<WorkGiverDef, string>();
         private List<DefMap<WorkGiverDef, int>> priorities = new List<DefMap<WorkGiverDef, int>>();
+        private bool newFormat = true;
+
+        private string _prioritiesScribeHelper;
 
         #endregion Fields
 
@@ -36,6 +41,9 @@ namespace Fluffy_Tabs
 
         private void InitPriorityCache()
         {
+            // create fresh list (just to be sure).
+            priorities = new List<DefMap<WorkGiverDef, int>>();
+
             // initialize from vanilla priorities.
             var vanillaPriorities = Detours_WorkSettings.GetVanillaPriorities( pawn );
 
@@ -70,13 +78,75 @@ namespace Fluffy_Tabs
         public void ExposeData()
         {
             Scribe_References.LookReference( ref pawn, "pawn" );
-            Scribe_Collections.LookList( ref priorities, "priorities", LookMode.Deep );
             Scribe_References.LookReference( ref currentFavourite, "currentFavourite" );
+
+            // handle priorities, first try to see what style the old save was in.
+            // note that while saving, newFormat is set to true. While loading,
+            // it defaults to false. The value of newFormat should be immediately available.
+            if ( Scribe.mode == LoadSaveMode.Saving )
+                newFormat = true;
+            Scribe_Values.LookValue( ref newFormat, "newFormat", false );
+            //Controller.Logger.Message( "Loading priorities from {1} format save: {0}", Scribe.mode,
+            //                           newFormat ? "NEW" : "OLD" );
+            if ( newFormat )
+            {
+                switch ( Scribe.mode )
+                {
+                    case LoadSaveMode.Saving:
+                        // this one is fairly straightforward, create string block that has one line per hour and just joins all the priorities
+                        // note; this means a hard requirement for priorities to be single digits.
+                        _prioritiesScribeHelper = priorities.Select(m => m.GetIntString()).Join("\n");
+                        Scribe_Values.LookValue(ref _prioritiesScribeHelper, "priorities", string.Empty, true);
+                        break;
+                    case LoadSaveMode.LoadingVars:
+                        // just read out the string block, we'll process it in the PostLoadInit
+                        Scribe_Values.LookValue(ref _prioritiesScribeHelper, "priorities", string.Empty, true);
+                        break;
+                    case LoadSaveMode.PostLoadInit:
+                        // create priorities data, and fill with defaults
+                        InitPriorityCache(); 
+
+                        // fill in saved priorities
+                        LoadPrioritiesFromString();
+                        break;
+                }
+            }
+            else
+            {
+                // fall back to old style
+                Scribe_Collections.LookList(ref priorities, "priorities", LookMode.Deep);
+            }
 
             // clear tip cache so it gets rebuild after load
             if ( Scribe.mode == LoadSaveMode.PostLoadInit )
                 foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                     _cacheDirty[workgiver] = true;
+        }
+
+        private void LoadPrioritiesFromString()
+        {
+            // fetch priorities from the string block
+            List<List<int>> _priorities = _prioritiesScribeHelper
+                // first off, split the lines to get a string per hour
+                .Split( "\n".ToCharArray() )
+                // split lines into individual priorities
+                .Select( IntsFromString ).ToList();
+
+            // fill priority tracker
+            foreach ( WorkGiverDef workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
+            {
+                int savedWorkgiverIndex = WorldObject_Priorities.GetSavedWorkgiverIndex( workgiver );
+                if ( savedWorkgiverIndex >= 0 )
+                    for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
+                        priorities[hour][workgiver] = _priorities[hour][savedWorkgiverIndex];
+            }
+        }
+
+        private List<int> IntsFromString( string line )
+        {
+            return line.ToCharArray() // break into individual characters
+                       .Select( c => int.Parse( c.ToString() ) ) // parse as ints
+                       .ToList(); 
         }
 
         public int GetPriority( WorkGiverDef workgiver )
@@ -96,13 +166,13 @@ namespace Fluffy_Tabs
 
                     // force priority back to 0.
                     priority = 0;
-                    SetPriority( workgiver, 0, hour );
+                    SetPriority( workgiver, priority, hour );
                 }
                 return priority;
             }
             catch ( ArgumentOutOfRangeException )
             {
-                // workgiver-priority defmap is really just and ordered list indexed by a dynamically generated workgiver index int
+                // workgiver-priority defmap is really just an ordered list indexed by a dynamically generated workgiver index int
                 // if the number of workgivers increases, this means errors.
                 Messages.Message( "WorkGiver database corrupted, resetting priorities for " + pawn.NameStringShort + ". Did you add mods during the game?", MessageSound.SeriousAlert );
                 priorities = new List<DefMap<WorkGiverDef, int>>();
@@ -115,7 +185,7 @@ namespace Fluffy_Tabs
         public int GetPriority( WorkTypeDef worktype, int hour = -1 )
         {
             // get current hour if left default
-            // check if pawn has a registered Map we can use for the local time (99%) of cases.
+            // check if pawn has a registered Map we can use for the local time (99% of cases).
             if ( hour < 0 && pawn?.Map != null )
                 hour = GenLocalDate.HourOfDay( pawn.Map );
             // if not, try use the visible map

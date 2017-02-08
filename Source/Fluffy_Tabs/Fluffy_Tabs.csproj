@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Controller.cs" />
+    <Compile Include="Core\DefMap_Extensions.cs" />
     <Compile Include="Core\Widgets_UI_TextureChooser.cs" />
     <Compile Include="Work\Detours_WorkSettings.cs" />
     <Compile Include="Work\Dialog_CreateFavourite.cs" />

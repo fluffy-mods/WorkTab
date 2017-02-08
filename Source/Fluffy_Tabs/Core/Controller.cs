@@ -7,6 +7,21 @@ namespace Fluffy_Tabs
     public class Controller : ModBase
     {
         public override string ModIdentifier => "WorkTab";
+        private static ModLogger _logger;
+
+        public Controller() : base() { _logger = base.Logger; }
+
+        #region Overrides of ModBase
+
+        public override void DefsLoaded()
+        {
+            base.DefsLoaded();
+            WorldObject_Priorities.OnDefsLoaded();
+        }
+
+        #endregion
+
+        public new static ModLogger Logger => _logger;
 
         public override void MapLoaded( Map map )
         {

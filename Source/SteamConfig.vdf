@@ -42,11 +42,10 @@ All current and past versions of this mod can be downloaded from [url=https://gi
 This mod is licensed under the Creative Commons [url=http://creativecommons.org/licenses/by-nc-sa/4.0/]by-nc-sa 4.0 Int[/url] license.
 
 [h1]Version[/h1]
-This is version v0.16.1.8
+This is version v0.16.1.9
 
 "
-  "changenote" "be even more forceful in not allowing forbidden work fix bug where final work column would show up at specific combinations of resolution / counts of worktypes
-add readme and license"
+  "changenote" "we're now up to paranoid levels of checking priorities"
   "publishedfileid" "725219116"
 }
 

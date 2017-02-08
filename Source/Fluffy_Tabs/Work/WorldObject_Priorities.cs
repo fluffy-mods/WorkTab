@@ -1,7 +1,10 @@
+using System;
 using HugsLib.Utils;
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using Verse;
+using static Fluffy_Tabs.Controller;
 
 namespace Fluffy_Tabs
 {
@@ -19,10 +22,29 @@ namespace Fluffy_Tabs
         private static bool _schedulerMode = false;
         private static Dictionary<Pawn, PawnPrioritiesTracker> _trackers = new Dictionary<Pawn, PawnPrioritiesTracker>();
         private static List<PawnPrioritiesTracker> _trackersScribeHelper;
+        private static List<string> currentworkgiverDefs;
+        private static List<string> savedworkgiverDefs;
 
         #endregion Fields
 
         #region Properties
+
+        public static void OnDefsLoaded()
+        {
+            // initialize current list of workgiverDefs
+            currentworkgiverDefs = DefDatabase<WorkGiverDef>.AllDefsListForReading
+                .OrderBy( def => def.index )
+                .Select( def => def.defName )
+                .ToList();
+        }
+
+        public static int GetSavedWorkgiverIndex( WorkGiverDef workgiver )
+        {
+            if ( currentworkgiverDefs.NullOrEmpty() || savedworkgiverDefs.NullOrEmpty() )
+                throw new Exception( "current/saved workgiver lists not initialized." );
+
+            return savedworkgiverDefs.IndexOf( workgiver.defName );
+        }
 
         public static WorldObject_Priorities Instance
         {
@@ -75,10 +97,43 @@ namespace Fluffy_Tabs
             Scribe_Values.LookValue( ref _24Hours, "TwentyFourHourClock", true );
             Scribe_Values.LookValue( ref _schedulerMode, "SchedulerMode", false );
 
+            // scribe the current list of workgivers if saving
+            if ( Scribe.mode == LoadSaveMode.Saving )
+            {
+                Scribe_Collections.LookList( ref currentworkgiverDefs, "workgivers" );
+            }
+            // otherwise, load the list as the saved workgivers, current will have been assigned on defsloaded
+            else
+            {
+                Scribe_Collections.LookList( ref savedworkgiverDefs, "workgivers" );
+                // Logger.Message( "old: {0}, new {1}", savedworkgiverDefs?.Count.ToString() ?? "NULL", currentworkgiverDefs?.Count.ToString() ?? "NULL" );
+
+                if ( Scribe.mode == LoadSaveMode.PostLoadInit )
+                {
+                    if ( savedworkgiverDefs == null )
+                    {
+                        Logger.Message( "Migrating to new save format..." );
+                    }
+                    else
+                    {
+                        Logger.Message( "Validating stored priorities..." );
+                        foreach (string saved in savedworkgiverDefs)
+                            if (!currentworkgiverDefs.Contains(saved))
+                                Logger.Error("Workgiver {0} was removed from the game. Removing defs from an ongoing game is almost always a bad idea.", saved);
+
+                        foreach (string current in currentworkgiverDefs)
+                            if (!savedworkgiverDefs.Contains(current))
+                                Logger.Warning("Workgiver {0} was added to the game. Adding defs to an ongoing game can lead to errors.", current);
+                    }
+                }
+            }
+
             // scribe only the actual trackers, since pawns don't want to be saved in dicts
             if ( Scribe.mode == LoadSaveMode.Saving )
             {
-                _trackersScribeHelper = _trackers.Values.ToList();
+                _trackersScribeHelper = _trackers
+                    .Where( p => p.Key != null && p.Key.Spawned && !p.Key.Dead )
+                    .Select( p => p.Value ).ToList();
             }
 
             // do the scribing
