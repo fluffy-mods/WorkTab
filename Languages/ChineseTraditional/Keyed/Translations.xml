@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <FluffyTabs.WorkNaturalPrioritiesTip>編輯默認優先度</FluffyTabs.WorkNaturalPrioritiesTip>
+  <FluffyTabs.PrioritiesWorkgiversTip>當前顯示原版優先度\n\n點擊切換至細化優先度</FluffyTabs.PrioritiesWorkgiversTip>
+  <FluffyTabs.PrioritiesWorktypesTip>當前顯示細化優先度\n\n點擊切換至原版優先度</FluffyTabs.PrioritiesWorktypesTip>
+  <FluffyTabs.PrioritiesToggleTip>當前顯示數字化優先度\n\n點擊切換至開/關優先度</FluffyTabs.PrioritiesToggleTip>
+  <FluffyTabs.PrioritiesIntTip>當前顯示開/關優先度\n\n點擊切換至數字化優先度</FluffyTabs.PrioritiesIntTip>
+  <FluffyTabs.PrioritiesSchedulerTip>當前顯示時間表優先度\n\n點擊切換至全天優先度</FluffyTabs.PrioritiesSchedulerTip>
+  <FluffyTabs.PrioritiesAllDayTip>當前顯示全天優先度\n\n點擊切換至時間表優先度</FluffyTabs.PrioritiesAllDayTip>
+  <FluffyTabs.LowPriorityLabel>低優先度 =&gt;</FluffyTabs.LowPriorityLabel>
+  <FluffyTabs.HighPriorityLabel>&lt;= 高優先度</FluffyTabs.HighPriorityLabel>
+  <FluffyTabs.Name>姓名</FluffyTabs.Name>
+  <FluffyTabs.NameColumnTip>左鍵點擊按姓名排序\n右鍵點擊按遊戲排序。</FluffyTabs.NameColumnTip>
+  <FluffyTabs.WorkPrioritiesDisclaimer>默認優先度工作窗口允許你變更各類工作的默認優先度 (烹飪, 建設，諸如此類)，以及他們的當前行為 (搬運, 建造, 諸如此類)。\n\n提示：\n - 這可能會導致殖民者的行為系統崩潰。可選擇重置鍵來重置恢復為默認的優先度。</FluffyTabs.WorkPrioritiesDisclaimer>
+  <FluffyTabs.WorkPrioritiesDisclaimerTitle>默認優先度</FluffyTabs.WorkPrioritiesDisclaimerTitle>
+  <FluffyTabs.WorkPrioritiesDetails>默認優先度</FluffyTabs.WorkPrioritiesDetails>
+  <FluffyTabs.ResetPrioritiesTip>重置恢復原版優先度</FluffyTabs.ResetPrioritiesTip>
+  <FluffyTabs.IncreasePriority>提高優先度</FluffyTabs.IncreasePriority>
+  <FluffyTabs.DecreasePriority>降低優先度</FluffyTabs.DecreasePriority>
+  <FluffyTabs.ToggleOn>啟用</FluffyTabs.ToggleOn>
+  <FluffyTabs.ToggleOff>禁用</FluffyTabs.ToggleOff>
+
+  <FluffyTabs.CurrentJobColumnTip>當前行為\n\n點擊按行為排序</FluffyTabs.CurrentJobColumnTip>
+  <FluffyTabs.CurrentMoodColumnTip>當前心情\n\n點擊按心情排序</FluffyTabs.CurrentMoodColumnTip>
+  <FluffyTabs.FavouriteButtonTip>新建/設定 偏好</FluffyTabs.FavouriteButtonTip>
+  <FluffyTabs.XIsScheduledForY>{0} 被安排去{1}在：\n</FluffyTabs.XIsScheduledForY>
+  <FluffyTabs.XIsPartiallyScheduledForY>{0} 部分預定{1}</FluffyTabs.XIsPartiallyScheduledForY>
+  <FluffyTabs.ClearTimeSelection>{0} 點擊選擇全天模式</FluffyTabs.ClearTimeSelection>
+  <FluffyTabs.CreateFavouritesDialogTitle>新建偏好</FluffyTabs.CreateFavouritesDialogTitle>
+  <FluffyTabs.CreateFavouritesDialog>根據當前工作選擇來設定 {0} 的偏好。</FluffyTabs.CreateFavouritesDialog>
+  <FluffyTabs.TextureChooser.Previous>上一個</FluffyTabs.TextureChooser.Previous>
+  <FluffyTabs.TextureChooser.Next>下一個</FluffyTabs.TextureChooser.Next>
+  <Cancel>取消</Cancel>
+
+  <FluffyTabs.CurrentFavourite>當前偏好: {0}\n\n</FluffyTabs.CurrentFavourite>
+  <FluffyTabs.ClickToAssignFavourite>點擊分配偏好</FluffyTabs.ClickToAssignFavourite>
+  <FluffyTabs.AssignFavouriteX>分配 {0}</FluffyTabs.AssignFavouriteX>
+  <FluffyTabs.ClickToAssignOrCreateFavourite>點擊分配或新建一個偏好。</FluffyTabs.ClickToAssignOrCreateFavourite>
+  <FluffyTabs.CreateNewFavouriteTitle>點擊新建偏好。</FluffyTabs.CreateNewFavouriteTitle>
+  <FluffyTabs.DeleteFavouriteX>刪除 {0}</FluffyTabs.DeleteFavouriteX>
+  <FluffyTabs.DefaultFavouriteLabel>偏好</FluffyTabs.DefaultFavouriteLabel>
+
+  <FluffyTabs.ColorCodedPassions>彩色的偏好圖標</FluffyTabs.ColorCodedPassions>
+  <FluffyTabs.ColorCodedPassionsTip>偏好的圖標是否啟用彩色？</FluffyTabs.ColorCodedPassionsTip>
+  <FluffyTabs.24HourMode>24小時制</FluffyTabs.24HourMode>
+  <FluffyTabs.24HourModeTip>顯示12小時制 (白天/9p.m.) 還是 24小時制 (12:00, 21:00) 模式？</FluffyTabs.24HourModeTip>
+  <FluffyTabs.MaxPriority>數字化優先度等級</FluffyTabs.MaxPriority>
+  <FluffyTabs.MaxPriorityTip>設定使用幾級的數字化優先度 (最小4最大9)</FluffyTabs.MaxPriorityTip>
+
+  <!-- 0: label, 1: modeup, 2: modedown, 3: description -->
+  <FluffyTabs.WorktypeHeaderTip>{0}\n\n點擊按能力值排序\nShift+左鍵點擊：全部{1}\nShift+右鍵點擊：全部{2}\n\n{3}</FluffyTabs.WorktypeHeaderTip>
+
+  <!-- 0: label, 1: modeup, 3: modedown, 3: worktype label, 4: description -->
+  <FluffyTabs.WorkgiverHeaderTip>{0}\n\n點擊按能力值排序\nShift+左鍵點擊：全部{1}\nShift+右鍵點擊：全部{2}\n\n{0} 是 {3} 工作的一種\n\n{4}</FluffyTabs.WorkgiverHeaderTip>
+
+  <!-- Tooltips for scheduler -->
+  <FluffyTabs.SchedulerHourTip>{0} - {1} 目前狀態： {2}.\n左鍵點擊：添加選擇\n右鍵點擊：移除選擇\nShift+左鍵點擊：只選擇此小時</FluffyTabs.SchedulerHourTip>
+  <FluffyTabs.Selected>已選擇</FluffyTabs.Selected>
+  <FluffyTabs.NotSelected>未選擇</FluffyTabs.NotSelected>
+  <midnight>午夜</midnight>
+  <noon>中午</noon>
+  <FluffyTabs.SchedulerWholeDay>選擇全天</FluffyTabs.SchedulerWholeDay>
+  <FluffyTabs.SchedulerCurrentTimeOnly>選擇時間段</FluffyTabs.SchedulerCurrentTimeOnly>
+
+</LanguageData>
+
