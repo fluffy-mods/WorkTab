@@ -336,9 +336,10 @@ namespace Fluffy_Tabs
 
             // change priority
             priorities[hour][workgiver] = priority;
-            
-            // clear current favourite
-            currentFavourite = null;
+
+            // clear current favourite, if not currently scribing
+            if ( Scribe.mode == LoadSaveMode.Inactive )
+                currentFavourite = null;
 
             // notify pawn to recache it's work order
             pawn?.workSettings.Notify_UseWorkPrioritiesChanged();
