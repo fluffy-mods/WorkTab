@@ -31,7 +31,10 @@ namespace Fluffy_Tabs
         /// <summary>
         /// For scribe only!
         /// </summary>
-        public PawnPrioritiesTracker() { }
+        public PawnPrioritiesTracker()
+        {
+            InitPriorityCache();
+        }
 
         public PawnPrioritiesTracker( Pawn pawn )
         {
@@ -58,10 +61,15 @@ namespace Fluffy_Tabs
             {
                 // create map for this hour
                 priorities.Add( new Dictionary<WorkGiverDef, int>() );
-
+                
                 // loop over worktypes
                 foreach ( WorkTypeDef worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )
                 {
+                    // add workgivers to dictionary, initialize at zero.
+                    foreach ( WorkGiverDef workgiver in worktype.workGiversByPriority )
+                        priorities[hour].Add( workgiver, 0 );
+
+                    // copy over vanilla priorities
                     int priority = vanillaPriorities[worktype];
                     SetPriority( worktype, priority, hour );
                 }
