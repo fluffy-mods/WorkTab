@@ -110,7 +110,7 @@ namespace Fluffy_Tabs
                 Scribe_Collections.LookList( ref savedworkgiverDefs, "workgivers" );
                 // Logger.Message( "old: {0}, new {1}", savedworkgiverDefs?.Count.ToString() ?? "NULL", currentworkgiverDefs?.Count.ToString() ?? "NULL" );
 
-                if ( Scribe.mode == LoadSaveMode.PostLoadInit )
+                if ( Scribe.mode == LoadSaveMode.ResolvingCrossRefs )
                 {
                     if ( savedworkgiverDefs == null )
                     {
