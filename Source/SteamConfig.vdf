@@ -44,10 +44,11 @@ All original code in this mod is licensed under the [url=https://opensource.org/
 Parts of the code in this mod, and some content may be licensed by their original authors. If this is the case, the original author & license will either be given in the source code, or be in a LICENSE file next to the content. Please do not decompile my mods, but use the original source code available on [url=https://github.com/FluffierThanThou/WorkTab/]GitHub[/url], so license information in the source code is preserved.
 
 [h1]Version[/h1]
-This is version v0.16.2.2
+This is version v0.16.2.3
 
 "
-  "changenote" "do not clear currentfavourite field if changing priorities during scribing
+  "changenote" "move workgiver validation to occur earlier in load process
+do not clear currentfavourite field if changing priorities during scribing
 initialize new workgiver dictionary before using it
 better handling of saving/loading favourites"
   "publishedfileid" "725219116"
