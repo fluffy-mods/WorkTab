@@ -63,11 +63,11 @@ namespace Fluffy_Tabs
         {
             get
             {
-                return WorldObject_Priorities.Instance.DwarfTherapistMode;
+                return WorldObject_Priorities.Get.DwarfTherapistMode;
             }
             set
             {
-                WorldObject_Priorities.Instance.DwarfTherapistMode = value;
+                WorldObject_Priorities.Get.DwarfTherapistMode = value;
             }
         }
 
@@ -134,11 +134,11 @@ namespace Fluffy_Tabs
         {
             get
             {
-                return WorldObject_Priorities.Instance.SchedulerMode;
+                return WorldObject_Priorities.Get.SchedulerMode;
             }
             set
             {
-                WorldObject_Priorities.Instance.SchedulerMode = value;
+                WorldObject_Priorities.Get.SchedulerMode = value;
             }
         }
 

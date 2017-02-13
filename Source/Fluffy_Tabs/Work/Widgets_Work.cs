@@ -567,7 +567,7 @@ namespace Fluffy_Tabs
 
         public static string FormatHour( this int hour )
         {
-            if ( WorldObject_Priorities.Instance.TwentyFourHourMode )
+            if ( WorldObject_Priorities.Get.TwentyFourHourMode )
                 return hour.ToString( "D2" ) + ":00";
             else
             {
@@ -696,7 +696,7 @@ namespace Fluffy_Tabs
 
         public static PawnPrioritiesTracker Priorities( this Pawn pawn )
         {
-            return WorldObject_Priorities.Instance?.WorkgiverTracker( pawn );
+            return WorldObject_Priorities.Get?.WorkgiverTracker( pawn );
         }
 
         public static TipSignal TipForPawnWorker( Pawn pawn, WorkGiverDef workgiver )

@@ -29,6 +29,8 @@ namespace Fluffy_Tabs
 
         #region Properties
 
+        public static List<string> CurrentWorkGiverDefsListForReading => new List<string>( currentworkgiverDefs );
+
         public static void OnDefsLoaded()
         {
             // initialize current list of workgiverDefs
@@ -46,7 +48,7 @@ namespace Fluffy_Tabs
             return savedworkgiverDefs.IndexOf( workgiver.defName );
         }
 
-        public static WorldObject_Priorities Instance
+        public static WorldObject_Priorities Get
         {
             get
             {

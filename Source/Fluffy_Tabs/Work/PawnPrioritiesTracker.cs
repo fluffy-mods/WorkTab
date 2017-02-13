@@ -2,6 +2,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using HugsLib.Utils;
 using UnityEngine;
 using Verse;
@@ -18,7 +19,7 @@ namespace Fluffy_Tabs
         private DefMap<WorkGiverDef, bool> _cacheDirty = new DefMap<WorkGiverDef, bool>();
         private DefMap<WorkGiverDef, bool> _timeDependentCache = new DefMap<WorkGiverDef, bool>();
         private Dictionary<WorkGiverDef, string> _timeDependentTipCache = new Dictionary<WorkGiverDef, string>();
-        private List<DefMap<WorkGiverDef, int>> priorities = new List<DefMap<WorkGiverDef, int>>();
+        private List<Dictionary<WorkGiverDef, int>> priorities = new List<Dictionary<WorkGiverDef, int>>();
         private bool newFormat = true;
 
         private string _prioritiesScribeHelper;
@@ -42,16 +43,21 @@ namespace Fluffy_Tabs
         private void InitPriorityCache()
         {
             // create fresh list (just to be sure).
-            priorities = new List<DefMap<WorkGiverDef, int>>();
+            priorities = new List<Dictionary<WorkGiverDef, int>>();
 
-            // initialize from vanilla priorities.
-            var vanillaPriorities = Detours_WorkSettings.GetVanillaPriorities( pawn );
+            // initialize from vanilla priorities, if available.
+            // ( might no longer be available for priorities, in which case fall back to an empty defmap ).
+            DefMap<WorkTypeDef, int> vanillaPriorities;
+            if ( pawn != null )
+                vanillaPriorities = Detours_WorkSettings.GetVanillaPriorities(pawn);
+            else 
+                vanillaPriorities = new DefMap<WorkTypeDef, int>();
 
             // loop over hours
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
             {
                 // create map for this hour
-                priorities.Add( new DefMap<WorkGiverDef, int>() );
+                priorities.Add( new Dictionary<WorkGiverDef, int>() );
 
                 // loop over worktypes
                 foreach ( WorkTypeDef worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )
@@ -95,7 +101,7 @@ namespace Fluffy_Tabs
                     case LoadSaveMode.Saving:
                         // this one is fairly straightforward, create string block that has one line per hour and just joins all the priorities
                         // note; this means a hard requirement for priorities to be single digits.
-                        _prioritiesScribeHelper = priorities.Select(m => m.GetIntString()).Join("\n");
+                        _prioritiesScribeHelper = GetSaveString();
                         Scribe_Values.LookValue(ref _prioritiesScribeHelper, "priorities", string.Empty, true);
                         break;
                     case LoadSaveMode.LoadingVars:
@@ -123,6 +129,27 @@ namespace Fluffy_Tabs
                     _cacheDirty[workgiver] = true;
         }
 
+        private string GetSaveString()
+        {
+            var Workgivers = DefDatabase<WorkGiverDef>.AllDefsListForReading;
+            string savestring = string.Empty;
+
+            // for each hour
+            for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
+            {
+                // for each workgiver
+                foreach ( WorkGiverDef workgiver in Workgivers )
+                {
+                    savestring += GetPriority( workgiver, hour );
+                }
+
+                // next line
+                savestring += "\n";
+            }
+
+            return savestring;
+        }
+
         private void LoadPrioritiesFromString()
         {
             // fetch priorities from the string block
@@ -137,8 +164,24 @@ namespace Fluffy_Tabs
             {
                 int savedWorkgiverIndex = WorldObject_Priorities.GetSavedWorkgiverIndex( workgiver );
                 if ( savedWorkgiverIndex >= 0 )
-                    for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
-                        priorities[hour][workgiver] = _priorities[hour][savedWorkgiverIndex];
+                {
+                    try
+                    {
+                        // we made an error in judgment when storing favourites where 
+                        // we assumed they would be valid and include all workgivers. 
+                        // This is however not necessarily the case, so now we have
+                        // incomplete favourites stored in the new format. Yuck.
+                        for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
+                            priorities[hour][workgiver] = _priorities[hour][savedWorkgiverIndex];
+                    }
+                    catch ( ArgumentOutOfRangeException )
+                    {
+                        // yep, here we go!
+                        Log.Warning( $"Corrupted work priorities for {pawn.NameStringShort}. " + 
+                            "This is likely actually caused by a favourite created from the pawn before v0.16.2.1. " + 
+                            "You may want to verify your priorities and favourites are still correct." );
+                    }
+                }
             }
         }
 
@@ -174,8 +217,8 @@ namespace Fluffy_Tabs
             {
                 // workgiver-priority defmap is really just an ordered list indexed by a dynamically generated workgiver index int
                 // if the number of workgivers increases, this means errors.
-                Messages.Message( "WorkGiver database corrupted, resetting priorities for " + pawn.NameStringShort + ". Did you add mods during the game?", MessageSound.SeriousAlert );
-                priorities = new List<DefMap<WorkGiverDef, int>>();
+                Log.Error( "WorkGiver database corrupted, resetting priorities for " + pawn.NameStringShort + ". Did you add mods during the game?" );
+                priorities = new List<Dictionary<WorkGiverDef, int>>();
                 InitPriorityCache();
 
                 throw;
@@ -271,7 +314,7 @@ namespace Fluffy_Tabs
         public void SetPriority( WorkGiverDef workgiver, int priority, int hour )
         {
             // check if pawn is allowed to do this job
-            if ( priority > 0 && !pawn.CapableOf( workgiver ) )
+            if ( pawn != null && priority > 0 && !pawn.CapableOf( workgiver ) )
             {
                 Log.Error( $"tried to enable work {workgiver.workType.defName} for {pawn.NameStringShort}, who is incapable of said work." );
                 
@@ -290,10 +333,10 @@ namespace Fluffy_Tabs
             currentFavourite = null;
 
             // notify pawn to recache it's work order
-            pawn.workSettings.Notify_UseWorkPrioritiesChanged();
+            pawn?.workSettings.Notify_UseWorkPrioritiesChanged();
 
             // notify pawn that he might have to stop current job
-            if ( pawn.Spawned && priority == 0 && hour == GenLocalDate.HourOfDay( pawn.Map ) )
+            if ( pawn != null && pawn.Spawned && priority == 0 && hour == GenLocalDate.HourOfDay( pawn.Map ) )
                 pawn.mindState.Notify_WorkPriorityDisabled( workgiver.workType );
         }
 

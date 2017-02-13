@@ -9,7 +9,6 @@ namespace Fluffy_Tabs
         #region Fields
 
         public static int count = 0;
-
         public int ID;
         public string label;
         public PawnPrioritiesTracker workgiverPriorities = new PawnPrioritiesTracker();

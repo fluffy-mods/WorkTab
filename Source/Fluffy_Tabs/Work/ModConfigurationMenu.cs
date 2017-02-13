@@ -27,9 +27,9 @@
 
 //            // 24-hour mode
 //            optionRect.y += 30f;
-//            bool twentyFourHourMode = MapComponent_Priorities.Instance.TwentyFourHourMode;
+//            bool twentyFourHourMode = MapComponent_Priorities.Get.TwentyFourHourMode;
 //            Verse.Widgets.CheckboxLabeled( optionRect, "FluffyTabs.24HourMode".Translate(), ref twentyFourHourMode );
-//            MapComponent_Priorities.Instance.TwentyFourHourMode = twentyFourHourMode;
+//            MapComponent_Priorities.Get.TwentyFourHourMode = twentyFourHourMode;
 //            TooltipHandler.TipRegion( optionRect, "FluffyTabs.24HourModeTip".Translate() );
 
 //            // return height

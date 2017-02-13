@@ -53,7 +53,7 @@ namespace Fluffy_Tabs
             _favourites.Remove( favourite );
 
             // remove from assigned pawns
-            WorldObject_Priorities.Instance.Notify_FavouriteDeleted( favourite );
+            WorldObject_Priorities.Get.Notify_FavouriteDeleted( favourite );
         }
     }
 }
