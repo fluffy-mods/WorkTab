@@ -26,8 +26,7 @@ Finally, there will never be an 'autolabor' mode where a mod sets priorities for
 # Contributors
  - Bronytamin:	Russian translation
  - Eric Swanson:	
- - Duduluu:	Chineze translations
- - duduluu@outlook.com:	
+ - Duduluu:	Chinese translations
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,

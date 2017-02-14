@@ -19,10 +19,11 @@ namespace Fluffy_Tabs
         private DefMap<WorkGiverDef, bool> _cacheDirty = new DefMap<WorkGiverDef, bool>();
         private DefMap<WorkGiverDef, bool> _timeDependentCache = new DefMap<WorkGiverDef, bool>();
         private Dictionary<WorkGiverDef, string> _timeDependentTipCache = new Dictionary<WorkGiverDef, string>();
-        private List<Dictionary<WorkGiverDef, int>> priorities = new List<Dictionary<WorkGiverDef, int>>();
+        private List<Dictionary<WorkGiverDef, int>> _priorities = new List<Dictionary<WorkGiverDef, int>>();
         private bool newFormat = true;
 
         private string _prioritiesScribeHelper;
+        private List<DefMap<WorkGiverDef, int>> _oldPrioritiesScribeHelper;
 
         #endregion Fields
 
@@ -46,7 +47,7 @@ namespace Fluffy_Tabs
         private void InitPriorityCache()
         {
             // create fresh list (just to be sure).
-            priorities = new List<Dictionary<WorkGiverDef, int>>();
+            _priorities = new List<Dictionary<WorkGiverDef, int>>();
 
             // initialize from vanilla priorities, if available.
             // ( might no longer be available for priorities, in which case fall back to an empty defmap ).
@@ -60,14 +61,14 @@ namespace Fluffy_Tabs
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
             {
                 // create map for this hour
-                priorities.Add( new Dictionary<WorkGiverDef, int>() );
+                _priorities.Add( new Dictionary<WorkGiverDef, int>() );
                 
                 // loop over worktypes
                 foreach ( WorkTypeDef worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )
                 {
                     // add workgivers to dictionary, initialize at zero.
                     foreach ( WorkGiverDef workgiver in worktype.workGiversByPriority )
-                        priorities[hour].Add( workgiver, 0 );
+                        _priorities[hour].Add( workgiver, 0 );
 
                     // copy over vanilla priorities
                     int priority = vanillaPriorities[worktype];
@@ -85,7 +86,7 @@ namespace Fluffy_Tabs
             for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
                 foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                     if ( !pawn.story.WorkTypeIsDisabled( workgiver.workType ) )
-                        SetPriority( workgiver, favourite.workgiverPriorities.priorities[hour][workgiver], hour );
+                        SetPriority( workgiver, favourite.workgiverPriorities._priorities[hour][workgiver], hour );
             currentFavourite = favourite;
         }
 
@@ -127,8 +128,28 @@ namespace Fluffy_Tabs
             }
             else
             {
-                // fall back to old style
-                Scribe_Collections.LookList(ref priorities, "priorities", LookMode.Deep);
+                // fall back to old style. Old style is saved as a DefMap, so we need to translate to the Dictionaries in use now.
+                Scribe_Collections.LookList(ref _oldPrioritiesScribeHelper, "priorities", LookMode.Deep);
+
+                if ( Scribe.mode == LoadSaveMode.PostLoadInit )
+                {
+                    // initialize priorities
+                    InitPriorityCache();
+
+                    // blindly add piorities by index 
+                    // this sounds rediculously bad, but that was how it was done....
+                    var workgivers = DefDatabase<WorkGiverDef>.AllDefsListForReading;
+                    for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
+                    {
+                        // priorities for this hour
+                        var priorities = _oldPrioritiesScribeHelper[hour];
+                        for (int i = 0; i < priorities.Count && i < workgivers.Count; i++ )
+                        {
+                            // actually set the buggers.
+                            _priorities[hour][workgivers[i]] = priorities[i];
+                        }
+                    }
+                }
             }
 
             // clear tip cache so it gets rebuild after load
@@ -161,7 +182,7 @@ namespace Fluffy_Tabs
         private void LoadPrioritiesFromString()
         {
             // fetch priorities from the string block
-            List<List<int>> _priorities = _prioritiesScribeHelper
+            List<List<int>> priorities = _prioritiesScribeHelper
                 // first off, split the lines to get a string per hour
                 .Split( "\n".ToCharArray() )
                 // split lines into individual priorities
@@ -180,7 +201,7 @@ namespace Fluffy_Tabs
                         // This is however not necessarily the case, so now we have
                         // incomplete favourites stored in the new format. Yuck.
                         for ( int hour = 0; hour < GenDate.HoursPerDay; hour++ )
-                            priorities[hour][workgiver] = _priorities[hour][savedWorkgiverIndex];
+                            _priorities[hour][workgiver] = priorities[hour][savedWorkgiverIndex];
                     }
                     catch ( ArgumentOutOfRangeException )
                     {
@@ -209,7 +230,7 @@ namespace Fluffy_Tabs
         {
             try
             {
-                var priority = Find.PlaySettings.useWorkPriorities ? priorities[hour][workgiver] : priorities[hour][workgiver] > 0 ? 1 : 0;
+                var priority = Find.PlaySettings.useWorkPriorities ? _priorities[hour][workgiver] : _priorities[hour][workgiver] > 0 ? 1 : 0;
                 if ( !pawn.CapableOf( workgiver ) && priority > 0 )
                 {
                     // log it
@@ -226,7 +247,7 @@ namespace Fluffy_Tabs
                 // workgiver-priority defmap is really just an ordered list indexed by a dynamically generated workgiver index int
                 // if the number of workgivers increases, this means errors.
                 Log.Error( "WorkGiver database corrupted, resetting priorities for " + pawn.NameStringShort + ". Did you add mods during the game?" );
-                priorities = new List<Dictionary<WorkGiverDef, int>>();
+                _priorities = new List<Dictionary<WorkGiverDef, int>>();
                 InitPriorityCache();
 
                 throw;
@@ -331,11 +352,11 @@ namespace Fluffy_Tabs
             }
 
             // mark our partially scheduled cache dirty if changed
-            if ( priority != priorities[hour][workgiver] )
+            if ( priority != _priorities[hour][workgiver] )
                 _cacheDirty[workgiver] = true;
 
             // change priority
-            priorities[hour][workgiver] = priority;
+            _priorities[hour][workgiver] = priority;
 
             // clear current favourite, if not currently scribing
             if ( Scribe.mode == LoadSaveMode.Inactive )
