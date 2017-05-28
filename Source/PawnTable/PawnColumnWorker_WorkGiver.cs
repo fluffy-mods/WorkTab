@@ -1,0 +1,346 @@
+﻿// Karel Kroeze
+// PawnColumnWorker_WorkType.cs
+// 2017-05-22
+
+using System;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.Sound;
+using static WorkTab.Constants;
+using static WorkTab.InteractionUtilities;
+using static WorkTab.Resources;
+
+namespace WorkTab
+{
+    public class PawnColumnWorker_WorkGiver : PawnColumnWorker, IAlternatingColumn
+    {
+        public override int GetMinWidth(PawnTable table) { return WorkGiverWidth; }
+
+        private bool _moveDown;
+        public bool MoveDown
+        {
+            get { return _moveDown; }
+            set { _moveDown = value; }
+        }
+
+        public PawnColumnDef_WorkGiver Def => def as PawnColumnDef_WorkGiver;
+
+        public WorkGiverDef WorkGiver => Def?.workgiver;
+        
+        public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
+        {
+            // bail out if showing worksettings is nonsensical
+            if ( pawn.Dead 
+                || !pawn.workSettings.EverWork )
+                return;
+
+            var workgiver = WorkGiver;
+
+            // create rect in centre of cell, slightly offsetting left to give the appearance of aligning to worktype.
+            var pos = rect.center - new Vector2(WorkGiverBoxSize, WorkGiverBoxSize) / 2f;
+            var box = new Rect(pos.x - 2f, pos.y, WorkGiverBoxSize, WorkGiverBoxSize);
+
+            // is the pawn currently capable of doing this job?
+            var incapable = !pawn.CapableOf(workgiver);
+
+            // plop in the tooltip
+            Func<string> tipGetter = delegate { return WorkUtilities.TipForPawnWorker(pawn, workgiver, incapable); };
+            TooltipHandler.TipRegion(box, tipGetter, pawn.thingIDNumber ^ workgiver.workType.GetHashCode());
+
+            // bail out if pawn can't actually do this work
+            if (pawn.story == null || pawn.story.WorkTypeIsDisabled(workgiver.workType))
+                return;
+            
+            // draw the workbox
+            Text.Font = GameFont.Tiny;
+            DrawWorkGiverBoxFor(box, pawn, workgiver, incapable);
+
+            // handle interactions
+            HandleInteractions(rect, pawn);
+        }
+
+        protected virtual void DrawWorkGiverBoxFor(Rect box, Pawn pawn, WorkGiverDef workgiver, bool incapable )
+        {
+            // draw background
+            GUI.color = incapable ? new Color(1f, .3f, .3f) : Color.white;
+            WorkUtilities.DrawWorkBoxBackground( box, pawn, workgiver.workType );
+            GUI.color = Color.white;
+
+            // draw priorities / checks
+            WorkUtilities.DrawPriority( box, pawn.GetPriority( workgiver ), true );
+        }
+
+        protected virtual void HandleInteractions(Rect rect, Pawn pawn)
+        {
+            if (Find.PlaySettings.useWorkPriorities)
+                HandleInteractionsDetailed(rect, pawn);
+            else
+                HandleInteractionsToggle(rect, pawn);
+        }
+
+        private void HandleInteractionsDetailed(Rect rect, Pawn pawn)
+        {
+            if ((Event.current.type == EventType.MouseDown || Event.current.type == EventType.ScrollWheel)
+                && Mouse.IsOver(rect))
+            {
+                // track priority so we can play appropriate sounds
+                int oldpriority = pawn.GetPriority(WorkGiver);
+
+                // deal with clicks and scrolls
+                if (ScrolledUp(rect, true) || RightClicked(rect))
+                    WorkGiver.IncrementPriority(pawn);
+                if (ScrolledDown(rect, true) || LeftClicked(rect))
+                    WorkGiver.DecrementPriority(pawn);
+
+                // get new priority, play crunch if it wasn't pretty
+                int newPriority = pawn.GetPriority( WorkGiver );
+                if (Settings.playCrunch &&
+                    oldpriority == 0 && newPriority > 0 &&
+                    pawn.skills.AverageOfRelevantSkillsFor(WorkGiver.workType) <= 2f)
+                {
+                    SoundDefOf.Crunch.PlayOneShotOnCamera();
+                }
+
+                // update tutorials
+                PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.WorkTab, KnowledgeAmount.SpecificInteraction);
+                PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.ManualWorkPriorities, KnowledgeAmount.SmallInteraction);
+            }
+        }
+
+        private void HandleInteractionsToggle(Rect rect, Pawn pawn)
+        {
+            if ((Event.current.type == EventType.MouseDown || Event.current.type == EventType.ScrollWheel)
+                && Mouse.IsOver(rect))
+            {
+                // track priority so we can play appropriate sounds
+                bool active = pawn.GetPriority(WorkGiver) > 0;
+
+                if (active)
+                {
+                    pawn.SetPriority( WorkGiver, 0 );
+                    SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                }
+                else
+                {
+                    pawn.SetPriority( WorkGiver, Mathf.Min(Settings.maxPriority, 3));
+                    SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                    if (Settings.playCrunch && pawn.skills.AverageOfRelevantSkillsFor(WorkGiver.workType) <= 2f)
+                    {
+                        SoundDefOf.Crunch.PlayOneShotOnCamera();
+                    }
+                }
+
+                PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.WorkTab, KnowledgeAmount.SpecificInteraction);
+            }
+        }
+
+
+        protected override void HeaderClicked(Rect headerRect, PawnTable table)
+        {
+            // replaced with HeaderInteractions
+        }
+
+        public string Label => WorkGiver.label.NullOrEmpty() ? WorkGiver.gerund : WorkGiver.LabelCap;
+
+        public override void DoHeader(Rect rect, PawnTable table)
+        {
+            // make sure we're at the correct font size
+            Text.Font = GameFont.Tiny;
+
+            // get offset rect
+            var labelRect = GetLabelRect(rect);
+
+            // draw label, slightly greyed out to contrast with work types
+            GUI.color = new Color( 1f, 1f, 1f, .8f );
+            Widgets.Label(labelRect, Label.Truncate(labelRect.width, TruncationCache));
+            GUI.color = Color.white;
+
+            // get bottom center of label, offset left to align with boxes
+            var start = new Vector2(labelRect.center.x - 2f, labelRect.yMax);
+            var length = rect.yMax - start.y;
+
+            // make sure we're not at a whole pixel
+            if (start.x - (int)start.x < 1e-4)
+                start.x += .5f;
+
+            // draw the lines - two separate lines give a clearer edge than one 2px line...
+            GUI.color = new Color(1f, 1f, 1f, 0.3f);
+            Widgets.DrawLineVertical(Mathf.FloorToInt(start.x), start.y, length);
+            Widgets.DrawLineVertical(Mathf.CeilToInt(start.x), start.y, length);
+            GUI.color = Color.white;
+
+            // handle interactions (click + scroll)
+            HeaderInteractions(labelRect, table);
+
+            // mouseover stuff
+            Widgets.DrawHighlightIfMouseover(labelRect);
+            TooltipHandler.TipRegion(labelRect, GetHeaderTip(table));
+
+            // sort icon
+            if (table.SortingBy == def)
+            {
+                Texture2D sortIcon = (!table.SortingDescending) ? SortingIcon : SortingDescendingIcon;
+                Rect bottomRight = new Rect(rect.xMax - sortIcon.width - 1f, rect.yMax - sortIcon.height - 1f, sortIcon.width, sortIcon.height);
+                GUI.DrawTexture(bottomRight, sortIcon);
+            }
+        }
+
+        public override int Compare(Pawn a, Pawn b)
+        {
+            return GetValueToCompare(a).CompareTo(GetValueToCompare(b));
+        }
+
+        private string _headerTip;
+        protected override string GetHeaderTip(PawnTable table)
+        {
+            if (_headerTip.NullOrEmpty())
+                _headerTip = CreateHeaderTip(table);
+            return _headerTip;
+        }
+
+        private string CreateHeaderTip(PawnTable table)
+        {
+            string tip = "";
+            tip += Label + "\n";
+            if ( !WorkGiver.description.NullOrEmpty() )
+                tip += "\n" + WorkGiver.description + "\n";
+            tip += "\n" + "ClickToSortByThisColumn".Translate();
+            if (Find.PlaySettings.useWorkPriorities)
+                tip += "\n" + "WorkTab.DetailedColumnTip".Translate();
+            else
+                tip += "\n" + "WorkTab.ToggleColumnTip".Translate();
+            return tip;
+        }
+
+        private float GetValueToCompare(Pawn pawn)
+        {
+            if (pawn.workSettings == null || !pawn.workSettings.EverWork)
+                return -2f;
+            if (pawn.story != null && pawn.story.WorkTypeIsDisabled( WorkGiver.workType ))
+                return -1f;
+
+            return pawn.skills.AverageOfRelevantSkillsFor( WorkGiver.workType );
+        }
+
+
+        private Vector2 cachedLabelSize = Vector2.zero;
+
+        public Vector2 LabelSize
+        {
+            get
+            {
+                if (cachedLabelSize == Vector2.zero)
+                {
+                    cachedLabelSize = Text.CalcSize(Label);
+                    cachedLabelSize.x = Mathf.Min( cachedLabelSize.x, WorkGiverWidth * 2 - Margin );
+                }
+                return cachedLabelSize;
+            }
+        }
+
+        public override int GetMinHeaderHeight(PawnTable table)
+        {
+            return HeaderHeight;
+        }
+
+        private Rect GetLabelRect(Rect headerRect)
+        {
+            float x = headerRect.center.x;
+            // move down slightly since we're using a smaller font here.
+            Rect result = new Rect(x - LabelSize.x / 2f - 2f, headerRect.y + 3f, LabelSize.x, LabelSize.y);
+            if (MoveDown)
+                result.y += 20f;
+            return result;
+        }
+
+        public void HeaderInteractions(Rect rect, PawnTable table)
+        {
+            if (!Mouse.IsOver(rect))
+                return;
+
+            // handle interactions
+            if (Event.current.shift)
+            {
+                // deal with clicks and scrolls
+                if (Find.PlaySettings.useWorkPriorities)
+                {
+                    if (ScrolledUp(rect, true) || RightClicked(rect))
+                        WorkGiver.IncrementPriority(table.PawnsListForReading);
+                    if (ScrolledDown(rect, true) || LeftClicked(rect))
+                        WorkGiver.DecrementPriority(table.PawnsListForReading);
+                }
+                else
+                {
+                    // this gets slightly more complicated
+                    var pawns = table.PawnsListForReading;
+                    if (ScrolledUp(rect, true) || RightClicked(rect))
+                    {
+                        if (pawns.Any(p => p.GetPriority(WorkGiver) != 0))
+                        {
+                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                            foreach (Pawn pawn in pawns)
+                                pawn.SetPriority(WorkGiver, 0);
+                        }
+                    }
+                    if (ScrolledDown(rect, true) || LeftClicked(rect))
+                    {
+                        if (pawns.Any(p => p.GetPriority(WorkGiver) == 0))
+                        {
+                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                            foreach (Pawn pawn in pawns)
+                                pawn.SetPriority(WorkGiver, 3);
+                        }
+                    }
+                }
+            }
+            else if (def.sortable)
+            {
+                if (LeftClicked(rect))
+                    Sort(table);
+                if (RightClicked(rect))
+                    Sort(table, false);
+            }
+        }
+
+        protected virtual void Sort(PawnTable table, bool ascending = true)
+        {
+            if (ascending)
+            {
+                if (table.SortingBy != def)
+                {
+                    table.SortBy(def, true);
+                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                }
+                else if (table.SortingDescending)
+                {
+                    table.SortBy(def, false);
+                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                }
+                else
+                {
+                    table.SortBy(null, false);
+                    SoundDefOf.TickLow.PlayOneShotOnCamera();
+                }
+            }
+            else
+            {
+                if (table.SortingBy != def)
+                {
+                    table.SortBy(def, false);
+                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                }
+                else if (table.SortingDescending)
+                {
+                    table.SortBy(null, false);
+                    SoundDefOf.TickLow.PlayOneShotOnCamera();
+                }
+                else
+                {
+                    table.SortBy(def, true);
+                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+    <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to increase priorities\nShift + right click or scroll down to decrease priorities</WorkTab.DetailedColumnTip>
+    <WorkTab.ToggleColumnTip>Shift + left-click or scroll up to toggle priorities on\nShift + right click or scroll down to toggle priorities off</WorkTab.ToggleColumnTip>
+    <WorkTab.ExpandWorkgiversColumnTip>Ctrl + click to expand list of detailed priorities</WorkTab.ExpandWorkgiversColumnTip>
+    <WorkTab.CollapseWorkgiversColumnTip>Ctrl + click to collapse list of detailed priorities</WorkTab.CollapseWorkgiversColumnTip>
+</LanguageData>

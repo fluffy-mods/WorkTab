@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5C909B0F-E82A-46B1-AE39-E56285B236A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorkTab</RootNamespace>
+    <AssemblyName>WorkTab</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Assemblies\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\harmony\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="harmonycheck">
+      <HintPath>..\..\..\harmony\harmonycheck.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Constants.cs" />
+    <Compile Include="Core\Resources.cs" />
+    <Compile Include="Extensions\WorkGiver_Extensions.cs" />
+    <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
+    <Compile Include="PawnTable\IAlternatingColumn.cs" />
+    <Compile Include="PawnTable\IExpandableColumn.cs" />
+    <Compile Include="Utilities\InteractionUtilities.cs" />
+    <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="Core\Mod.cs" />
+    <Compile Include="Core\PriorityManager.cs" />
+    <Compile Include="Core\PawnPriorityTracker.cs" />
+    <Compile Include="Core\WorkPriorityTracker.cs" />
+    <Compile Include="Core\Settings.cs" />
+    <Compile Include="Utilities\TimeUtilities.cs" />
+    <Compile Include="Core\VanillaWorkSettings.cs" />
+    <Compile Include="Utilities\WorkUtilities.cs" />
+    <Compile Include="Extensions\Pawn_Extensions.cs" />
+    <Compile Include="Extensions\WorkType_Extensions.cs" />
+    <Compile Include="HarmonyPatches\DefGenerator_GenerateImpliedDefs_PreResolve.cs" />
+    <Compile Include="HarmonyPatches\Pawn_WorkSettings_GetPriority.cs" />
+    <Compile Include="HarmonyPatches\Pawn_WorkSettings_SetPriority.cs" />
+    <Compile Include="PawnTable\PawnColumnDef_WorkGiver.cs" />
+    <Compile Include="PawnTable\PawnColumnWorker_WorkGiver.cs" />
+    <Compile Include="PawnTable\PawnColumnWorker_WorkType.cs" />
+    <Compile Include="PawnTable\MainTabWindow_WorkTab.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>node ../../postbuild update -x -n "Work Tab"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
