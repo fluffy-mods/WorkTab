@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnColumnDef>
+    <defName>Mood</defName>
+    <workerClass>WorkTab.PawnColumnWorker_Mood</workerClass>
+    <sortable>true</sortable>
+    <headerTip>Mood</headerTip>    
+    <headerIcon>UI/Icons/Mood/happy</headerIcon>
+    <headerIconSize>(20,20)</headerIconSize>
+  </PawnColumnDef>
+  
+  <PawnColumnDef>
+    <defName>Job</defName>
+    <workerClass>WorkTab.PawnColumnWorker_Job</workerClass>
+    <sortable>true</sortable>
+    <headerTip>Current job</headerTip>    
+    <headerIcon>UI/Icons/Various/cog</headerIcon>
+    <headerIconSize>(20,20)</headerIconSize>
+  </PawnColumnDef>
+
+</Defs>

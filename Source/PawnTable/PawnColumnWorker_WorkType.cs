@@ -294,9 +294,9 @@ namespace WorkTab
                     }
                 }
             }
-            else if (CanExpand && Event.current.control)
+            else if (Event.current.control)
             {
-                if ( Clicked( rect ) )
+                if ( CanExpand && Clicked( rect ) )
                     Expanded = !Expanded;
             }
             else if (def.sortable)
@@ -370,7 +370,7 @@ namespace WorkTab
                 // get all the columns
                 var columns = DefDatabase<PawnColumnDef>
                     .AllDefsListForReading
-                    .Select( c => c as PawnColumnDef_WorkGiver )
+                    .OfType<PawnColumnDef_WorkGiver>()
                     .Where( c => c != null && def.workType.workGiversByPriority.Contains( c.workgiver ) );
 
                 // sort if needed (and possible).

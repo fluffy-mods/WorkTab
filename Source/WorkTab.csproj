@@ -55,10 +55,14 @@
   <ItemGroup>
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Resources.cs" />
+    <Compile Include="Extensions\Job_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
     <Compile Include="PawnTable\IAlternatingColumn.cs" />
     <Compile Include="PawnTable\IExpandableColumn.cs" />
+    <Compile Include="PawnTable\PawnColumnWorker_Job.cs" />
+    <Compile Include="PawnTable\PawnColumnWorker_Mood.cs" />
+    <Compile Include="Utilities\DefOf.cs" />
     <Compile Include="Utilities\InteractionUtilities.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Core\Mod.cs" />
