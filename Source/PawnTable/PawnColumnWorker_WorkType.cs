@@ -375,7 +375,7 @@ namespace WorkTab
 
                 // sort if needed (and possible).
                 if ( columns.Count() > 1 )
-                    columns = columns.OrderBy( c => c.workgiver.priorityInType );
+                    columns = columns.OrderByDescending( c => c.workgiver.priorityInType );
 
                 // cast back to list of vanilla defs
                 return columns
