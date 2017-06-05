@@ -16,7 +16,9 @@ namespace WorkTab
 
             // prefix implied PawnColumnWorker_WorkType generation 
             // prefix get/set workPriorities
+#if DEBUG
             HarmonyInstance.DEBUG = true;
+#endif
             var harmony = HarmonyInstance.Create( "fluffy.worktab" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
         }

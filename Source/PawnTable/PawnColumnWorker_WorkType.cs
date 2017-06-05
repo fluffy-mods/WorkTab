@@ -111,6 +111,8 @@ namespace WorkTab
 
         private void HandleInteractionsToggle( Rect rect, Pawn pawn )
         {
+            if (Mouse.IsOver(rect) && Event.current.type != EventType.Repaint )
+                Logger.Debug( Event.current.type.ToString() + " :: " + Event.current.rawType );
             if ((Event.current.type == EventType.MouseDown || Event.current.type == EventType.ScrollWheel)
                 && Mouse.IsOver(rect))
             {
@@ -132,6 +134,8 @@ namespace WorkTab
                     }
                 }
                 
+                // stop event bubbling (particularly scrolling).
+                Event.current.Use();
                 PlayerKnowledgeDatabase.KnowledgeDemonstrated( ConceptDefOf.WorkTab, KnowledgeAmount.SpecificInteraction );
             }
         }
