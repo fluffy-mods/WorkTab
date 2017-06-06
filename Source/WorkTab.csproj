@@ -58,7 +58,7 @@
     <Compile Include="Extensions\Job_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
-    <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
+    <Compile Include="HarmonyPatches\PawnTable_PawnTableOnGUI.cs" />
     <Compile Include="PawnTable\IAlternatingColumn.cs" />
     <Compile Include="PawnTable\IExpandableColumn.cs" />
     <Compile Include="PawnTable\PawnColumnWorker_Job.cs" />

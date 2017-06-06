@@ -22,6 +22,7 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - Bronytamin:	
  - Duduluu:	
  - Eric Swanson:	
+ - DoctorVanGogh:	
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
