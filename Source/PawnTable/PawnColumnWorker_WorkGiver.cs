@@ -3,6 +3,8 @@
 // 2017-05-22
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -49,7 +51,7 @@ namespace WorkTab
             TooltipHandler.TipRegion(box, tipGetter, pawn.thingIDNumber ^ workgiver.workType.GetHashCode());
 
             // bail out if pawn can't actually do this work
-            if (pawn.story == null || pawn.story.WorkTypeIsDisabled(workgiver.workType))
+            if ( !ShouldDrawCell( pawn ) )
                 return;
             
             // draw the workbox
@@ -58,6 +60,14 @@ namespace WorkTab
 
             // handle interactions
             HandleInteractions(rect, pawn);
+        }
+
+        public bool ShouldDrawCell( Pawn pawn )
+        {
+            if ( pawn?.story == null )
+                return false;
+
+            return !pawn.story.WorkTypeIsDisabled( WorkGiver.workType );
         }
 
         protected virtual void DrawWorkGiverBoxFor(Rect box, Pawn pawn, WorkGiverDef workgiver, bool incapable )
@@ -131,6 +141,8 @@ namespace WorkTab
                     }
                 }
 
+                // stop event propagation, update tutorials
+                Event.current.Use();
                 PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.WorkTab, KnowledgeAmount.SpecificInteraction);
             }
         }
@@ -254,6 +266,18 @@ namespace WorkTab
             return result;
         }
 
+        public List<Pawn> CapablePawns
+        {
+            get
+            {
+                return MainTabWindow_WorkTab.Instance
+                                            .Table
+                                            .PawnsListForReading
+                                            .Where( p => ShouldDrawCell( p ) )
+                                            .ToList();
+            }
+        }
+
         public void HeaderInteractions(Rect rect, PawnTable table)
         {
             if (!Mouse.IsOver(rect))
@@ -265,15 +289,15 @@ namespace WorkTab
                 // deal with clicks and scrolls
                 if (Find.PlaySettings.useWorkPriorities)
                 {
-                    if (ScrolledUp(rect, true) || RightClicked(rect))
-                        WorkGiver.IncrementPriority(table.PawnsListForReading);
-                    if (ScrolledDown(rect, true) || LeftClicked(rect))
-                        WorkGiver.DecrementPriority(table.PawnsListForReading);
+                    if ( ScrolledUp( rect, true ) || RightClicked( rect ) )
+                        WorkGiver.IncrementPriority( CapablePawns );
+                    if ( ScrolledDown( rect, true ) || LeftClicked( rect ) )
+                        WorkGiver.DecrementPriority( CapablePawns );
                 }
                 else
                 {
                     // this gets slightly more complicated
-                    var pawns = table.PawnsListForReading;
+                    var pawns = CapablePawns;
                     if (ScrolledUp(rect, true) || RightClicked(rect))
                     {
                         if (pawns.Any(p => p.GetPriority(WorkGiver) != 0))
@@ -285,11 +309,11 @@ namespace WorkTab
                     }
                     if (ScrolledDown(rect, true) || LeftClicked(rect))
                     {
-                        if (pawns.Any(p => p.GetPriority(WorkGiver) == 0))
+                        if ( pawns.Any( p => p.GetPriority( WorkGiver ) == 0 ) )
                         {
                             SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-                            foreach (Pawn pawn in pawns)
-                                pawn.SetPriority(WorkGiver, 3);
+                            foreach ( Pawn pawn in pawns )
+                                pawn.SetPriority( WorkGiver, 3 );
                         }
                     }
                 }

@@ -49,7 +49,7 @@ namespace WorkTab
             TooltipHandler.TipRegion(box, tipGetter, pawn.thingIDNumber ^ worktype.GetHashCode());
 
             // bail out if worktype is disabled (or pawn has no background story).
-            if ( pawn.story == null || pawn.story.WorkTypeIsDisabled( worktype ) )
+            if ( !ShouldDrawCell( pawn ) )
                 return;
 
             // draw the workbox
@@ -109,10 +109,28 @@ namespace WorkTab
             }
         }
 
+        public bool ShouldDrawCell( Pawn pawn )
+        {
+            if ( pawn?.story == null )
+                return false;
+
+            return !pawn.story.WorkTypeIsDisabled( def.workType );
+        }
+
+        public List<Pawn> CapablePawns
+        {
+            get
+            {
+                return MainTabWindow_WorkTab.Instance
+                                            .Table
+                                            .PawnsListForReading
+                                            .Where(p => ShouldDrawCell(p))
+                                            .ToList();
+            }
+        }
+
         private void HandleInteractionsToggle( Rect rect, Pawn pawn )
         {
-            if (Mouse.IsOver(rect) && Event.current.type != EventType.Repaint )
-                Logger.Debug( Event.current.type.ToString() + " :: " + Event.current.rawType );
             if ((Event.current.type == EventType.MouseDown || Event.current.type == EventType.ScrollWheel)
                 && Mouse.IsOver(rect))
             {
@@ -133,8 +151,8 @@ namespace WorkTab
                         SoundDefOf.Crunch.PlayOneShotOnCamera();
                     }
                 }
-                
-                // stop event bubbling (particularly scrolling).
+
+                // stop event propagation, update tutorials
                 Event.current.Use();
                 PlayerKnowledgeDatabase.KnowledgeDemonstrated( ConceptDefOf.WorkTab, KnowledgeAmount.SpecificInteraction );
             }
@@ -269,15 +287,15 @@ namespace WorkTab
                 // deal with clicks and scrolls
                 if (Find.PlaySettings.useWorkPriorities)
                 {
-                    if ( ScrolledUp(rect, true) || RightClicked(rect))
-                        def.workType.IncrementPriority(table.PawnsListForReading);
-                    if (ScrolledDown(rect, true) || LeftClicked(rect))
-                        def.workType.DecrementPriority(table.PawnsListForReading);
+                    if ( ScrolledUp( rect, true ) || RightClicked( rect ) )
+                        def.workType.IncrementPriority( CapablePawns );
+                    if ( ScrolledDown( rect, true ) || LeftClicked( rect ) )
+                        def.workType.DecrementPriority( CapablePawns );
                 }
                 else
                 {
                     // this gets slightly more complicated
-                    var pawns = table.PawnsListForReading;
+                    var pawns = CapablePawns;
                     if (ScrolledUp(rect, true) || RightClicked(rect))
                     {
                         if (pawns.Any(p => p.GetPriority(def.workType) != 0))
