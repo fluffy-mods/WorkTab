@@ -14,7 +14,31 @@ namespace WorkTab
     public class PriorityManager: GameComponent
     {
         public Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
-        public bool useScheduler;
+
+        private bool _useScheduler;
+        public bool UseScheduler
+        {
+            get { return _useScheduler; }
+            set
+            {
+                if ( value == _useScheduler )
+                    return;
+
+                _useScheduler = value;
+            }
+        }
+
+        public bool UseWorkPriorities
+        {
+            get { return Find.PlaySettings.useWorkPriorities; }
+            set
+            {
+                if ( value == Find.PlaySettings.useWorkPriorities )
+                    return;
+
+                Find.PlaySettings.useWorkPriorities = value;
+            }
+        }
         private List<Pawn> pawnsScribe;
         private List<PawnPriorityTracker> pawnPriorityTrackersScribe;
         private static PriorityManager _instance;
@@ -60,7 +84,7 @@ namespace WorkTab
                     priorities.Remove( pawn );
 
             Scribe_Collections.Look( ref priorities, "Priorities", LookMode.Reference, LookMode.Deep, ref pawnsScribe, ref pawnPriorityTrackersScribe );
-            Scribe_Values.Look( ref useScheduler, "UseScheduler", false );
+            Scribe_Values.Look( ref _useScheduler, "UseScheduler", false );
         }
         
     }

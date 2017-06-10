@@ -19,6 +19,38 @@ namespace WorkTab
     {
         protected override PawnTableDef PawnTableDef => PawnTableDefOf.Work;
         private static FieldInfo _tableFieldInfo;
+        private static List<int> _selectedHours = TimeUtilities.WholeDay;
+        private static int _visibleHour = -1;
+        public static List<int> SelectedHours => _selectedHours;
+        public static int VisibleHour => _visibleHour;
+
+        public static void AddSelectedHour( int hour )
+        {
+            if (!_selectedHours.Contains( hour ))
+                _selectedHours.Add( hour );
+            _visibleHour = hour;
+        }
+
+        public static void RemoveSelectedHour( int hour )
+        {
+            if ( _selectedHours.Contains( hour ) )
+                _selectedHours.Remove( hour );
+
+            if ( _visibleHour == hour )
+                _visibleHour = hour;
+        }
+
+        public static void SelectCurrentHour()
+        {
+            _selectedHours = new List<int>();
+            AddSelectedHour(GenLocalDate.HourOfDay(Find.VisibleMap) );
+        }
+
+        public static void SelectWholeDay()
+        {
+            _selectedHours = TimeUtilities.WholeDay;
+            _visibleHour = -1;
+        }
 
         static MainTabWindow_WorkTab()
         {
@@ -103,7 +135,7 @@ namespace WorkTab
         private void DoTimeBar( Rect canvas )
         {
             Rect rect = new Rect( 0f, canvas.yMax - TimeBarHeight - base.ExtraBottomSpace, canvas.width, TimeBarHeight );
-            //Widgets.DrawBox( rect );
+            Widgets.DrawBox( rect );
         }
 
         private void DoPriorityLabels( Rect canvas )
@@ -131,12 +163,12 @@ namespace WorkTab
         {
             Rect rect = new Rect( canvas.xMax - 30f, canvas.yMin, 30f, 30f );
 
-            ButtonImageToggle( ref Find.PlaySettings.useWorkPriorities, rect,
+            ButtonImageToggle(() => PriorityManager.Get.UseWorkPriorities, (val) => PriorityManager.Get.UseWorkPriorities = val, rect,
                                "WorkTab.PrioritiesDetailed".Translate(), PrioritiesDetailed,
                                "WorkTab.PrioritiesSimple".Translate(), PrioritiesSimple );
             rect.x -= 30f + Margin;
 
-            ButtonImageToggle( ref PriorityManager.Get.useScheduler, rect,
+            ButtonImageToggle( () => PriorityManager.Get.UseScheduler, (val) => PriorityManager.Get.UseScheduler = val, rect,
                                "WorkTab.PrioritiesTimed".Translate(), PrioritiesTimed,
                                "WorkTab.PrioritiesWholeDay".Translate(), PrioritiesWholeDay);
             rect.x -= 30f + Margin;

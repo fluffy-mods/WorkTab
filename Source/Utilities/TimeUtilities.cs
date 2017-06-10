@@ -8,7 +8,7 @@ namespace WorkTab
 {
     public static class TimeUtilities
     {
-        public static List<int> FullDay
+        public static List<int> WholeDay
         {
             get
             {

@@ -12,8 +12,8 @@ namespace WorkTab
 {
     public static class WorkGiver_Extensions
     {
-        public static void DecrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour = -1,
-                                              List<int> hours = null, bool playSound = true )
+        public static void DecrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour,
+                                              List<int> hours, bool playSound = true )
         {
             // get default hour if not specified
             if ( hour < 0 )
@@ -30,8 +30,8 @@ namespace WorkTab
                 SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
         }
 
-        public static void IncrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour = -1,
-                                              List<int> hours = null, bool playSound = true )
+        public static void IncrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour,
+                                              List<int> hours, bool playSound = true )
         {
             // get default hour if not specified
             if ( hour < 0 )
@@ -48,8 +48,8 @@ namespace WorkTab
                 SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
         }
 
-        public static void DecrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour = -1,
-                                              List<int> hours = null, bool playSound = true )
+        public static void DecrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour,
+                                              List<int> hours, bool playSound = true )
         {
             // bail out on bad input
             if ( pawns.NullOrEmpty() )
@@ -68,8 +68,8 @@ namespace WorkTab
                 DecrementPriority( workgiver, pawn, hour, hours, false );
         }
 
-        public static void IncrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour = -1,
-                                              List<int> hours = null, bool playSound = true )
+        public static void IncrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour,
+                                              List<int> hours, bool playSound = true )
         {
             // bail out on bad input
             if ( pawns.NullOrEmpty() )

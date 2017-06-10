@@ -12,7 +12,7 @@ namespace WorkTab
 {
     public static class Pawn_Extensions
     {
-        public static int GetPriority( this Pawn pawn, WorkTypeDef worktype, int hour = -1)
+        public static int GetPriority( this Pawn pawn, WorkTypeDef worktype, int hour )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
@@ -28,7 +28,7 @@ namespace WorkTab
             return priorities.Min();
         }
 
-        public static int GetPriority(this Pawn pawn, WorkGiverDef workgiver, int hour = -1)
+        public static int GetPriority(this Pawn pawn, WorkGiverDef workgiver, int hour )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
@@ -37,13 +37,13 @@ namespace WorkTab
             return PriorityManager.Get[pawn][workgiver][hour];
         }
 
-        public static void SetPriority( this Pawn pawn, WorkTypeDef worktype, int priority, List<int> hours = null)
+        public static void SetPriority( this Pawn pawn, WorkTypeDef worktype, int priority, List<int> hours )
         {
-            foreach (int hour in (hours ?? FullDay))
+            foreach (int hour in (hours ?? WholeDay))
                 SetPriority(pawn, worktype, priority, hour);
         }
 
-        public static void SetPriority(Pawn pawn, WorkTypeDef worktype, int priority, int hour = -1)
+        public static void SetPriority(Pawn pawn, WorkTypeDef worktype, int priority, int hour )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
@@ -52,13 +52,13 @@ namespace WorkTab
                 SetPriority(pawn, workgiver, priority, hour);
         }
 
-        public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, List<int> hours = null)
+        public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, List<int> hours )
         {
-            foreach (int hour in (hours ?? FullDay))
+            foreach (int hour in (hours ?? WholeDay))
                 SetPriority(pawn, workgiver, priority, hour);
         }
 
-        public static void SetPriority(Pawn pawn, WorkGiverDef workgiver, int priority, int hour = -1)
+        public static void SetPriority(Pawn pawn, WorkGiverDef workgiver, int priority, int hour )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);

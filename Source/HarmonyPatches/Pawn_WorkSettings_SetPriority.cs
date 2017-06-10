@@ -13,7 +13,7 @@ namespace WorkTab
     {
         static void Prefix( Pawn_WorkSettings __instance, WorkTypeDef w, int priority )
         {
-            __instance.Pawn().SetPriority( w, priority );
+            __instance.Pawn().SetPriority( w, priority, null );
         }
     }
 }

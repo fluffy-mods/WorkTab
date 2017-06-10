@@ -42,7 +42,7 @@ namespace WorkTab
             var pawn = pawnField.GetValue( __instance ) as Pawn;
             var allWorkgivers = DefDatabase<WorkGiverDef>.AllDefsListForReading
                                                          .Select( wgd => wgd.Worker )
-                                                         .Where( wg => pawn.GetPriority( wg.def ) > 0 );
+                                                         .Where( wg => pawn.GetPriority( wg.def, -1 ) > 0 );
             var normalWorkgivers = new List<WorkGiver>();
             var emergencyWorkgivers = new List<WorkGiver>();
 
@@ -50,21 +50,21 @@ namespace WorkTab
             if ( allWorkgivers.Any() )
             {
                 allWorkgivers = allWorkgivers
-                    .OrderBy( wg => pawn.GetPriority( wg.def ) )
+                    .OrderBy( wg => pawn.GetPriority( wg.def, -1 ) )
                     .ThenByDescending( wg => wg.def.workType.naturalPriority )
                     .ThenByDescending( wg => wg.def.priorityInType ).ToList();
 
                 // lowest priority non-emergency job
                 int maxEmergPrio = allWorkgivers
                     .Where( wg => !wg.def.emergency )
-                    .Min( wg => pawn.GetPriority( wg.def ) );
+                    .Min( wg => pawn.GetPriority( wg.def, -1 ) );
 
                 // create lists of workgivers
                 normalWorkgivers = allWorkgivers
-                    .Where( wg => !wg.def.emergency || pawn.GetPriority( wg.def ) > maxEmergPrio )
+                    .Where( wg => !wg.def.emergency || pawn.GetPriority( wg.def, -1 ) > maxEmergPrio )
                     .ToList();
                 emergencyWorkgivers = allWorkgivers
-                    .Where( wg => wg.def.emergency && pawn.GetPriority( wg.def ) <= maxEmergPrio )
+                    .Where( wg => wg.def.emergency && pawn.GetPriority( wg.def, -1 ) <= maxEmergPrio )
                     .ToList();
             }
 

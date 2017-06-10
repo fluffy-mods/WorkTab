@@ -2,6 +2,7 @@
 // InteractionUtilities.cs
 // 2017-05-25
 
+using System;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -46,18 +47,16 @@ namespace WorkTab
         public static bool ScrolledUp( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Up, stopPropagation ); }
         public static bool ScrolledDown( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Down, stopPropagation ); }
 
-        public static bool ButtonImageToggle( ref bool toggle, Rect canvas,
+        public static void ButtonImageToggle( Func<bool> getter, Action<bool> setter, Rect canvas,
                                               string tipOn, Texture2D texOn,
                                               string tipOff, Texture2D texOff )
         {
-            TooltipHandler.TipRegion( canvas, toggle ? tipOff : tipOn );
-            if ( Widgets.ButtonImage( canvas, toggle ? texOff : texOn, Color.white, GenUI.MouseoverColor ) )
-            {
-                toggle = !toggle;
-                return true;
-            }
+            if ( setter == null || getter == null )
+                throw new NullReferenceException( "getter and setter must not be null" );
 
-            return false;
+            TooltipHandler.TipRegion( canvas, getter() ? tipOff : tipOn );
+            if ( Widgets.ButtonImage( canvas, getter() ? texOff : texOn, Color.white, GenUI.MouseoverColor ) )
+                setter( !getter() );
         }
     }
 }
