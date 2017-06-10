@@ -7,7 +7,7 @@
     <sortable>true</sortable>
     <headerTip>Mood</headerTip>    
     <headerIcon>UI/Icons/Mood/happy</headerIcon>
-    <headerIconSize>(20,20)</headerIconSize>
+    <headerIconSize>(16,16)</headerIconSize>
   </PawnColumnDef>
   
   <PawnColumnDef>
@@ -16,7 +16,7 @@
     <sortable>true</sortable>
     <headerTip>Current job</headerTip>    
     <headerIcon>UI/Icons/Various/cog</headerIcon>
-    <headerIconSize>(20,20)</headerIconSize>
+    <headerIconSize>(16,16)</headerIconSize>
   </PawnColumnDef>
 
 </Defs>
