@@ -45,5 +45,19 @@ namespace WorkTab
 
         public static bool ScrolledUp( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Up, stopPropagation ); }
         public static bool ScrolledDown( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Down, stopPropagation ); }
+
+        public static bool ButtonImageToggle( ref bool toggle, Rect canvas,
+                                              string tipOn, Texture2D texOn,
+                                              string tipOff, Texture2D texOff )
+        {
+            TooltipHandler.TipRegion( canvas, toggle ? tipOff : tipOn );
+            if ( Widgets.ButtonImage( canvas, toggle ? texOff : texOn, Color.white, GenUI.MouseoverColor ) )
+            {
+                toggle = !toggle;
+                return true;
+            }
+
+            return false;
+        }
     }
 }

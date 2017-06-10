@@ -19,10 +19,10 @@ With great power comes great responsibility. The default priorities of tasks wit
 Finally, there will never be an 'autolabour' mode where a mod sets priorities for you. Due to the way the AI is handled (e.g. pawns actively look for work, instead of there being a 'bulletin board' of jobs that need doing), it's not feasible to get the complete list of work that needs doing that would be needed to make this a reality, without extreme overhead and loads of special exception coding.
 
 # Contributors
- - Bronytamin:	
- - Duduluu:	
- - Eric Swanson:	
- - DoctorVanGogh:	
+ - Bronytamin:	Russian translation
+ - Duduluu:	Chinese translation
+ - Eric Swanson:	Help with time-dependent tooltips
+ - DoctorVanGogh:	Help with typos in build script
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,

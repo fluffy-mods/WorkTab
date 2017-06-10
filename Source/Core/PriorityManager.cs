@@ -11,10 +11,10 @@ using Verse;
 
 namespace WorkTab
 {
-    // todo; implement IExposable
     public class PriorityManager: GameComponent
     {
         public Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
+        public bool useScheduler;
         private List<Pawn> pawnsScribe;
         private List<PawnPriorityTracker> pawnPriorityTrackersScribe;
         private static PriorityManager _instance;
@@ -60,6 +60,7 @@ namespace WorkTab
                     priorities.Remove( pawn );
 
             Scribe_Collections.Look( ref priorities, "Priorities", LookMode.Reference, LookMode.Deep, ref pawnsScribe, ref pawnPriorityTrackersScribe );
+            Scribe_Values.Look( ref useScheduler, "UseScheduler", false );
         }
         
     }

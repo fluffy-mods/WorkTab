@@ -58,11 +58,11 @@
     <Compile Include="Extensions\Job_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
-    <Compile Include="HarmonyPatches\PawnTable_PawnTableOnGUI.cs" />
-    <Compile Include="PawnTable\IAlternatingColumn.cs" />
-    <Compile Include="PawnTable\IExpandableColumn.cs" />
-    <Compile Include="PawnTable\PawnColumnWorker_Job.cs" />
-    <Compile Include="PawnTable\PawnColumnWorker_Mood.cs" />
+    <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
+    <Compile Include="PawnColumns\IAlternatingColumn.cs" />
+    <Compile Include="PawnColumns\IExpandableColumn.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_Job.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_Mood.cs" />
     <Compile Include="Utilities\DefOf.cs" />
     <Compile Include="Utilities\InteractionUtilities.cs" />
     <Compile Include="Utilities\Logger.cs" />
@@ -79,9 +79,9 @@
     <Compile Include="HarmonyPatches\DefGenerator_GenerateImpliedDefs_PreResolve.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_GetPriority.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_SetPriority.cs" />
-    <Compile Include="PawnTable\PawnColumnDef_WorkGiver.cs" />
-    <Compile Include="PawnTable\PawnColumnWorker_WorkGiver.cs" />
-    <Compile Include="PawnTable\PawnColumnWorker_WorkType.cs" />
+    <Compile Include="PawnColumns\PawnColumnDef_WorkGiver.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_WorkGiver.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_WorkType.cs" />
     <Compile Include="PawnTable\MainTabWindow_WorkTab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

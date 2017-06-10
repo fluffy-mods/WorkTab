@@ -16,7 +16,11 @@ namespace WorkTab
                                          MoodContent,
                                          MoodDiscontent,
                                          MoodUnhappy,
-                                         MoodBroken;
+                                         MoodBroken,
+                                         PrioritiesDetailed,
+                                         PrioritiesSimple,
+                                         PrioritiesTimed,
+                                         PrioritiesWholeDay;
 
         static Resources()
         {
@@ -27,6 +31,10 @@ namespace WorkTab
             MoodDiscontent = ContentFinder<Texture2D>.Get( "UI/Icons/Mood/discontent" );
             MoodUnhappy = ContentFinder<Texture2D>.Get( "UI/Icons/Mood/unhappy" );
             MoodBroken = ContentFinder<Texture2D>.Get( "UI/Icons/Mood/broken" );
+            PrioritiesDetailed = ContentFinder<Texture2D>.Get( "UI/Icons/numbers" );
+            PrioritiesSimple = ContentFinder<Texture2D>.Get( "UI/Icons/checks" );
+            PrioritiesTimed = ContentFinder<Texture2D>.Get( "UI/Icons/clock-scheduler" );
+            PrioritiesWholeDay = ContentFinder<Texture2D>.Get( "UI/Icons/clock-24hours" );
         }
     }
 }
