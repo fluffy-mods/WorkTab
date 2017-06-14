@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Harmony;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -85,20 +86,8 @@ namespace WorkTab
                 return;
             }
 
-            // get clean copy of base columns
-            var columns = new List<PawnColumnDef>( _instance.PawnTableDef.columns );
-
-            // add workgiver columns for expanded worktypes
-            var templist = new List<PawnColumnDef>( columns );
-            foreach ( PawnColumnDef column in templist )
-            {
-                var expandable = column.Worker as IExpandableColumn;
-                if ( expandable != null && expandable.Expanded )
-                {
-                    var index = columns.IndexOf( column );
-                    columns.InsertRange( index + 1, expandable.ChildColumns );
-                }
-            }
+            // get columns
+            var columns = Columns; 
             
             // update alternating vertical positions
             bool moveNextDown = false;
@@ -119,6 +108,32 @@ namespace WorkTab
             // rebuild table
             Instance.Table = new PawnTable( columns, () => Instance.Pawns, 998, UI.screenWidth - (int)(Instance.Margin * 2f), 0,
                                    (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
+
+            // force recache of timeBarRect
+            Instance._timeBarRect = default( Rect );
+        }
+
+        private static List<PawnColumnDef> Columns
+        {
+            get
+            {
+                // get clean copy of base columns
+                List<PawnColumnDef> columns = new List<PawnColumnDef>(_instance.PawnTableDef.columns);
+
+                // add workgiver columns for expanded worktypes
+                var templist = new List<PawnColumnDef>(columns);
+                foreach (PawnColumnDef column in templist)
+                {
+                    var expandable = column.Worker as IExpandableColumn;
+                    if (expandable != null && expandable.Expanded)
+                    {
+                        var index = columns.IndexOf(column);
+                        columns.InsertRange(index + 1, expandable.ChildColumns);
+                    }
+                }
+
+                return columns;
+            }
         }
 
         public override void DoWindowContents( Rect rect )
@@ -134,8 +149,46 @@ namespace WorkTab
 
         private void DoTimeBar( Rect canvas )
         {
-            Rect rect = new Rect( 0f, canvas.yMax - TimeBarHeight - base.ExtraBottomSpace, canvas.width, TimeBarHeight );
-            Widgets.DrawBox( rect );
+            Rect bar = TimeBarRect;
+            Widgets.DrawBox( bar );
+        }
+
+
+        private Rect _timeBarRect = default( Rect );
+        public Rect TimeBarRect
+        {
+            get
+            {
+                if ( _timeBarRect == default( Rect ) )
+                {
+                    var widths = Traverse.Create( Table ).Field( "cachedColumnWidths" ).GetValue<List<float>>();
+                    var columns = Table.ColumnsListForReading;
+                    float start = 0;
+                    float width = 0;
+
+                    // loop over columns, initially add any column that is not a workbox to the start, but not after we've seen a workbox.
+                    // Add widths for workboxes to width. 
+                    // NOTE: This assumes a continguous block of workboxes!
+                    for ( int i = 0; i < columns.Count; i++ )
+                    {
+                        var column = columns[i].Worker;
+                        if ( column is PawnColumnWorker_WorkType || column is PawnColumnWorker_WorkGiver )
+                            width += widths[i];
+                        else if ( width == 0 )
+                            start += widths[i];
+                    }
+
+                    // build the rect
+                    _timeBarRect = new Rect( start, 
+                                             windowRect.height - TimeBarHeight - base.ExtraBottomSpace, 
+                                             width,
+                                             TimeBarHeight );
+
+                    Logger.Debug( "created time bar rect: " + _timeBarRect );
+                }
+
+                return _timeBarRect;
+            }
         }
 
         private void DoPriorityLabels( Rect canvas )
