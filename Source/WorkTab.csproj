@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Constants.cs" />
+    <Compile Include="Core\MapComponent_TimeKeeper.cs" />
     <Compile Include="Core\Resources.cs" />
     <Compile Include="Extensions\Int_Extensions.cs" />
     <Compile Include="Extensions\Job_Extensions.cs" />
