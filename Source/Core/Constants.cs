@@ -17,8 +17,9 @@ namespace WorkTab
         public const int Margin = 4;
         public const int HeaderHeight = 50;
         public static Dictionary<string,string> TruncationCache = new Dictionary<string, string>();
-        public const int TimeBarHeight = 30;
+        public const int TimeBarHeight = 40;
         public const int ExtraTopSpace = 40;
         public static readonly Vector2 PriorityLabelSize = new Vector2( 160, 30 );
+        public const float MinTimeBarLabelSpacing = 50f;
     }
 }

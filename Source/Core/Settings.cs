@@ -12,6 +12,7 @@ namespace WorkTab
         public static int maxPriority = 9;
         public static bool playCrunch = true;
         public static bool playSounds = true;
+        public static bool TwentyFourHourMode = true;
 
         public static void DoWindowContents( Rect rect )
         {

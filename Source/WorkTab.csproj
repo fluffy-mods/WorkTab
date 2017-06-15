@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Resources.cs" />
+    <Compile Include="Extensions\Int_Extensions.cs" />
     <Compile Include="Extensions\Job_Extensions.cs" />
+    <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
     <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Core\Settings.cs" />
     <Compile Include="Utilities\TimeUtilities.cs" />
     <Compile Include="Core\VanillaWorkSettings.cs" />
+    <Compile Include="Utilities\UIUtilities.cs" />
     <Compile Include="Utilities\WorkUtilities.cs" />
     <Compile Include="Extensions\Pawn_Extensions.cs" />
     <Compile Include="Extensions\WorkType_Extensions.cs" />

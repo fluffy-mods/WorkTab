@@ -20,7 +20,9 @@ namespace WorkTab
                                          PrioritiesDetailed,
                                          PrioritiesSimple,
                                          PrioritiesTimed,
-                                         PrioritiesWholeDay;
+                                         PrioritiesWholeDay,
+                                         PinEye,
+                                         PinClock;
 
         static Resources()
         {
@@ -35,6 +37,8 @@ namespace WorkTab
             PrioritiesSimple = ContentFinder<Texture2D>.Get( "UI/Icons/checks" );
             PrioritiesTimed = ContentFinder<Texture2D>.Get( "UI/Icons/clock-scheduler" );
             PrioritiesWholeDay = ContentFinder<Texture2D>.Get( "UI/Icons/clock-24hours" );
+            PinEye = ContentFinder<Texture2D>.Get( "UI/Icons/pin-eye" );
+            PinClock = ContentFinder<Texture2D>.Get( "UI/Icons/pin-clock" );
         }
     }
 }

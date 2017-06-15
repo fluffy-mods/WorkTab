@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Security;
 using System.Reflection;
 using Harmony;
 using RimWorld;
@@ -147,10 +148,99 @@ namespace WorkTab
             DoTimeBar( rect );
         }
 
-        private void DoTimeBar( Rect canvas )
+        private void DoTimeBar( Rect rect )
         {
             Rect bar = TimeBarRect;
-            Widgets.DrawBox( bar );
+
+            // split the available area into rects. bottom 2/3's are used for 'buttons', with text for times.
+            float hourWidth = bar.width / GenDate.HoursPerDay;
+            float barheight = bar.height * 2 / 3f;
+            float timeIndicatorSize = bar.height * 2 / 3f;
+            float lastLabelPosition = 0f;
+            Rect hourRect = new Rect( bar.xMin, bar.yMax - barheight, hourWidth, barheight );
+
+            // draw buttons
+            //Rect buttonRect = new Rect(bar.xMax + Margin * 2 + (FavouritesColumnWidth - timeIndicatorSize) * 1 / 2f, bar.yMin + (bar.height - timeIndicatorSize) * 2 / 3f, timeIndicatorSize, timeIndicatorSize);
+
+            // draw first tick
+            GUI.color = Color.grey;
+            Widgets.DrawLineVertical(hourRect.xMin, hourRect.yMin + hourRect.height * 1 / 2f, hourRect.height * 1 / 2f);
+
+            // draw horizontal line ( y - 1 because canvas gets clipped on bottom )
+            Widgets.DrawLineHorizontal(bar.xMin, bar.yMax - 1, bar.width);
+            GUI.color = Color.white;
+
+            // label and rect
+            string label;
+            Rect labelRect;
+
+            for (int hour = 0; hour < GenDate.HoursPerDay; hour++)
+            {
+                // print major tick
+                GUI.color = Color.grey;
+                Widgets.DrawLineVertical(hourRect.xMax, hourRect.yMin + hourRect.height * 1 / 2f, hourRect.height * 1 / 2f);
+
+                // print minor ticks
+                Widgets.DrawLineVertical(hourRect.xMin + hourRect.width * 1 / 4f, hourRect.yMin + hourRect.height * 3 / 4f, hourRect.height * 1 / 4f);
+                Widgets.DrawLineVertical(hourRect.xMin + hourRect.width * 2 / 4f, hourRect.yMin + hourRect.height * 3 / 4f, hourRect.height * 1 / 4f);
+                Widgets.DrawLineVertical(hourRect.xMin + hourRect.width * 3 / 4f, hourRect.yMin + hourRect.height * 3 / 4f, hourRect.height * 1 / 4f);
+                GUI.color = Color.white;
+
+                // create and draw labelrect - but only if the last label isn't too close
+                if ( hourRect.xMin - lastLabelPosition > MinTimeBarLabelSpacing )
+                {
+                    label = hour.FormatHour();
+                    labelRect = new Rect(0f, bar.yMin + bar.height * 1 / 3f, label.NoWrapWidth(), bar.height * 2 / 3f);
+                    labelRect.x = hourRect.xMin - labelRect.width / 2f;
+                    UIUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
+
+                    lastLabelPosition = labelRect.xMax;
+                }
+
+                // draw hour rect with mouseover + interactions
+                Widgets.DrawHighlightIfMouseover(hourRect);
+
+                // set/remove focus (LMB and any other MB respectively)
+                if (Mouse.IsOver(hourRect))
+                {
+                    if (Input.GetMouseButton(0))
+                        AddSelectedHour( hour );
+
+                    if ( Input.GetMouseButton( 1 ) )
+                        RemoveSelectedHour( hour );
+                }
+
+                // handle tooltip
+                var currentlySelectedString = SelectedHours.Contains(hour)
+                                                  ? "WorkTab.Selected".Translate()
+                                                  : "WorkTab.NotSelected".Translate();
+                TooltipHandler.TipRegion(hourRect, "WorkTab.SchedulerHourTip".Translate(hour.FormatHour(), (hour + 1 % GenDate.HoursPerDay).FormatHour(), currentlySelectedString));
+
+                // if this is currently the 'main' timeslot, and not the actual time, draw an eye
+                if ( hour == VisibleHour && hour != GenLocalDate.HourOfDay(Find.VisibleMap) )
+                {
+                    Rect eyeRect = new Rect(hourRect.center.x - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize);
+                    GUI.DrawTexture(eyeRect, PinEye);
+                }
+
+                // also highlight all selected timeslots
+                if ( SelectedHours.Contains( hour ) )
+                    Widgets.DrawHighlightSelected( hourRect );
+
+                // advance rect
+                hourRect.x += hourRect.width;
+            }
+
+            // draw final label
+            label = 0.FormatHour();
+            labelRect = new Rect(0f, bar.yMin + bar.height * 1 / 3f, label.NoWrapWidth(), bar.height * 2 / 3f);
+            labelRect.x = hourRect.xMin - labelRect.width / 2f;
+            UIUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
+
+            // draw current time indicator
+            float curTimeX = GenLocalDate.DayPercent(Find.VisibleMap) * bar.width;
+            Rect curTimeRect = new Rect(bar.xMin + curTimeX - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize);
+            GUI.DrawTexture(curTimeRect, PinClock);
         }
 
 
@@ -216,12 +306,12 @@ namespace WorkTab
         {
             Rect rect = new Rect( canvas.xMax - 30f, canvas.yMin, 30f, 30f );
 
-            ButtonImageToggle(() => PriorityManager.Get.UseWorkPriorities, (val) => PriorityManager.Get.UseWorkPriorities = val, rect,
+            ButtonImageToggle(() => PriorityManager.Get.UseWorkPriorities, val => PriorityManager.Get.UseWorkPriorities = val, rect,
                                "WorkTab.PrioritiesDetailed".Translate(), PrioritiesDetailed,
                                "WorkTab.PrioritiesSimple".Translate(), PrioritiesSimple );
             rect.x -= 30f + Margin;
 
-            ButtonImageToggle( () => PriorityManager.Get.UseScheduler, (val) => PriorityManager.Get.UseScheduler = val, rect,
+            ButtonImageToggle( () => PriorityManager.Get.UseScheduler, val => PriorityManager.Get.UseScheduler = val, rect,
                                "WorkTab.PrioritiesTimed".Translate(), PrioritiesTimed,
                                "WorkTab.PrioritiesWholeDay".Translate(), PrioritiesWholeDay);
             rect.x -= 30f + Margin;

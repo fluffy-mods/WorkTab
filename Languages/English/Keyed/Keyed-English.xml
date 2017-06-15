@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
+    <!-- Main tab toggle buttons -->
+	<WorkTab.PrioritiesSimple>Currently showing numeric priorities\n\nClick to switch to on/off priorities</WorkTab.PrioritiesSimple>
+	<WorkTab.PrioritiesDetailed>Currently showing on/off priorities\n\nClick to switch to numeric priorities</WorkTab.PrioritiesDetailed>
+	<WorkTab.PrioritiesTimed>Currently showing scheduled priorities\n\nClick to switch to all-day priorities</WorkTab.PrioritiesTimed>
+	<WorkTab.PrioritiesWholeDay>Currently showing all-day priorities\n\nClick to switch to scheduled priorities</WorkTab.PrioritiesWholeDay>
+
+    <!-- column header tooltips -->
     <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to increase priorities\nShift + right click or scroll down to decrease priorities</WorkTab.DetailedColumnTip>
     <WorkTab.ToggleColumnTip>Shift + left-click or scroll up to toggle priorities on\nShift + right click or scroll down to toggle priorities off</WorkTab.ToggleColumnTip>
     <WorkTab.ExpandWorkgiversColumnTip>Ctrl + click to expand list of detailed priorities</WorkTab.ExpandWorkgiversColumnTip>
     <WorkTab.CollapseWorkgiversColumnTip>Ctrl + click to collapse list of detailed priorities</WorkTab.CollapseWorkgiversColumnTip>
+
+    <!-- settings labels and tooltips -->
+	<WorkTab.24HourMode>24 hour mode</WorkTab.24HourMode>
+	<WorkTab.24HourModeTip>Should times be shown in 12h (e.g. noon, 9p.m.) or 24h (e.g. 12:00, 21:00) mode?</WorkTab.24HourModeTip>
+	<WorkTab.MaxPriority>Levels of priority</WorkTab.MaxPriority>
+	<WorkTab.MaxPriorityTip>How many levels of priority should we use? (Limited to between 4 and 9)</WorkTab.MaxPriorityTip>
+    
+    <!-- scheduler -->
+    <WorkTab.SchedulerHourTip>{0}-{1} is currently {2}</WorkTab.SchedulerHourTip>
+    <WorkTab.Selected>selected</WorkTab.Selected>
+    <WorkTab.NotSelected>not selected</WorkTab.NotSelected>
+	<midnight>midnight</midnight>
+	<noon>noon</noon>
+	<WorkTab.SchedulerWholeDay>Select whole day</WorkTab.SchedulerWholeDay>
+	<WorkTab.SchedulerCurrentTimeOnly>Select current hour</WorkTab.SchedulerCurrentTimeOnly>
 </LanguageData>
