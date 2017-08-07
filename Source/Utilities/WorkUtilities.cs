@@ -60,7 +60,7 @@ namespace WorkTab
             // draw clock icon in bottom left
             var colour = GUI.color;
             GUI.color = Color.grey;
-            GUI.DrawTexture(new Rect(box.xMin, box.yMin + box.height / 2f, box.height / 2f, box.width / 2f), Resources.Clock);
+            GUI.DrawTexture(new Rect(box.xMin, box.yMin + box.height / 2f, box.height / 2f, box.width / 2f).ContractedBy(2f), Resources.Clock);
             GUI.color = colour;
         }
 
@@ -69,7 +69,7 @@ namespace WorkTab
             // draw clock icon in top left
             var colour = GUI.color;
             GUI.color = Color.grey;
-            GUI.DrawTexture(new Rect(box.xMin, box.yMin, box.height / 2f, box.width / 2f), Resources.Half);
+            GUI.DrawTexture(new Rect(box.xMin, box.yMin, box.height / 2f, box.width / 2f).ContractedBy(2f), Resources.Half);
             GUI.color = colour;
         }
 
@@ -149,7 +149,7 @@ namespace WorkTab
                 // stop condition
                 if (curpriority != priority && start >= 0)
                 {
-                    tip += "\n\t";
+                    tip += "\n   ";
                     tip += start.FormatHour() + " - " + hour.FormatHour();
                     if (Find.PlaySettings.useWorkPriorities)
                         tip += " (" + priority + ")";
@@ -170,7 +170,7 @@ namespace WorkTab
             // final check for x till midnight
             if (start > 0)
             {
-                tip += "\n";
+                tip += "\n   ";
                 tip += start.FormatHour() + " - " + 0.FormatHour();
                 if (Find.PlaySettings.useWorkPriorities)
                     tip += " (" + priority + ")";
