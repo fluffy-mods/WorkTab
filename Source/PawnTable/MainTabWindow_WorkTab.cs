@@ -110,6 +110,10 @@ namespace WorkTab
             Instance.Table = new PawnTable( columns, () => Instance.Pawns, 998, UI.screenWidth - (int)(Instance.Margin * 2f), 0,
                                    (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
 
+            // force recache of table sizes: set the table to be dirty, then get the size - which calls the private recache routine.
+            Instance.Table.SetDirty();
+            var tmp = Instance.Table.Size;
+
             // force recache of timeBarRect
             Instance._timeBarRect = default( Rect );
         }
@@ -176,6 +180,9 @@ namespace WorkTab
 
             for (int hour = 0; hour < GenDate.HoursPerDay; hour++)
             {
+                bool selected = SelectedHours.Contains(hour);
+                bool focused = hour == VisibleHour;
+
                 // print major tick
                 GUI.color = Color.grey;
                 Widgets.DrawLineVertical(hourRect.xMax, hourRect.yMin + hourRect.height * 1 / 2f, hourRect.height * 1 / 2f);
@@ -208,23 +215,38 @@ namespace WorkTab
 
                     if ( Input.GetMouseButton( 1 ) )
                         RemoveSelectedHour( hour );
+
+                    // handle tooltip
+                    var selectedString = selected
+                                                      ? "WorkTab.Selected".Translate()
+                                                      : "WorkTab.NotSelected".Translate();
+                    var interactionString = "";
+                    if ( selected )
+                    {
+                        interactionString += "WorkTab.RightClickToDeselect".Translate();
+                        if ( focused )
+                            interactionString += "\n" + "WorkTab.ClickToFocus".Translate();
+                    }
+                    else
+                        interactionString += "WorkTab.ClickToSelect".Translate();
+
+                    TooltipHandler.TipRegion( hourRect,
+                                              "WorkTab.SchedulerHourTip".Translate( hour.FormatHour(),
+                                                                                    ( hour + 1 % GenDate.HoursPerDay ).FormatHour(),
+                                                                                    selectedString,
+                                                                                    interactionString ) );
+
                 }
 
-                // handle tooltip
-                var currentlySelectedString = SelectedHours.Contains(hour)
-                                                  ? "WorkTab.Selected".Translate()
-                                                  : "WorkTab.NotSelected".Translate();
-                TooltipHandler.TipRegion(hourRect, "WorkTab.SchedulerHourTip".Translate(hour.FormatHour(), (hour + 1 % GenDate.HoursPerDay).FormatHour(), currentlySelectedString));
-
                 // if this is currently the 'main' timeslot, and not the actual time, draw an eye
-                if ( hour == VisibleHour && hour != GenLocalDate.HourOfDay(Find.VisibleMap) )
+                if ( focused && hour != GenLocalDate.HourOfDay(Find.VisibleMap) )
                 {
                     Rect eyeRect = new Rect(hourRect.center.x - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize);
                     GUI.DrawTexture(eyeRect, PinEye);
                 }
 
                 // also highlight all selected timeslots
-                if ( SelectedHours.Contains( hour ) )
+                if ( selected )
                     Widgets.DrawHighlightSelected( hourRect );
 
                 // advance rect
@@ -258,13 +280,13 @@ namespace WorkTab
 
                     // loop over columns, initially add any column that is not a workbox to the start, but not after we've seen a workbox.
                     // Add widths for workboxes to width. 
-                    // NOTE: This assumes a continguous block of workboxes!
+                    // NOTE: This assumes a single contiguous block of workboxes!
                     for ( int i = 0; i < columns.Count; i++ )
                     {
                         var column = columns[i].Worker;
                         if ( column is PawnColumnWorker_WorkType || column is PawnColumnWorker_WorkGiver )
                             width += widths[i];
-                        else if ( width == 0 )
+                        else if ( width < 1 )
                             start += widths[i];
                     }
 
