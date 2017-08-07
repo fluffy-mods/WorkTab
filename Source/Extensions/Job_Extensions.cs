@@ -36,6 +36,9 @@ namespace WorkTab
 
         public static string DefaultIconPath(this JobDef job)
         {
+            if (job == null)
+                return DefaultJobIconPath;
+
             // long list of vanilla jobs with presets
             // combat
             if (job == JobDefOf.AttackMelee || 
@@ -58,7 +61,9 @@ namespace WorkTab
                 job == JobDefOf.PrisonerExecution || 
                 job == JobDefOf.PrisonerFriendlyChat || 
                 job == JobDefOf.ReleasePrisoner || 
-                job == JobDefOf.TakeWoundedPrisonerToBed)
+                job == JobDefOf.TakeWoundedPrisonerToBed ||
+                job == JobDefOf.Kidnap ||
+                job == JobDefOf.CarryDownedPawnToExit )
                 return "UI/Icons/Various/handcuffs";
 
             // trade 
@@ -189,22 +194,63 @@ namespace WorkTab
                 job == JobDefOf.Uninstall || 
                 job == JobDefOf.Deconstruct ||
                 job == JobDefOf.BuildRoof || 
-                job == JobDefOf.RemoveRoof )
+                job == JobDefOf.RemoveRoof)
                 return "UI/Icons/Various/hammer";
 
             // repair
             if (job == JobDefOf.FixBrokenDownBuilding || 
-                job == JobDefOf.Repair)
+                job == JobDefOf.Repair ||
+                job == JobDefOf2.Maintain ||
+                job == JobDefOf.RearmTrap )
                 return "UI/Icons/Various/wrench";
 
             // cook
             if ( job == JobDefOf.DeliverFood )
                 return "UI/Icons/Various/chef";
 
+            // sick
+            if (job == JobDefOf.WaitDowned ||
+                job == JobDefOf.Vomit )
+                return "UI/Icons/Various/sick";
+
+            // wear 
+            if (job == JobDefOf.Equip ||
+                job == JobDefOf.Wear )
+                return "UI/Icons/Various/wear";
+
+            // undress
+            if (job == JobDefOf.RemoveApparel ||
+                job == JobDefOf.Strip ||
+                job == JobDefOf.DropEquipment)
+                return "UI/Icons/Various/wear";
+
+            // take
+            if (job == JobDefOf.TakeInventory)
+                return "UI/Icons/Various/take";
+
+            // drop
+            if (job == JobDefOf.UnloadInventory ||
+                job == JobDefOf.UnloadYourInventory)
+                return "UI/Icons/Various/drop";
+
+            // action
+            if (job == JobDefOf.Open ||
+                job == JobDefOf.EnterCryptosleepCasket ||
+                job == JobDefOf.UseNeurotrainer ||
+                job == JobDefOf.UseArtifact ||
+                job == JobDefOf.Flick ||
+                job == JobDefOf.EnterTransporter ||
+                job == JobDefOf.Steal)
+                return "UI/Icons/Various/hand";
+
             // bills
             // TODO: Try to split bills to type
             if (job == JobDefOf.DoBill)
                 return "UI/Icons/Various/star";
+
+            // known unknown
+            if (job == JobDefOf.UseVerbOnThing)
+                return DefaultJobIconPath;
 
             Logger.Debug( $"No icon set for JobDef {job.defName}." );
             return DefaultJobIconPath;

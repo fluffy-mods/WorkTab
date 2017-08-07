@@ -30,5 +30,6 @@ namespace WorkTab
         public static JobDef ViewArt;
         public static JobDef GoForWalk;
         public static JobDef BuildSnowman;
+        public static JobDef Maintain;
     }
 }
