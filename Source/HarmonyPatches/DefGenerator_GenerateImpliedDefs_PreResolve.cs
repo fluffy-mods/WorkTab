@@ -42,6 +42,12 @@ namespace WorkTab
                 column.PostLoad();
                 DefDatabase<PawnColumnDef>.Add( column );
             }
+
+            // replace and move copy/paste to the right
+            var copyPasteColumn = workTable.columns.Find(c => c.defName == "CopyPasteWorkPriorities");
+            workTable.columns.Remove(copyPasteColumn);
+            // Note; the far right column is a spacer to take all remaining available space, so index should be count - 2 (count - 1 before insert).
+            workTable.columns.Insert( workTable.columns.Count - 1, DefDatabase<PawnColumnDef>.GetNamed("CopyPasteDetailedWorkPriorities"));
         }
     }
 }

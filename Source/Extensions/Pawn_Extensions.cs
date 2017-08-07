@@ -78,7 +78,7 @@ namespace WorkTab
             PriorityManager.Get[pawn].Recache(workgiver);
         }
 
-        public static void SetPriority(Pawn pawn, WorkGiverDef workgiver, int priority, int hour, bool recache = true )
+        public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, int hour, bool recache = true )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);

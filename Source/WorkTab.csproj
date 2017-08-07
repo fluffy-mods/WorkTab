@@ -65,6 +65,7 @@
     <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
     <Compile Include="PawnColumns\IAlternatingColumn.cs" />
     <Compile Include="PawnColumns\IExpandableColumn.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_CopyPasteDetailedWorkPriorities.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Job.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Mood.cs" />
     <Compile Include="Utilities\DefOf.cs" />

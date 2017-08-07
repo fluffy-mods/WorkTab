@@ -107,18 +107,18 @@ namespace WorkTab
             _partScheduledWorkType[worktype] = _everScheduledWorkType[worktype] && workgivers.Any(wg => pawn.GetPriorities(wg).All(p => p == 0));
         }
 
-        public WorkPriorityTracker this[ WorkGiverDef index ]
+        public WorkPriorityTracker this[ WorkGiverDef workgiver ]
         {
             get
             {
-                if ( !priorities.ContainsKey( index ) )
+                if ( !priorities.ContainsKey( workgiver ) )
                 {
-                    Logger.Debug( $"requested {index.defName} priorities for {pawn.LabelShort}, which did not yet exist." );
-                    priorities.Add( index, new WorkPriorityTracker( pawn, index ) );
+                    Logger.Debug( $"requested {workgiver.defName} priorities for {pawn.LabelShort}, which did not yet exist." );
+                    priorities.Add( workgiver, new WorkPriorityTracker( pawn, workgiver ) );
                 }
-                return priorities[index];
+                return priorities[workgiver];
             }
-            set => priorities[index] = value;
+            set => priorities[workgiver] = value;
         }
 
         public PawnPriorityTracker(){

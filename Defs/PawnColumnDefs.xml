@@ -19,4 +19,9 @@
     <headerIconSize>(16,16)</headerIconSize>
   </PawnColumnDef>
 
+  <PawnColumnDef>
+    <defName>CopyPasteDetailedWorkPriorities</defName>
+    <workerClass>WorkTab.PawnColumnWorker_CopyPasteDetailedWorkPriorities</workerClass>
+  </PawnColumnDef>
+
 </Defs>
