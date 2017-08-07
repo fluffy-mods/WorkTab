@@ -2,8 +2,8 @@
 "workshopitem"
 {
   "appid" "294100"
-  "contentfolder" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\WorkTab"
-  "previewfile" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
+  "contentfolder" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab"
+  "previewfile" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
   "visibilitiy" "0"
   "title" "Work Tab"
   "description" "Provides a vastly more customizable work tab.
@@ -45,12 +45,28 @@ All original code in this mod is licensed under the [url=https://opensource.org/
 Parts of the code in this mod, and some content may be licensed by their original authors. If this is the case, the original author & license will either be given in the source code, or be in a LICENSE file next to the content. Please do not decompile my mods, but use the original source code available on [url=https://github.com/FluffierThanThou/WorkTab/]GitHub[/url], so license information in the source code is preserved.
 
 [h1]Version[/h1]
-This is version v0.17.0.6
+This is version v0.17.0.7
 
 "
-  "changenote" "hook up timed priorities backend
-16x16 icons are just better.
-start implementing maintab drawer"
+  "changenote" "force priority recache after switching numeric/toggle mode
+do not use numeric priorities when viewing toggled priorities
+tweak scheduler icon offsets and deselect interaction
+fully implement scheduler
+margins around background indicators, better alignment of scheduled tip
+add indicators for partially (time and/or subjobs) scheduled jobs
+add some more job icons
+implement copy/paste column
+add sanity check for assigning disabled priorities (mostly for debugging purposes)
+tweak play sounds settings toggles to behave more naturally
+tweak scheduler tooltip, have sounds obey settings
+implement user settings
+cache tooltips and scheduled/partial status
+add schedule tooltip
+allow toggling scheduler, tweak scheduler placement/margins
+force update of column size caches before expanding/collapsing worktypes
+add timekeeper component
+implement time bar
+align time bar with workbox area"
   "publishedfileid" "725219116"
 }
 
