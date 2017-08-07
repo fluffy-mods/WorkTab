@@ -28,6 +28,14 @@ namespace WorkTab
             return priorities.Min();
         }
 
+        public static int[] GetPriorities(this Pawn pawn, WorkTypeDef worktype)
+        {
+            int[] priorities = new int[GenDate.HoursPerDay];
+            for (int hour = 0; hour < GenDate.HoursPerDay; hour++)
+                priorities[hour] = pawn.GetPriority(worktype, hour);
+            return priorities;
+        }
+
         public static int GetPriority(this Pawn pawn, WorkGiverDef workgiver, int hour )
         {
             if (hour < 0)
@@ -35,6 +43,11 @@ namespace WorkTab
 
             Logger.Trace($"Getting {pawn.LabelShort}'s {workgiver.defName} priority for {hour}");
             return PriorityManager.Get[pawn][workgiver][hour];
+        }
+
+        public static int[] GetPriorities(this Pawn pawn, WorkGiverDef workgiver)
+        {
+            return PriorityManager.Get[pawn][workgiver].Priorities;
         }
 
         public static void SetPriority( this Pawn pawn, WorkTypeDef worktype, int priority, List<int> hours )
@@ -74,6 +87,16 @@ namespace WorkTab
         public static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
         {
             return !workgiver.requiredCapacities.Any( c => !pawn.health.capacities.CapableOf( c ) );
+        }
+
+        public static bool EverAssignedTo(this Pawn pawn, WorkGiverDef workgiver)
+        {
+            return PriorityManager.Get[pawn][workgiver].EverAssigned;
+        }
+
+        public static bool EverAssignedTo(this Pawn pawn, WorkTypeDef worktype)
+        {
+            return worktype.WorkGivers().Any(workgiver => EverAssignedTo(pawn, workgiver));
         }
     }
 }

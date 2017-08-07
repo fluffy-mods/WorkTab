@@ -47,7 +47,7 @@ namespace WorkTab
             var box = new Rect( pos.x, pos.y, WorkTypeBoxSize, WorkTypeBoxSize );
 
             // plop in the tooltip
-            Func<string> tipGetter = delegate { return WidgetsWork.TipForPawnWorker( pawn, worktype, incapable ); };
+            Func<string> tipGetter = delegate { return WorkUtilities.TipForPawnWorker( pawn, worktype, incapable ); };
             TooltipHandler.TipRegion( box, tipGetter, pawn.thingIDNumber ^ worktype.GetHashCode() );
 
             // bail out if worktype is disabled (or pawn has no background story).

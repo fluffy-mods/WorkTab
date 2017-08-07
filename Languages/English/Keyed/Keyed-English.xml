@@ -29,4 +29,7 @@
 	<noon>noon</noon>
 	<WorkTab.SchedulerWholeDay>Select whole day</WorkTab.SchedulerWholeDay>
 	<WorkTab.SchedulerCurrentTimeOnly>Select current hour</WorkTab.SchedulerCurrentTimeOnly>
+
+    <!-- detailed tooltips  -->
+    <WorkTab.XIsAssignedToY>{0} is assigned to {1}</WorkTab.XIsAssignedToY>
 </LanguageData>

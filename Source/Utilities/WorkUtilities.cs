@@ -24,9 +24,7 @@ namespace WorkTab
                 _drawWorkBoxBackgroundMethodInfo = typeof(WidgetsWork).GetMethod("DrawWorkBoxBackground",
                                                                                     AccessTools.all);
                 if (_drawWorkBoxBackgroundMethodInfo == null)
-                {
                     throw new NullReferenceException("DrawWorkBoxBackground method info not found!");
-                }
             }
 
             _drawWorkBoxBackgroundMethodInfo.Invoke(null, new object[] { box, pawn, worktype });
@@ -92,10 +90,66 @@ namespace WorkTab
                            "RelevantSkills".Translate( skills, pawn.skills.AverageOfRelevantSkillsFor( workgiver.workType ), 20 );
                 }
             }
+
             if (incapableBecauseOfCapacities)
-            {
                 tip += "\n\n" + "IncapableOfWorkTypeBecauseOfCapacities".Translate();
+
+            if (pawn.EverAssignedTo(workgiver))
+                tip += "\n\n" + TimeTableTip(pawn, pawn.GetPriorities(workgiver), workgiver.label);
+
+            return tip;
+        }
+
+        public static string TipForPawnWorker(Pawn pawn, WorkTypeDef worktype, bool incapableBecauseOfCapacities)
+        {
+            string tip = WidgetsWork.TipForPawnWorker(pawn, worktype, incapableBecauseOfCapacities);
+            if (pawn.EverAssignedTo(worktype))
+                tip += "\n\n" + TimeTableTip(pawn, pawn.GetPriorities(worktype), worktype.gerundLabel);
+
+            return tip;
+        }
+
+        public static string TimeTableTip(Pawn pawn, int[] priorities, string label)
+        {
+            string tip = "WorkTab.XIsAssignedToY".Translate(pawn.Name.ToStringShort, label);
+
+            int start = -1;
+            int priority = -1;
+
+            for (int hour = 0; hour < GenDate.HoursPerDay; hour++)
+            {
+                int curpriority = priorities[hour];
+
+                // stop condition
+                if (curpriority != priority && start >= 0)
+                {
+                    tip += "\n";
+                    tip += start.FormatHour() + " - " + hour.FormatHour();
+                    if (Find.PlaySettings.useWorkPriorities)
+                        tip += " (" + priority + ")";
+
+                    // reset start & priority
+                    start = -1;
+                    priority = -1;
+                }
+
+                // start condition
+                if (curpriority > 0 && curpriority != priority && start < 0)
+                {
+                    priority = curpriority;
+                    start = hour;
+                }
             }
+
+            // final check for x till midnight
+            if (start > 0)
+            {
+                tip += "\n";
+                tip += start.FormatHour() + " - " + 0.FormatHour();
+                if (Find.PlaySettings.useWorkPriorities)
+                    tip += " (" + priority + ")";
+            }
+
             return tip;
         }
     }

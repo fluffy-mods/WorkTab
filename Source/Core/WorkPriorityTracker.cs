@@ -8,7 +8,9 @@ namespace WorkTab {
         private WorkGiverDef workgiver;
         private int[] priorities;
         protected internal Pawn pawn;
-
+        private string _tooltip;
+        private bool _variesOverTime;
+        
         public WorkPriorityTracker(){ 
             // Scribe
         }
@@ -38,6 +40,10 @@ namespace WorkTab {
         }
 
         public WorkGiverDef Workgiver => workgiver;
+
+        public bool EverAssigned => priorities.Any(p => p > 0);
+
+        public int[] Priorities => priorities;
 
         public void ExposeData()
         {
