@@ -10,7 +10,7 @@ namespace WorkTab
     [StaticConstructorOnStartup]
     public static class Resources
     {
-        public static readonly Texture2D 
+        public static readonly Texture2D
             SortingIcon,
             SortingDescendingIcon,
             MoodHappy,
@@ -25,7 +25,8 @@ namespace WorkTab
             PinEye,
             PinClock,
             Clock,
-            Half;
+            Half,
+            Now;
 
         static Resources()
         {
@@ -39,11 +40,12 @@ namespace WorkTab
             PrioritiesDetailed = ContentFinder<Texture2D>.Get( "UI/Icons/numbers" );
             PrioritiesSimple = ContentFinder<Texture2D>.Get( "UI/Icons/checks" );
             PrioritiesTimed = ContentFinder<Texture2D>.Get( "UI/Icons/clock-scheduler" );
-            PrioritiesWholeDay = ContentFinder<Texture2D>.Get( "UI/Icons/clock-24hours" );
+            PrioritiesWholeDay = ContentFinder<Texture2D>.Get( "UI/Icons/whole-day" );
             PinEye = ContentFinder<Texture2D>.Get( "UI/Icons/pin-eye" );
             PinClock = ContentFinder<Texture2D>.Get( "UI/Icons/pin-clock" );
             Clock = ContentFinder<Texture2D>.Get("UI/Icons/clock");
             Half = ContentFinder<Texture2D>.Get("UI/Icons/half");
+            Now = ContentFinder<Texture2D>.Get("UI/Icons/now");
         }
     }
 }

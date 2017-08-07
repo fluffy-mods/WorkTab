@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Security;
 using System.Reflection;
 using Harmony;
 using RimWorld;
@@ -23,12 +22,20 @@ namespace WorkTab
         private static FieldInfo _tableFieldInfo;
         private static List<int> _selectedHours = TimeUtilities.WholeDay;
         private static int _visibleHour = -1;
-        public static List<int> SelectedHours => _selectedHours;
-        public static int VisibleHour => _visibleHour;
 
-        public static void AddSelectedHour( int hour )
+        public static List<int> SelectedHours => PriorityManager.Get.ShowScheduler
+            ? _selectedHours
+            : TimeUtilities.WholeDay;
+
+        public static int VisibleHour => PriorityManager.Get.ShowScheduler
+            ? _visibleHour
+            : -1;
+
+        public static void AddSelectedHour( int hour, bool replace )
         {
-            if (!_selectedHours.Contains( hour ))
+            if (replace)
+                _selectedHours.Clear();
+            if (replace || !_selectedHours.Contains( hour ))
                 _selectedHours.Add( hour );
             _visibleHour = hour;
         }
@@ -41,13 +48,7 @@ namespace WorkTab
             if ( _visibleHour == hour )
                 _visibleHour = hour;
         }
-
-        public static void SelectCurrentHour()
-        {
-            _selectedHours = new List<int>();
-            AddSelectedHour(GenLocalDate.HourOfDay(Find.VisibleMap) );
-        }
-
+        
         public static void SelectWholeDay()
         {
             _selectedHours = TimeUtilities.WholeDay;
@@ -155,7 +156,10 @@ namespace WorkTab
 
         private void DoTimeBar( Rect rect )
         {
+            // set up rects
             Rect bar = TimeBarRect;
+            Rect buttons = new Rect(rect.xMin, bar.yMin + bar.height / 3f, bar.xMin - rect.xMin, bar.height * 2/3f);
+            Rect button = new Rect(buttons.xMax - buttons.height, buttons.yMin, buttons.height, buttons.height);
 
             // split the available area into rects. bottom 2/3's are used for 'buttons', with text for times.
             float hourWidth = bar.width / GenDate.HoursPerDay;
@@ -165,7 +169,13 @@ namespace WorkTab
             Rect hourRect = new Rect( bar.xMin, bar.yMax - barheight, hourWidth, barheight );
 
             // draw buttons
-            //Rect buttonRect = new Rect(bar.xMax + Margin * 2 + (FavouritesColumnWidth - timeIndicatorSize) * 1 / 2f, bar.yMin + (bar.height - timeIndicatorSize) * 2 / 3f, timeIndicatorSize, timeIndicatorSize);
+            TooltipHandler.TipRegion(button, "WorkTab.SelectWholeDayTip".Translate());
+            if (Widgets.ButtonImage( button, PrioritiesWholeDay, Color.white, GenUI.MouseoverColor ))
+                SelectWholeDay();
+            button.x -= button.height + Constants.Margin;
+            TooltipHandler.TipRegion(button, "WorkTab.SelectCurrentHourTip".Translate());
+            if (Widgets.ButtonImage(button, Now, Color.white, GenUI.MouseoverColor))
+                AddSelectedHour(GenLocalDate.HourOfDay(Find.VisibleMap), true);
 
             // draw first tick
             GUI.color = Color.grey;
@@ -212,7 +222,7 @@ namespace WorkTab
                 if (Mouse.IsOver(hourRect))
                 {
                     if (Input.GetMouseButton(0))
-                        AddSelectedHour( hour );
+                        AddSelectedHour( hour, Event.current.shift );
 
                     if ( Input.GetMouseButton( 1 ) )
                         RemoveSelectedHour( hour );
