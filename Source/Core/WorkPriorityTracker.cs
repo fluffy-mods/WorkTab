@@ -31,6 +31,13 @@ namespace WorkTab {
                 return priorities[hour];
             }
             set{
+                // check if we're allowed to do this job
+                if (value > 0 && pawn.story.WorkTypeIsDisabled(workgiver.workType))
+                {
+                    Logger.Debug($"Tried to set priority for {workgiver.label} to {pawn.LabelShort}, which is incapable of that work.");
+                    return;
+                }
+
                 // update priority
                 priorities[hour] = value;
 
