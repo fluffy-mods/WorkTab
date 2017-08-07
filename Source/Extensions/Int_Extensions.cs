@@ -9,7 +9,6 @@ namespace WorkTab
 {
     public static class Int_Extensions
     {
-
         public static string FormatHour( this int hour )
         {
             // 24-hour is simple

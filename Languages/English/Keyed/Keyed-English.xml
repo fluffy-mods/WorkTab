@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
+    <WorkTab>Work Tab</WorkTab>
+
     <!-- Main tab toggle buttons -->
 	<WorkTab.PrioritiesSimple>Currently showing numeric priorities\n\nClick to switch to on/off priorities</WorkTab.PrioritiesSimple>
 	<WorkTab.PrioritiesDetailed>Currently showing on/off priorities\n\nClick to switch to numeric priorities</WorkTab.PrioritiesDetailed>
@@ -12,11 +14,15 @@
     <WorkTab.ExpandWorkgiversColumnTip>Ctrl + click to expand list of detailed priorities</WorkTab.ExpandWorkgiversColumnTip>
     <WorkTab.CollapseWorkgiversColumnTip>Ctrl + click to collapse list of detailed priorities</WorkTab.CollapseWorkgiversColumnTip>
 
-    <!-- settings labels and tooltips -->
+    <!-- settings -->
 	<WorkTab.24HourMode>24 hour mode</WorkTab.24HourMode>
 	<WorkTab.24HourModeTip>Should times be shown in 12h (e.g. noon, 9p.m.) or 24h (e.g. 12:00, 21:00) mode?</WorkTab.24HourModeTip>
 	<WorkTab.MaxPriority>Levels of priority</WorkTab.MaxPriority>
 	<WorkTab.MaxPriorityTip>How many levels of priority should we use? (Limited to between 4 and 9)</WorkTab.MaxPriorityTip>
+    <WorkTab.PlaySounds>Sounds</WorkTab.PlaySounds>
+    <WorkTab.PlaySoundsTip>Play sounds when a priority is changed?</WorkTab.PlaySoundsTip>
+    <WorkTab.PlayCrunch>Crunchy sounds</WorkTab.PlayCrunch>
+    <WorkTab.PlayCrunchTip>Play a crunchy sound when a pawn is assigned to a job they are not skilled at?</WorkTab.PlayCrunchTip>
     
     <!-- scheduler -->
     <WorkTab.SchedulerHourTip>{0}-{1} is currently {2}\n\n{3}</WorkTab.SchedulerHourTip>
@@ -32,4 +38,5 @@
 
     <!-- detailed tooltips  -->
     <WorkTab.XIsAssignedToY>{0} is assigned to {1}</WorkTab.XIsAssignedToY>
+
 </LanguageData>

@@ -4,6 +4,7 @@
 
 using System.Reflection;
 using Harmony;
+using UnityEngine;
 using Verse;
 
 namespace WorkTab
@@ -21,6 +22,17 @@ namespace WorkTab
 #endif
             var harmony = HarmonyInstance.Create( "fluffy.worktab" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
+        }
+        
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            base.DoSettingsWindowContents(inRect);
+            Settings.DoWindowContents(inRect);
+        }
+
+        public override string SettingsCategory()
+        {
+            return "WorkTab".Translate();
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Core\Resources.cs" />
     <Compile Include="Extensions\Int_Extensions.cs" />
     <Compile Include="Extensions\Job_Extensions.cs" />
+    <Compile Include="Extensions\Listing_Extensions.cs" />
     <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
     <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />

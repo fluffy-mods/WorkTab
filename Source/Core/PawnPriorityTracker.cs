@@ -95,7 +95,7 @@ namespace WorkTab
             var workgivers = worktype.WorkGivers();
             var priorities = pawn.GetPriorities(worktype);
 
-            // first update all the workgivers (if bubbling down, or not set yet)
+            // first update all the workgivers (if bubbling down, or not yet set)
             foreach (var workgiver in workgivers)
                 if (bubble || !_everScheduledWorkGiver.ContainsKey(workgiver)) // using _everScheduled as a proxy - assumes all these are cached at the same time!
                     Recache(workgiver, false);
