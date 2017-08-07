@@ -93,9 +93,13 @@ namespace WorkTab
 
             if (incapableBecauseOfCapacities)
                 tip += "\n\n" + "IncapableOfWorkTypeBecauseOfCapacities".Translate();
+            
+            var tracker = PriorityManager.Get[pawn];
+            if (tracker.EverScheduled(workgiver))
+                tip += "\n\n" + "WorkTab.XIsAssignedToY".Translate(pawn.Name.ToStringShort, workgiver.label);
 
-            if (pawn.EverAssignedTo(workgiver))
-                tip += "\n\n" + TimeTableTip(pawn, pawn.GetPriorities(workgiver), workgiver.label);
+            if (tracker.TimeScheduled(workgiver))
+                tip += tracker.TimeScheduledTip(workgiver);
 
             return tip;
         }
@@ -103,16 +107,20 @@ namespace WorkTab
         public static string TipForPawnWorker(Pawn pawn, WorkTypeDef worktype, bool incapableBecauseOfCapacities)
         {
             string tip = WidgetsWork.TipForPawnWorker(pawn, worktype, incapableBecauseOfCapacities);
-            if (pawn.EverAssignedTo(worktype))
-                tip += "\n\n" + TimeTableTip(pawn, pawn.GetPriorities(worktype), worktype.gerundLabel);
+
+            var tracker = PriorityManager.Get[pawn];
+            if (tracker.EverScheduled(worktype))
+                tip += "\n\n" + "WorkTab.XIsAssignedToY".Translate(pawn.Name.ToStringShort, worktype.gerundLabel);
+
+            if (tracker.TimeScheduled(worktype))
+                tip += tracker.TimeScheduledTip(worktype);
 
             return tip;
         }
 
-        public static string TimeTableTip(Pawn pawn, int[] priorities, string label)
+        public static string TimeScheduledTip(Pawn pawn, int[] priorities, string label)
         {
-            string tip = "WorkTab.XIsAssignedToY".Translate(pawn.Name.ToStringShort, label);
-
+            string tip = "";
             int start = -1;
             int priority = -1;
 

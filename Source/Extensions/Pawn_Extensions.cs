@@ -53,25 +53,32 @@ namespace WorkTab
         public static void SetPriority( this Pawn pawn, WorkTypeDef worktype, int priority, List<int> hours )
         {
             foreach (int hour in (hours ?? WholeDay))
-                SetPriority(pawn, worktype, priority, hour);
+                SetPriority(pawn, worktype, priority, hour, false);
+
+            PriorityManager.Get[pawn].Recache(worktype);
         }
 
-        public static void SetPriority(Pawn pawn, WorkTypeDef worktype, int priority, int hour )
+        public static void SetPriority(Pawn pawn, WorkTypeDef worktype, int priority, int hour, bool recache = true )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
 
             foreach (WorkGiverDef workgiver in worktype.WorkGivers())
-                SetPriority(pawn, workgiver, priority, hour);
+                SetPriority(pawn, workgiver, priority, hour, false);
+
+            if (recache)
+                PriorityManager.Get[pawn].Recache(worktype);
         }
 
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, List<int> hours )
         {
             foreach (int hour in (hours ?? WholeDay))
-                SetPriority(pawn, workgiver, priority, hour);
+                SetPriority(pawn, workgiver, priority, hour, false);
+
+            PriorityManager.Get[pawn].Recache(workgiver);
         }
 
-        public static void SetPriority(Pawn pawn, WorkGiverDef workgiver, int priority, int hour )
+        public static void SetPriority(Pawn pawn, WorkGiverDef workgiver, int priority, int hour, bool recache = true )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
@@ -82,21 +89,14 @@ namespace WorkTab
 
             Logger.Trace( $"Setting {pawn.LabelShort}'s {workgiver.defName} priority for {hour} to {priority}"  );
             PriorityManager.Set[pawn][workgiver][hour] = priority;
+            
+            if (recache)
+                PriorityManager.Get[pawn].Recache(workgiver);
         }
 
         public static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
         {
             return !workgiver.requiredCapacities.Any( c => !pawn.health.capacities.CapableOf( c ) );
-        }
-
-        public static bool EverAssignedTo(this Pawn pawn, WorkGiverDef workgiver)
-        {
-            return PriorityManager.Get[pawn][workgiver].EverAssigned;
-        }
-
-        public static bool EverAssignedTo(this Pawn pawn, WorkTypeDef worktype)
-        {
-            return worktype.WorkGivers().Any(workgiver => EverAssignedTo(pawn, workgiver));
         }
     }
 }
