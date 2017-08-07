@@ -25,7 +25,11 @@ namespace WorkTab
                 return 0;
 
             // otherwise, return the lowest number (highest priority).
-            return priorities.Min();
+            if (Find.PlaySettings.useWorkPriorities)
+                return priorities.Min();
+
+            // or, in simple mode, just 3.
+            return 3;
         }
 
         public static int[] GetPriorities(this Pawn pawn, WorkTypeDef worktype)
@@ -42,7 +46,11 @@ namespace WorkTab
                 hour = GenLocalDate.HourOfDay(pawn);
 
             Logger.Trace($"Getting {pawn.LabelShort}'s {workgiver.defName} priority for {hour}");
-            return PriorityManager.Get[pawn][workgiver][hour];
+            if (Find.PlaySettings.useWorkPriorities)
+                return PriorityManager.Get[pawn][workgiver][hour];
+            
+            // or in simple mode, 3 or 0
+            return PriorityManager.Get[pawn][workgiver][hour] > 0 ? 3 : 0;
         }
 
         public static int[] GetPriorities(this Pawn pawn, WorkGiverDef workgiver)
