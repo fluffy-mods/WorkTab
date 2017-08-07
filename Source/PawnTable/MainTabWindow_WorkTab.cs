@@ -46,7 +46,7 @@ namespace WorkTab
                 _selectedHours.Remove( hour );
 
             if ( _visibleHour == hour )
-                _visibleHour = hour;
+                _visibleHour = -1;
         }
         
         public static void SelectWholeDay()
@@ -159,7 +159,7 @@ namespace WorkTab
             // set up rects
             Rect bar = TimeBarRect;
             Rect buttons = new Rect(rect.xMin, bar.yMin + bar.height / 3f, bar.xMin - rect.xMin, bar.height * 2/3f);
-            Rect button = new Rect(buttons.xMax - buttons.height, buttons.yMin, buttons.height, buttons.height);
+            Rect button = new Rect(buttons.xMax - buttons.height * 2f, buttons.yMin, buttons.height, buttons.height);
 
             // split the available area into rects. bottom 2/3's are used for 'buttons', with text for times.
             float hourWidth = bar.width / GenDate.HoursPerDay;
