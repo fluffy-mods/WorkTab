@@ -37,7 +37,12 @@ namespace WorkTab
                 if ( value == Find.PlaySettings.useWorkPriorities )
                     return;
 
+                // update setting
                 Find.PlaySettings.useWorkPriorities = value;
+
+                // force re-cache of all pawns
+                foreach (var pawn in priorities.Keys.ToList())
+                    pawn.workSettings.Notify_UseWorkPrioritiesChanged();   
             }
         }
         private List<Pawn> pawnsScribe;
