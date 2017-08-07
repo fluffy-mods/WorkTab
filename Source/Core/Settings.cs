@@ -24,7 +24,8 @@ namespace WorkTab
             options.TextFieldNumericLabeled<int>("WorkTab.MaxPriority".Translate(), ref maxPriority, ref maxPriorityBuffer, 4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
             options.CheckboxLabeled("WorkTab.24HourMode".Translate(), ref TwentyFourHourMode, "WorkTab.24HourModeTip".Translate() );
             options.CheckboxLabeled("WorkTab.PlaySounds".Translate(), ref playSounds, "WorkTab.PlaySoundsTip".Translate());
-            options.CheckboxLabeled("WorkTab.PlayCrunch".Translate(), ref playCrunch, playSounds, "WorkTab.PlayCrunchTip".Translate());
+            playCrunch = playSounds && playCrunch; // disabling sounds also disables crunch.
+            options.CheckboxLabeled("WorkTab.PlayCrunch".Translate(), ref playCrunch, !playSounds, "WorkTab.PlayCrunchTip".Translate());
             options.End();
         }
 
