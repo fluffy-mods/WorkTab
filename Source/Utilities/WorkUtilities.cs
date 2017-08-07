@@ -55,6 +55,24 @@ namespace WorkTab
                 GUI.DrawTexture( box.ContractedBy( 3f ), WidgetsWork.WorkBoxCheckTex );
         }
 
+        public static void DrawTimeScheduled(Rect box)
+        {
+            // draw clock icon in bottom left
+            var colour = GUI.color;
+            GUI.color = Color.grey;
+            GUI.DrawTexture(new Rect(box.xMin, box.yMin + box.height / 2f, box.height / 2f, box.width / 2f), Resources.Clock);
+            GUI.color = colour;
+        }
+
+        public static void DrawPartScheduled(Rect box)
+        {
+            // draw clock icon in top left
+            var colour = GUI.color;
+            GUI.color = Color.grey;
+            GUI.DrawTexture(new Rect(box.xMin, box.yMin, box.height / 2f, box.width / 2f), Resources.Half);
+            GUI.color = colour;
+        }
+
         private static Color ColorOfPriority(int priority)
         {
             // first 1/3rd of priority levels lerp from green to white, then lerp to grey

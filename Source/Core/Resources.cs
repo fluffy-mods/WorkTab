@@ -10,19 +10,22 @@ namespace WorkTab
     [StaticConstructorOnStartup]
     public static class Resources
     {
-        public static readonly Texture2D SortingIcon,
-                                         SortingDescendingIcon,
-                                         MoodHappy,
-                                         MoodContent,
-                                         MoodDiscontent,
-                                         MoodUnhappy,
-                                         MoodBroken,
-                                         PrioritiesDetailed,
-                                         PrioritiesSimple,
-                                         PrioritiesTimed,
-                                         PrioritiesWholeDay,
-                                         PinEye,
-                                         PinClock;
+        public static readonly Texture2D 
+            SortingIcon,
+            SortingDescendingIcon,
+            MoodHappy,
+            MoodContent,
+            MoodDiscontent,
+            MoodUnhappy,
+            MoodBroken,
+            PrioritiesDetailed,
+            PrioritiesSimple,
+            PrioritiesTimed,
+            PrioritiesWholeDay,
+            PinEye,
+            PinClock,
+            Clock,
+            Half;
 
         static Resources()
         {
@@ -39,6 +42,8 @@ namespace WorkTab
             PrioritiesWholeDay = ContentFinder<Texture2D>.Get( "UI/Icons/clock-24hours" );
             PinEye = ContentFinder<Texture2D>.Get( "UI/Icons/pin-eye" );
             PinClock = ContentFinder<Texture2D>.Get( "UI/Icons/pin-clock" );
+            Clock = ContentFinder<Texture2D>.Get("UI/Icons/clock");
+            Half = ContentFinder<Texture2D>.Get("UI/Icons/half");
         }
     }
 }

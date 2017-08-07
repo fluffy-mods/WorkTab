@@ -79,6 +79,11 @@ namespace WorkTab
             WorkUtilities.DrawWorkBoxBackground( box, pawn, workgiver.workType );
             GUI.color = Color.white;
 
+            // draw extras
+            var tracker = PriorityManager.Get[pawn];
+            if (tracker.TimeScheduled(workgiver))
+                WorkUtilities.DrawTimeScheduled(box);
+
             // draw priorities / checks
             WorkUtilities.DrawPriority( box, pawn.GetPriority( workgiver, VisibleHour ), true );
         }
