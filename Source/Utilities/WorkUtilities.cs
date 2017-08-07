@@ -131,7 +131,7 @@ namespace WorkTab
                 // stop condition
                 if (curpriority != priority && start >= 0)
                 {
-                    tip += "\n";
+                    tip += "\n\t";
                     tip += start.FormatHour() + " - " + hour.FormatHour();
                     if (Find.PlaySettings.useWorkPriorities)
                         tip += " (" + priority + ")";

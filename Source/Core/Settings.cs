@@ -4,7 +4,6 @@
 
 using UnityEngine;
 using Verse;
-using static WorkTab.Constants;
 
 namespace WorkTab
 {

@@ -98,7 +98,7 @@ namespace WorkTab
 
                 // get new priority, play crunch if it wasn't pretty
                 int newPriority = pawn.GetPriority( def.workType, -1 );
-                if ( Settings.playCrunch &&
+                if ( Settings.playSounds && Settings.playCrunch &&
                      oldpriority == 0 && newPriority > 0 &&
                      pawn.skills.AverageOfRelevantSkillsFor( def.workType ) <= 2f )
                 {
@@ -137,13 +137,15 @@ namespace WorkTab
                 if ( active )
                 {
                     pawn.SetPriority( def.workType, 0, SelectedHours );
-                    SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                    if (Settings.playSounds)
+                        SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                 }
                 else
                 {
                     pawn.SetPriority( def.workType, Mathf.Min( Settings.maxPriority, 3 ), SelectedHours );
-                    SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-                    if ( Settings.playCrunch && pawn.skills.AverageOfRelevantSkillsFor( def.workType ) <= 2f )
+                    if (Settings.playSounds)
+                        SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                    if (Settings.playSounds && Settings.playCrunch && pawn.skills.AverageOfRelevantSkillsFor( def.workType ) <= 2f )
                     {
                         SoundDefOf.Crunch.PlayOneShotOnCamera();
                     }
@@ -297,7 +299,8 @@ namespace WorkTab
                     {
                         if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) != 0 ) )
                         {
-                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                            if (Settings.playSounds)
+                                SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                             foreach ( Pawn pawn in pawns )
                                 pawn.SetPriority( def.workType, 0, SelectedHours );
                         }
@@ -307,7 +310,8 @@ namespace WorkTab
                     {
                         if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) == 0 ) )
                         {
-                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                            if (Settings.playSounds)
+                                SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                             foreach ( Pawn pawn in pawns )
                                 pawn.SetPriority( def.workType, 3, SelectedHours );
                         }
