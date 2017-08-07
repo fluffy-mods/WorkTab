@@ -149,7 +149,8 @@ namespace WorkTab
 
             DoToggleButtons( rect );
             DoPriorityLabels( rect );
-            DoTimeBar( rect );
+            if (PriorityManager.Get.ShowScheduler)
+                DoTimeBar( rect );
         }
 
         private void DoTimeBar( Rect rect )
@@ -272,35 +273,38 @@ namespace WorkTab
             get
             {
                 if ( _timeBarRect == default( Rect ) )
-                {
-                    var widths = Traverse.Create( Table ).Field( "cachedColumnWidths" ).GetValue<List<float>>();
-                    var columns = Table.ColumnsListForReading;
-                    float start = 0;
-                    float width = 0;
-
-                    // loop over columns, initially add any column that is not a workbox to the start, but not after we've seen a workbox.
-                    // Add widths for workboxes to width. 
-                    // NOTE: This assumes a single contiguous block of workboxes!
-                    for ( int i = 0; i < columns.Count; i++ )
-                    {
-                        var column = columns[i].Worker;
-                        if ( column is PawnColumnWorker_WorkType || column is PawnColumnWorker_WorkGiver )
-                            width += widths[i];
-                        else if ( width < 1 )
-                            start += widths[i];
-                    }
-
-                    // build the rect
-                    _timeBarRect = new Rect( start, 
-                                             windowRect.height - TimeBarHeight - base.ExtraBottomSpace, 
-                                             width,
-                                             TimeBarHeight );
-
-                    Logger.Debug( "created time bar rect: " + _timeBarRect );
-                }
+                    RecacheTimeBarRect();
 
                 return _timeBarRect;
             }
+        }
+
+        public void RecacheTimeBarRect()
+        {
+            var widths = Traverse.Create(Table).Field("cachedColumnWidths").GetValue<List<float>>();
+            var columns = Table.ColumnsListForReading;
+            float start = 0;
+            float width = 0;
+
+            // loop over columns, initially add any column that is not a workbox to the start, but not after we've seen a workbox.
+            // Add widths for workboxes to width. 
+            // NOTE: This assumes a single contiguous block of workboxes!
+            for (int i = 0; i < columns.Count; i++)
+            {
+                var column = columns[i].Worker;
+                if (column is PawnColumnWorker_WorkType || column is PawnColumnWorker_WorkGiver)
+                    width += widths[i];
+                else if (width < 1)
+                    start += widths[i];
+            }
+
+            // build the rect
+            _timeBarRect = new Rect(start,
+                windowRect.height - base.ExtraBottomSpace, // note that we're not subtracting the time bar height itself, as at this point the window's height has not yet been updated to include it.
+                width,
+                TimeBarHeight);
+
+            Logger.Debug("created time bar rect: " + _timeBarRect);
         }
 
         private void DoPriorityLabels( Rect canvas )
@@ -328,18 +332,20 @@ namespace WorkTab
         {
             Rect rect = new Rect( canvas.xMax - 30f, canvas.yMin, 30f, 30f );
 
-            ButtonImageToggle(() => PriorityManager.Get.UseWorkPriorities, val => PriorityManager.Get.UseWorkPriorities = val, rect,
+            ButtonImageToggle(() => PriorityManager.Get.ShowPriorities, val => PriorityManager.Set.ShowPriorities = val, rect,
                                "WorkTab.PrioritiesDetailed".Translate(), PrioritiesDetailed,
                                "WorkTab.PrioritiesSimple".Translate(), PrioritiesSimple );
             rect.x -= 30f + Margin;
 
-            ButtonImageToggle( () => PriorityManager.Get.UseScheduler, val => PriorityManager.Get.UseScheduler = val, rect,
+            ButtonImageToggle( () => PriorityManager.Get.ShowScheduler, val => PriorityManager.Set.ShowScheduler = val, rect,
                                "WorkTab.PrioritiesTimed".Translate(), PrioritiesTimed,
                                "WorkTab.PrioritiesWholeDay".Translate(), PrioritiesWholeDay);
             rect.x -= 30f + Margin;
         }
 
-        protected override float ExtraBottomSpace => base.ExtraBottomSpace + TimeBarHeight;
+        protected override float ExtraBottomSpace => PriorityManager.Get.ShowScheduler
+            ? base.ExtraBottomSpace / 2f + TimeBarHeight // slightly less margin if we're showing the scheduler, as it already takes quite a sizeable chunk of screen space
+            : base.ExtraBottomSpace;
         protected override float ExtraTopSpace => base.ExtraTopSpace + Constants.ExtraTopSpace;
     }
 }

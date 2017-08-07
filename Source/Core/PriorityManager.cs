@@ -15,20 +15,21 @@ namespace WorkTab
     {
         public Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
 
-        private bool _useScheduler;
-        public bool UseScheduler
+        private bool _showScheduler;
+        public bool ShowScheduler
         {
-            get { return _useScheduler; }
+            get { return _showScheduler; }
             set
             {
-                if ( value == _useScheduler )
+                if ( value == _showScheduler )
                     return;
 
-                _useScheduler = value;
+                _showScheduler = value;
+                MainTabWindow_WorkTab.Instance.RecacheTimeBarRect();
             }
         }
 
-        public bool UseWorkPriorities
+        public bool ShowPriorities
         {
             get { return Find.PlaySettings.useWorkPriorities; }
             set
@@ -80,11 +81,11 @@ namespace WorkTab
             // purge null pawn elements, note that this also neatly keeps track of periodic garbage collection on autosaves
             var pawns = priorities.Keys.ToList();
             foreach( Pawn pawn in pawns )
-                if ( pawn?.Destroyed ?? true )
+                if ( pawn?.Destroyed ?? true ) // null or destroyed
                     priorities.Remove( pawn );
 
             Scribe_Collections.Look( ref priorities, "Priorities", LookMode.Reference, LookMode.Deep, ref pawnsScribe, ref pawnPriorityTrackersScribe );
-            Scribe_Values.Look( ref _useScheduler, "UseScheduler", false );
+            Scribe_Values.Look( ref _showScheduler, "ShowScheduler", false );
         }
         
     }
