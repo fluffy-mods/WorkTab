@@ -23,5 +23,11 @@
     <defName>CopyPasteDetailedWorkPriorities</defName>
     <workerClass>WorkTab.PawnColumnWorker_CopyPasteDetailedWorkPriorities</workerClass>
   </PawnColumnDef>
+  
+  <PawnColumnDef>
+    <defName>WorkTabLabel</defName>
+    <workerClass>WorkTab.PawnColumnWorker_WorkTabLabel</workerClass>
+    <widthPriority>100</widthPriority>
+  </PawnColumnDef>
 
 </Defs>

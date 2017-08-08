@@ -68,6 +68,7 @@
     <Compile Include="PawnColumns\PawnColumnWorker_CopyPasteDetailedWorkPriorities.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Job.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Mood.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_WorkTabLabel.cs" />
     <Compile Include="Utilities\DefOf.cs" />
     <Compile Include="Utilities\InteractionUtilities.cs" />
     <Compile Include="Utilities\Logger.cs" />

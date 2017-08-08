@@ -16,11 +16,17 @@ namespace WorkTab
             // replace worker on Work MainButtonDef
             DefDatabase<MainButtonDef>.GetNamed( "Work" ).tabWindowClass = typeof( MainTabWindow_WorkTab );
 
-            // insert mood and job columns after name
+            // get our table
             var workTable = PawnTableDefOf.Work;
-            var index = workTable.columns.IndexOf( PawnColumnDefOf.Label );
-            workTable.columns.Insert( index + 1, PawnColumnDefOf.Job );
-            workTable.columns.Insert( index + 2, PawnColumnDefOf.Mood );
+
+            // replace label column
+            var labelIndex = workTable.columns.IndexOf(PawnColumnDefOf.Label);
+            workTable.columns.RemoveAt(labelIndex);
+            workTable.columns.Insert( labelIndex, PawnColumnDefOf.WorkTabLabel);
+
+            // insert mood and job columns after name
+            workTable.columns.Insert( labelIndex + 1, PawnColumnDefOf.Job );
+            workTable.columns.Insert( labelIndex + 2, PawnColumnDefOf.Mood );
 
             // go over PawnColumnDefs and replace all PawnColumnWorker_WorkPriority
             foreach ( PawnColumnDef column in DefDatabase<PawnColumnDef>.AllDefs )

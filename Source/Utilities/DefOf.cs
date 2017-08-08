@@ -13,6 +13,7 @@ namespace WorkTab
         public static PawnColumnDef Mood;
         public static PawnColumnDef Job;
         public static PawnColumnDef Label;
+        public static PawnColumnDef WorkTabLabel;
     }
 
     [DefOf]
