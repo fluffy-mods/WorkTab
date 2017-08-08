@@ -19,6 +19,11 @@ namespace WorkTab
         [Conditional( "TRACE" )]
         public static void Trace( string msg ) { Log.Error( FormatMessage( msg ) ); }
 
+        public static void Error(string msg)
+        {
+            Log.Error(FormatMessage(msg));
+        }
+
         public static void Message( string msg ) { Log.Message( FormatMessage( msg ) ); }
     }
 }

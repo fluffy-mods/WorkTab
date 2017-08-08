@@ -2,6 +2,7 @@
 // Job_Extensions.cs
 // 2017-05-30
 
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace WorkTab
         public static Dictionary<JobDef, string> JobIconPaths;
         public static Dictionary<JobDef, Texture2D> JobIcons;
         public const string DefaultJobIconPath = "UI/Icons/Various/unknown";
+        public static Texture2D DefaultJobIcon;
 
         static Job_Extensions()
         {
@@ -30,6 +32,9 @@ namespace WorkTab
 
             // initialize job icons dictionary
             JobIcons = new Dictionary<JobDef, Texture2D>();
+
+            // default icon as a fallback
+            DefaultJobIcon = ContentFinder<Texture2D>.Get(DefaultJobIconPath);
         }
 
         public static Texture2D StatusIcon( this JobDef job )
@@ -38,9 +43,19 @@ namespace WorkTab
             if (JobIcons.TryGetValue(job, out icon))
                 return icon;
 
-            Logger.Debug($"Loading icon '{JobIconPaths[job]}' for job '{job.defName}'");
-            icon = ContentFinder<Texture2D>.Get(JobIconPaths[job]);
-            JobIcons.Add( job, icon );
+            // TODO: had some odd reports of missing keys - remove the try block once resolved
+            try
+            {
+                Logger.Debug($"Loading icon '{JobIconPaths[job]}' for job '{job.defName}'");
+                icon = ContentFinder<Texture2D>.Get(JobIconPaths[job]);
+                JobIcons.Add(job, icon);
+            }
+            catch ( Exception e )
+            {
+                icon = DefaultJobIcon;
+                Logger.Error( $"Error while loading icon '{JobIconPaths[job]}' for job '{job.defName}';\n{e}");
+            }
+
             return icon;
         }
 
