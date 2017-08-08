@@ -35,6 +35,11 @@ namespace WorkTab
             TooltipHandler.TipRegion(rect, GetTooltip(pawn));
         }
 
+        public override int Compare(Pawn a, Pawn b)
+        {
+            return String.Compare( a.NameStringShort, b.NameStringShort, StringComparison.CurrentCultureIgnoreCase );
+        }
+
         public string GetTooltip(Pawn pawn)
         {
             return "WorkTab.LabelCellTip".Translate() + "\n\n" + pawn.GetTooltip().text;

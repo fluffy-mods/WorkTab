@@ -27,6 +27,7 @@
   <PawnColumnDef>
     <defName>WorkTabLabel</defName>
     <workerClass>WorkTab.PawnColumnWorker_WorkTabLabel</workerClass>
+    <sortable>true</sortable>
     <widthPriority>100</widthPriority>
   </PawnColumnDef>
 
