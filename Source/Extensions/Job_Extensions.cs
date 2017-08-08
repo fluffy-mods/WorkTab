@@ -18,10 +18,15 @@ namespace WorkTab
 
         static Job_Extensions()
         {
+            LongEventHandler.ExecuteWhenFinished( Initialize );
+        }
+
+        private static void Initialize()
+        {
             // initialize job icon paths
             JobIconPaths = new Dictionary<JobDef, string>();
-            foreach ( var job in DefDatabase<JobDef>.AllDefsListForReading )
-                JobIconPaths.Add( job, job.DefaultIconPath() );
+            foreach (var job in DefDatabase<JobDef>.AllDefsListForReading)
+                JobIconPaths.Add(job, job.DefaultIconPath());
 
             // initialize job icons dictionary
             JobIcons = new Dictionary<JobDef, Texture2D>();
@@ -29,9 +34,14 @@ namespace WorkTab
 
         public static Texture2D StatusIcon( this JobDef job )
         {
-            if ( !JobIcons.ContainsKey( job ) )
-                JobIcons.Add( job, ContentFinder<Texture2D>.Get( JobIconPaths[job] ) );
-            return JobIcons[job];
+            Texture2D icon;
+            if (JobIcons.TryGetValue(job, out icon))
+                return icon;
+
+            Logger.Debug($"Loading icon '{JobIconPaths[job]}' for job '{job.defName}'");
+            icon = ContentFinder<Texture2D>.Get(JobIconPaths[job]);
+            JobIcons.Add( job, icon );
+            return icon;
         }
 
         public static string DefaultIconPath(this JobDef job)
