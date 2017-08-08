@@ -7,6 +7,8 @@
 	<WorkTab.PrioritiesDetailed>Currently showing on/off priorities\n\nClick to switch to numeric priorities</WorkTab.PrioritiesDetailed>
 	<WorkTab.PrioritiesTimed>Currently showing all-day priorities\n\nClick to switch to scheduled priorities</WorkTab.PrioritiesTimed>
 	<WorkTab.PrioritiesWholeDay>Currently showing scheduled priorities\n\nClick to switch to all-day priorities</WorkTab.PrioritiesWholeDay>
+    <WorkTab.ExpandAll>Click to expand all priorities\nCtrl-click headers to toggle expanding individual priorities</WorkTab.ExpandAll>
+    <WorkTab.CollapseAll>Click to collapse all priorities\nCtrl-click headers to toggle expanding individual priorities</WorkTab.CollapseAll>
 
     <!-- column header tooltips -->
     <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to increase priorities\nShift + right click or scroll down to decrease priorities</WorkTab.DetailedColumnTip>

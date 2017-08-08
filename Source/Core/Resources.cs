@@ -26,7 +26,9 @@ namespace WorkTab
             PinClock,
             Clock,
             Half,
-            Now;
+            Now,
+            Expand,
+            Collapse;
 
         static Resources()
         {
@@ -46,6 +48,8 @@ namespace WorkTab
             Clock = ContentFinder<Texture2D>.Get("UI/Icons/clock");
             Half = ContentFinder<Texture2D>.Get("UI/Icons/half");
             Now = ContentFinder<Texture2D>.Get("UI/Icons/now");
+            Expand = ContentFinder<Texture2D>.Get("UI/Icons/expand");
+            Collapse = ContentFinder<Texture2D>.Get("UI/Icons/collapse");
         }
     }
 }

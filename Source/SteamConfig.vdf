@@ -9,8 +9,7 @@
   "description" "Provides a vastly more customizable work tab.
 
 [h1]Important[/h1]
-[b]BETA release[/b]
- This should be considered a beta release. The basic functionality is confirmed to work, but there may be more elusive bugs still to be caught.
+Work Tab completely takes over job priorities from the vanilla game. In order to support core functionalities and other mods, it intercepts calls to get/set priorities. However, when it is told to set priorities by other sources - these sources are not aware of the time schedule, and the priority will be set for the whole day. As such, this mod is currently [i]incompatible[/i] with mods that dynamically change priorities (e.g. [url=http://steamcommunity.com/sharedfiles/filedetails/?id=937170538]Force Pawn to do a Job[/url]).
 
 [h1]Features[/h1]
 Various usability extentions to the ‘vanilla’ work tab;
@@ -18,13 +17,17 @@ Various usability extentions to the ‘vanilla’ work tab;
  - Work types can be expanded to allow you to set priorities for the individual tasks within each work type.
  - Time scheduler to set priorities for a given time slot only - allows you to designate a cleaning hour, or have your cook prepare meals right before dinner, etc. etc.
  - Up to 9 priority levels (configurable)
- - Various small UX tweaks, e.g. scrolling to increase/decrease/toggle priorities.
+ - Various small UX tweaks; scrolling to increase/decrease/toggle priorities, increase/decrease priorities for whole columns/rows.
+ - All functions are detailed in the tooltips, take a moment to hover over and read them!
  
 
 [h1]Notes[/h1]
-With great power comes great responsibility. The default priorities of tasks within a job is set for a good reason; it’s a sensible default. Changing these can lead to deadlock situations, so change the priorities of individual jobs at your own risk!
+With great power comes great responsibility. The default priorities of tasks within a job is set for a good reason; it’s (usually) a sensible default. Changing these can lead to deadlock situations, so change the priorities of individual jobs at your own risk!
 
 Finally, there will never be an ‘autolabour’ mode where a mod sets priorities for you. Due to the way the AI is handled (e.g. pawns actively look for work, instead of there being a ‘bulletin board’ of jobs that need doing), it’s not feasible to get the complete list of work that needs doing that would be needed to make this a reality, without extreme overhead and loads of special exception coding.
+
+[h1]Powered by Harmony[/h1]
+[img]https://camo.githubusercontent.com/074bf079275fa90809f51b74e9dd0deccc70328f/68747470733a2f2f7332342e706f7374696d672e6f72672f3538626c31727a33392f6c6f676f2e706e67[/img]
 
 [h1]Contributors[/h1]
  - Bronytamin: Russian translation
@@ -45,28 +48,13 @@ All original code in this mod is licensed under the [url=https://opensource.org/
 Parts of the code in this mod, and some content may be licensed by their original authors. If this is the case, the original author & license will either be given in the source code, or be in a LICENSE file next to the content. Please do not decompile my mods, but use the original source code available on [url=https://github.com/FluffierThanThou/WorkTab/]GitHub[/url], so license information in the source code is preserved.
 
 [h1]Version[/h1]
-This is version v0.17.0.7
+This is version v0.17.1.0
 
 "
-  "changenote" "force priority recache after switching numeric/toggle mode
-do not use numeric priorities when viewing toggled priorities
-tweak scheduler icon offsets and deselect interaction
-fully implement scheduler
-margins around background indicators, better alignment of scheduled tip
-add indicators for partially (time and/or subjobs) scheduled jobs
-add some more job icons
-implement copy/paste column
-add sanity check for assigning disabled priorities (mostly for debugging purposes)
-tweak play sounds settings toggles to behave more naturally
-tweak scheduler tooltip, have sounds obey settings
-implement user settings
-cache tooltips and scheduled/partial status
-add schedule tooltip
-allow toggling scheduler, tweak scheduler placement/margins
-force update of column size caches before expanding/collapsing worktypes
-add timekeeper component
-implement time bar
-align time bar with workbox area"
+  "changenote" "add sorting by name (nickname)
+implement row functionality
+add some additional safeguards around job icon code, catch and log errors with a bit more information
+slightly refactor job icon logic, and initialize the database later"
   "publishedfileid" "725219116"
 }
 

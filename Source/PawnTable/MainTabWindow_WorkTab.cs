@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Harmony;
 using RimWorld;
@@ -340,17 +341,33 @@ namespace WorkTab
 
         private void DoToggleButtons( Rect canvas )
         {
-            Rect rect = new Rect( canvas.xMax - 30f, canvas.yMin, 30f, 30f );
+            Rect button = new Rect( canvas.xMax - 30f, canvas.yMin, 30f, 30f );
 
-            ButtonImageToggle(() => PriorityManager.Get.ShowPriorities, val => PriorityManager.Set.ShowPriorities = val, rect,
+            ButtonImageToggle(() => PriorityManager.Get.ShowPriorities, val => PriorityManager.Set.ShowPriorities = val, button,
                                "WorkTab.PrioritiesDetailed".Translate(), PrioritiesDetailed,
                                "WorkTab.PrioritiesSimple".Translate(), PrioritiesSimple );
-            rect.x -= 30f + Margin;
+            button.x -= 30f + Margin;
 
-            ButtonImageToggle( () => PriorityManager.Get.ShowScheduler, val => PriorityManager.Set.ShowScheduler = val, rect,
+            ButtonImageToggle( () => PriorityManager.Get.ShowScheduler, val => PriorityManager.Set.ShowScheduler = val, button,
                                "WorkTab.PrioritiesTimed".Translate(), PrioritiesTimed,
                                "WorkTab.PrioritiesWholeDay".Translate(), PrioritiesWholeDay);
-            rect.x -= 30f + Margin;
+            button.x -= 30f + Margin;
+
+            ButtonImageToggle(() => AnyExpanded, ExpandAll, button,
+                "WorkTab.ExpandAll".Translate(), Expand,
+                "WorkTab.CollapseAll".Translate(), Collapse);
+        }
+
+        private bool AnyExpanded => PawnTableDef.columns
+            .Select(c => c.Worker)
+            .OfType<IExpandableColumn>()
+            .Any(w => w.Expanded);
+        
+        private void ExpandAll( bool expand )
+        {
+            foreach (var expandableColumn in PawnTableDef.columns.Select( c => c.Worker ).OfType<IExpandableColumn>())
+                if (expandableColumn.Expanded != expand)
+                    expandableColumn.Expanded = expand;
         }
 
         protected override float ExtraBottomSpace => PriorityManager.Get.ShowScheduler
