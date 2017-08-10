@@ -104,7 +104,10 @@ namespace WorkTab
             _everScheduledWorkType[worktype] = workgivers.Any(wg => _everScheduledWorkGiver[wg]);
             _timeScheduledWorkType[worktype] = workgivers.Any(wg => _timeScheduledWorkGiver[wg]);
             _timeScheduledWorkTypeTip[worktype] = WorkUtilities.TimeScheduledTip(pawn, priorities, worktype.gerundLabel);
-            _partScheduledWorkType[worktype] = _everScheduledWorkType[worktype] && workgivers.Any(wg => pawn.GetPriorities(wg).All(p => p == 0));
+
+            // is any workgiver different from the whole at any time during the day?
+            _partScheduledWorkType[worktype] = TimeUtilities.WholeDay
+                .Any(hour => worktype.WorkGivers().Any(wg => pawn.GetPriority(worktype, hour) != pawn.GetPriority(wg, hour)));
         }
 
         public WorkPriorityTracker this[ WorkGiverDef workgiver ]
