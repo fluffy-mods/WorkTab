@@ -13,6 +13,7 @@ namespace WorkTab
         public static bool playCrunch = true;
         public static bool playSounds = true;
         public static bool TwentyFourHourMode = true;
+        public static bool disableScrollwheel = false;
 
         // buffers
         private static string maxPriorityBuffer = maxPriority.ToString();
@@ -26,6 +27,7 @@ namespace WorkTab
             options.CheckboxLabeled("WorkTab.PlaySounds".Translate(), ref playSounds, "WorkTab.PlaySoundsTip".Translate());
             playCrunch = playSounds && playCrunch; // disabling sounds also disables crunch.
             options.CheckboxLabeled("WorkTab.PlayCrunch".Translate(), ref playCrunch, !playSounds, "WorkTab.PlayCrunchTip".Translate());
+            options.CheckboxLabeled("WorkTab.DisableScrollwheel".Translate(), ref disableScrollwheel, "WorkTab.DisableScrollwheelTip".Translate());
             options.End();
         }
 
@@ -37,6 +39,7 @@ namespace WorkTab
             Scribe_Values.Look(ref TwentyFourHourMode, "TwentyFourHourMode", true);
             Scribe_Values.Look(ref playSounds, "PlaySounds", true);
             Scribe_Values.Look(ref playCrunch, "PlayCrunch", true);
+            Scribe_Values.Look(ref disableScrollwheel, "DisableScrollwheel", false);
         }
 
         #endregion
