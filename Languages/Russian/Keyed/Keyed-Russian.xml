@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+    <WorkTab>Work Tab</WorkTab>
+
+    <!-- Main tab toggle buttons -->
+	<WorkTab.PrioritiesSimple>Сейчас отображается точная (числовая) настройка приоритетов\n\nКлик переключит на простую (вкл/выкл) настройку приоритетов</WorkTab.PrioritiesSimple>
+	<WorkTab.PrioritiesDetailed>Сейчас отображается простая (вкл/выкл) настройка приоритетов\n\nКлик переключит на точную (числовую) настройку приоритетов</WorkTab.PrioritiesDetailed>
+	<WorkTab.PrioritiesTimed>Сейчас отображается обычная (полнодневная) приоритезация\n\nКлик переключит на приоритезацию с учётом времени</WorkTab.PrioritiesTimed>
+	<WorkTab.PrioritiesWholeDay>Сейчас отображается приоритезация с учётом времени\n\nКлик переключит на обычную (полнодневную) приоритезацию</WorkTab.PrioritiesWholeDay>
+    <WorkTab.ExpandAll>Клик развернёт все приоритеты\nCtrl+клик по заголовку развернёт только его</WorkTab.ExpandAll>
+    <WorkTab.CollapseAll>Клик свернёт все приоритеты\nCtrl+клик по заголовку развернёт только его</WorkTab.CollapseAll>
+
+    <!-- column header tooltips -->
+    <WorkTab.DetailedColumnTip>Shift+ЛКМ или Shift+прокрутка вверх повысит приоритет этой задачи для всех колонистов\nShift+ПКМ или Shift+прокрутка вниз понизит приоритет этой задачи для всех колонистов</WorkTab.DetailedColumnTip>
+    <WorkTab.ToggleColumnTip>Shift+ЛКМ или Shift+прокрутка вверх назначит эту задачу всем колонистам\nShift+ПКМ или Shift+прокрутка вниз освободит всех колонистов от этой задачи</WorkTab.ToggleColumnTip>
+    <WorkTab.ExpandWorkgiversColumnTip>Ctrl+клик развернёт детальный список приоритетов</WorkTab.ExpandWorkgiversColumnTip>
+    <WorkTab.CollapseWorkgiversColumnTip>Ctrl+клик свернёт детальный список приоритетов</WorkTab.CollapseWorkgiversColumnTip>
+
+    <!-- settings -->
+	<WorkTab.24HourMode>24-часовой режим</WorkTab.24HourMode>
+	<WorkTab.24HourModeTip>Отображать время в 12-часовом (например полдень, 9p.m.) или 24-часовом (например 12:00, 21:00) режиме?</WorkTab.24HourModeTip>
+	<WorkTab.MaxPriority>Уровни приоритета</WorkTab.MaxPriority>
+	<WorkTab.MaxPriorityTip>Сколько уровней приоритета требуется? (от 4 до 9)</WorkTab.MaxPriorityTip>
+    <WorkTab.PlaySounds>Звук</WorkTab.PlaySounds>
+    <WorkTab.PlaySoundsTip>Воспроизводить звук при изменении приоритета?</WorkTab.PlaySoundsTip>
+    <WorkTab.PlayCrunch>Хруст</WorkTab.PlayCrunch>
+    <WorkTab.PlayCrunchTip>Воспроизводить хрустящий звук когда колонисту назначена работа в которой он не умел</WorkTab.PlayCrunchTip>
+
+    <!-- scheduler -->
+    <WorkTab.SchedulerHourTip>Временной интервал {0}-{1} сейчас {2}\n\n{3}</WorkTab.SchedulerHourTip>
+    <WorkTab.Selected>выделен</WorkTab.Selected>
+    <WorkTab.NotSelected>не выделен</WorkTab.NotSelected>
+    <WorkTab.ClickToSelect>Клик выделит\nShift+клик выделит только этот интервал</WorkTab.ClickToSelect>
+    <WorkTab.ClickToFocus>Click to focus</WorkTab.ClickToFocus>
+    <WorkTab.RightClickToDeselect>ПКМ снимет выделение</WorkTab.RightClickToDeselect>
+	<midnight>полночь</midnight>
+	<noon>полдень</noon>
+	<WorkTab.SelectWholeDayTip>Выделить весь день</WorkTab.SelectWholeDayTip>
+	<WorkTab.SelectCurrentHourTip>Выделить текущий час</WorkTab.SelectCurrentHourTip>
+
+    <!-- detailed tooltips  -->
+    <WorkTab.XIsAssignedToY>{0} назначен {1}</WorkTab.XIsAssignedToY>
+
+    <!-- pawn label tooltip  -->
+    <WorkTab.LabelCellTip>ЛКМ — перейти к колонисту\nShift+ЛКМ или Shift+прокрутка верх — повысить приоритеты всех задач для колониста\nShift+ПКМ или Shift+прокрутка вниз — понизить приоритеты всех задач для колониста</WorkTab.LabelCellTip>
+
+</LanguageData>
