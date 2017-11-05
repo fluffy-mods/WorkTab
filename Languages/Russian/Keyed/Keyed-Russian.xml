@@ -5,8 +5,8 @@
     <!-- Main tab toggle buttons -->
 	<WorkTab.PrioritiesSimple>Сейчас отображается точная (числовая) настройка приоритетов\n\nКлик переключит на простую (вкл/выкл) настройку приоритетов</WorkTab.PrioritiesSimple>
 	<WorkTab.PrioritiesDetailed>Сейчас отображается простая (вкл/выкл) настройка приоритетов\n\nКлик переключит на точную (числовую) настройку приоритетов</WorkTab.PrioritiesDetailed>
-	<WorkTab.PrioritiesTimed>Сейчас отображается обычная (полнодневная) приоритезация\n\nКлик переключит на приоритезацию с учётом времени</WorkTab.PrioritiesTimed>
-	<WorkTab.PrioritiesWholeDay>Сейчас отображается приоритезация с учётом времени\n\nКлик переключит на обычную (полнодневную) приоритезацию</WorkTab.PrioritiesWholeDay>
+	<WorkTab.PrioritiesTimed>Сейчас отображается обычная (полнодневная) приоритизация\n\nКлик переключит на приоритизацию с учётом времени</WorkTab.PrioritiesTimed>
+	<WorkTab.PrioritiesWholeDay>Сейчас отображается приоритизация с учётом времени\n\nКлик переключит на обычную (полнодневную) приоритизацию</WorkTab.PrioritiesWholeDay>
     <WorkTab.ExpandAll>Клик развернёт все приоритеты\nCtrl+клик по заголовку развернёт только его</WorkTab.ExpandAll>
     <WorkTab.CollapseAll>Клик свернёт все приоритеты\nCtrl+клик по заголовку развернёт только его</WorkTab.CollapseAll>
 
