@@ -3,10 +3,10 @@
     <WorkTab>Work Tab</WorkTab>
 
     <!-- Main tab toggle buttons -->
-	<WorkTab.PrioritiesSimple>Сейчас отображается точная (числовая) настройка приоритетов\n\nКлик переключит на простую (вкл/выкл) настройку приоритетов</WorkTab.PrioritiesSimple>
-	<WorkTab.PrioritiesDetailed>Сейчас отображается простая (вкл/выкл) настройка приоритетов\n\nКлик переключит на точную (числовую) настройку приоритетов</WorkTab.PrioritiesDetailed>
-	<WorkTab.PrioritiesTimed>Сейчас отображается обычная (полнодневная) приоритизация\n\nКлик переключит на приоритизацию с учётом времени</WorkTab.PrioritiesTimed>
-	<WorkTab.PrioritiesWholeDay>Сейчас отображается приоритизация с учётом времени\n\nКлик переключит на обычную (полнодневную) приоритизацию</WorkTab.PrioritiesWholeDay>
+    <WorkTab.PrioritiesSimple>Сейчас отображается точная (числовая) настройка приоритетов\n\nКлик переключит на простую (вкл/выкл) настройку приоритетов</WorkTab.PrioritiesSimple>
+    <WorkTab.PrioritiesDetailed>Сейчас отображается простая (вкл/выкл) настройка приоритетов\n\nКлик переключит на точную (числовую) настройку приоритетов</WorkTab.PrioritiesDetailed>
+    <WorkTab.PrioritiesTimed>Сейчас отображается обычная (полнодневная) приоритизация\n\nКлик переключит на приоритизацию с учётом времени</WorkTab.PrioritiesTimed>
+    <WorkTab.PrioritiesWholeDay>Сейчас отображается приоритизация с учётом времени\n\nКлик переключит на обычную (полнодневную) приоритизацию</WorkTab.PrioritiesWholeDay>
     <WorkTab.ExpandAll>Клик развернёт все приоритеты\nCtrl+клик по заголовку развернёт только его</WorkTab.ExpandAll>
     <WorkTab.CollapseAll>Клик свернёт все приоритеты\nCtrl+клик по заголовку развернёт только его</WorkTab.CollapseAll>
 
@@ -17,10 +17,10 @@
     <WorkTab.CollapseWorkgiversColumnTip>Ctrl+клик свернёт детальный список приоритетов</WorkTab.CollapseWorkgiversColumnTip>
 
     <!-- settings -->
-	<WorkTab.24HourMode>24-часовой режим</WorkTab.24HourMode>
-	<WorkTab.24HourModeTip>Отображать время в 12-часовом (например полдень, 9p.m.) или 24-часовом (например 12:00, 21:00) режиме?</WorkTab.24HourModeTip>
-	<WorkTab.MaxPriority>Уровни приоритета</WorkTab.MaxPriority>
-	<WorkTab.MaxPriorityTip>Сколько уровней приоритета требуется? (от 4 до 9)</WorkTab.MaxPriorityTip>
+    <WorkTab.24HourMode>24-часовой режим</WorkTab.24HourMode>
+    <WorkTab.24HourModeTip>Отображать время в 12-часовом (например полдень, 9p.m.) или 24-часовом (например 12:00, 21:00) режиме?</WorkTab.24HourModeTip>
+    <WorkTab.MaxPriority>Уровни приоритета</WorkTab.MaxPriority>
+    <WorkTab.MaxPriorityTip>Сколько уровней приоритета требуется? (от 4 до 9)</WorkTab.MaxPriorityTip>
     <WorkTab.PlaySounds>Звук</WorkTab.PlaySounds>
     <WorkTab.PlaySoundsTip>Воспроизводить звук при изменении приоритета?</WorkTab.PlaySoundsTip>
     <WorkTab.PlayCrunch>Хруст</WorkTab.PlayCrunch>
@@ -33,10 +33,10 @@
     <WorkTab.ClickToSelect>Клик выделит\nShift+клик выделит только этот интервал</WorkTab.ClickToSelect>
     <WorkTab.ClickToFocus>Click to focus</WorkTab.ClickToFocus>
     <WorkTab.RightClickToDeselect>ПКМ снимет выделение</WorkTab.RightClickToDeselect>
-	<midnight>полночь</midnight>
-	<noon>полдень</noon>
-	<WorkTab.SelectWholeDayTip>Выделить весь день</WorkTab.SelectWholeDayTip>
-	<WorkTab.SelectCurrentHourTip>Выделить текущий час</WorkTab.SelectCurrentHourTip>
+    <midnight>полночь</midnight>
+    <noon>полдень</noon>
+    <WorkTab.SelectWholeDayTip>Выделить весь день</WorkTab.SelectWholeDayTip>
+    <WorkTab.SelectCurrentHourTip>Выделить текущий час</WorkTab.SelectCurrentHourTip>
 
     <!-- detailed tooltips  -->
     <WorkTab.XIsAssignedToY>{0} назначен {1}</WorkTab.XIsAssignedToY>
