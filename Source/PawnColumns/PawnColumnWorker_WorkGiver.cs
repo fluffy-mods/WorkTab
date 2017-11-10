@@ -128,7 +128,7 @@ namespace WorkTab
 
         private void HandleInteractionsToggle( Rect rect, Pawn pawn )
         {
-            if ( ( Event.current.type == EventType.MouseDown || Event.current.type == EventType.ScrollWheel )
+            if ( ( Event.current.type == EventType.MouseDown || ( Event.current.type == EventType.ScrollWheel && !Settings.disableScrollwheel ) )
                  && Mouse.IsOver( rect ) )
             {
                 // track priority so we can play appropriate sounds
