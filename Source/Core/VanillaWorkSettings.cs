@@ -24,10 +24,20 @@ namespace WorkTab
                     throw new NullReferenceException( "priorities field not found" );
             }
 
-            return ( prioritiesFieldInfo.GetValue( pawn.workSettings ) as DefMap<WorkTypeDef, int> )[worktype];
+            int priority;
+            try
+            {
+                priority = ( prioritiesFieldInfo.GetValue( pawn.workSettings ) as DefMap<WorkTypeDef, int> )[worktype];
+            }
+            catch ( ArgumentOutOfRangeException )
+            {
+                priority = 0; 
+                Logger.Message( $"Priority requested for a workgiver that did not yet exist for {pawn.NameStringShort}. Did you add mods in an existing game?" );
+            }
+            return priority;
         }
 
-        public static Pawn Pawn( this Pawn_WorkSettings worksettings)
+        public static Pawn Pawn( this Pawn_WorkSettings worksettings )
         {
             if (pawnFieldInfo == null)
             {

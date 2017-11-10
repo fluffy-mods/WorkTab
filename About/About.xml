@@ -3,7 +3,7 @@
   <name>Work Tab</name>
   <author>Fluffy</author>
   <url>https://ludeon.com/forums/index.php?topic=15964.0</url>
-  <targetVersion>0.18.1700</targetVersion>
+  <targetVersion>0.18.1717</targetVersion>
   <description>Provides a vastly more customizable work tab. 
 
 &lt;size=24&gt;Important&lt;/size&gt;
@@ -33,6 +33,8 @@ Bronytamin:    Russian translation
 Duduluu:    Chinese translation
 Eric Swanson:    Help with time-dependent tooltips
 DoctorVanGogh:    Help with typos in build script
+MrClon:    
+mercutiodesign:    
 
 &lt;size=24&gt;Version&lt;/size&gt;
 This is version v0.18.0.0
