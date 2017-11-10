@@ -26,8 +26,8 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - Duduluu:	Chinese translation
  - Eric Swanson:	Help with time-dependent tooltips
  - DoctorVanGogh:	Help with typos in build script
- - MrClon:	
- - mercutiodesign:	
+ - MrClon:	Russian translation
+ - mercutiodesign:	Optional scrollwheel usage setting
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,

@@ -49,7 +49,7 @@ namespace WorkTab
             var incapable = !pawn.CapableOf( workgiver );
 
             // plop in the tooltip
-            Func<string> tipGetter = delegate { return WorkUtilities.TipForPawnWorker( pawn, workgiver, incapable ); };
+            Func<string> tipGetter = delegate { return DrawUtilities.TipForPawnWorker( pawn, workgiver, incapable ); };
             TooltipHandler.TipRegion( box, tipGetter, pawn.thingIDNumber ^ workgiver.workType.GetHashCode() );
 
             // bail out if pawn can't actually do this work
@@ -76,16 +76,16 @@ namespace WorkTab
         {
             // draw background
             GUI.color = incapable ? new Color( 1f, .3f, .3f ) : Color.white;
-            WorkUtilities.DrawWorkBoxBackground( box, pawn, workgiver.workType );
+            DrawUtilities.DrawWorkBoxBackground( box, pawn, workgiver.workType );
             GUI.color = Color.white;
 
             // draw extras
             var tracker = PriorityManager.Get[pawn];
             if (tracker.TimeScheduled(workgiver))
-                WorkUtilities.DrawTimeScheduled(box);
+                DrawUtilities.DrawTimeScheduled(box);
 
             // draw priorities / checks
-            WorkUtilities.DrawPriority( box, pawn.GetPriority( workgiver, VisibleHour ), true );
+            DrawUtilities.DrawPriority( box, pawn.GetPriority( workgiver, VisibleHour ), true );
         }
 
         protected virtual void HandleInteractions( Rect rect, Pawn pawn )
@@ -162,14 +162,48 @@ namespace WorkTab
         }
 
         public string Label => WorkGiver.label.NullOrEmpty() ? WorkGiver.gerund : WorkGiver.LabelCap;
-
-        public override void DoHeader( Rect rect, PawnTable table )
+        
+        public override void DoHeader(Rect rect, PawnTable table)
         {
             // make sure we're at the correct font size
             Text.Font = GameFont.Tiny;
+            Rect labelRect = rect;
 
+            if ( Settings.verticalLabels )
+                DrawVerticalHeader( rect, table );
+            else
+                DrawHorizontalHeader( rect, table, out labelRect );    
+            
+            // handle interactions (click + scroll)
+            HeaderInteractions(labelRect, table);
+
+            // mouseover stuff
+            Widgets.DrawHighlightIfMouseover(labelRect);
+            TooltipHandler.TipRegion(labelRect, GetHeaderTip(table));
+
+            // sort icon
+            if (table.SortingBy == def)
+            {
+                Texture2D sortIcon = (!table.SortingDescending) ? SortingIcon : SortingDescendingIcon;
+                Rect bottomRight = new Rect(rect.xMax - sortIcon.width - 1f, rect.yMax - sortIcon.height - 1f,
+                    sortIcon.width, sortIcon.height);
+                GUI.DrawTexture(bottomRight, sortIcon);
+            }
+        }
+
+        public void DrawVerticalHeader( Rect rect, PawnTable table )
+        {
+            GUI.color = new Color(.8f, .8f, .8f);
+            Text.Anchor = TextAnchor.MiddleLeft;
+            DrawUtilities.VerticalLabel(rect, Label.Truncate(rect.height, VerticalTruncationCache));
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        public void DrawHorizontalHeader( Rect rect, PawnTable table, out Rect labelRect )
+        {
             // get offset rect
-            var labelRect = GetLabelRect( rect );
+            labelRect = GetLabelRect( rect );
 
             // draw label, slightly greyed out to contrast with work types
             GUI.color = new Color( 1f, 1f, 1f, .8f );
@@ -189,22 +223,6 @@ namespace WorkTab
             Widgets.DrawLineVertical( Mathf.FloorToInt( start.x ), start.y, length );
             Widgets.DrawLineVertical( Mathf.CeilToInt( start.x ), start.y, length );
             GUI.color = Color.white;
-
-            // handle interactions (click + scroll)
-            HeaderInteractions( labelRect, table );
-
-            // mouseover stuff
-            Widgets.DrawHighlightIfMouseover( labelRect );
-            TooltipHandler.TipRegion( labelRect, GetHeaderTip( table ) );
-
-            // sort icon
-            if ( table.SortingBy == def )
-            {
-                Texture2D sortIcon = ( !table.SortingDescending ) ? SortingIcon : SortingDescendingIcon;
-                Rect bottomRight = new Rect( rect.xMax - sortIcon.width - 1f, rect.yMax - sortIcon.height - 1f,
-                                             sortIcon.width, sortIcon.height );
-                GUI.DrawTexture( bottomRight, sortIcon );
-            }
         }
 
         public override int Compare( Pawn a, Pawn b )
@@ -261,7 +279,7 @@ namespace WorkTab
             }
         }
 
-        public override int GetMinHeaderHeight( PawnTable table ) { return HeaderHeight; }
+        public override int GetMinHeaderHeight( PawnTable table ) { return Settings.verticalLabels ? VerticalHeaderHeight : HorizontalHeaderHeight; }
 
         private Rect GetLabelRect( Rect headerRect )
         {

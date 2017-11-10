@@ -1,5 +1,5 @@
 ﻿// Karel Kroeze
-// WorkUtilities.cs
+// DrawUtilities.cs
 // 2017-05-25
 
 using System;
@@ -14,8 +14,16 @@ using Verse;
 
 namespace WorkTab
 {
-    public static class WorkUtilities
+    public static class DrawUtilities
     {
+        public static void VerticalLabel( Rect rect, string text, float margin = Constants.Margin )
+        {
+            GUIUtility.RotateAroundPivot( -90, rect.center );
+            var flipped = new Rect( 0f, 0f, rect.height, rect.width ) {center = rect.center};
+            Widgets.Label(flipped, text);
+            GUIUtility.RotateAroundPivot(90, rect.center);
+        }
+
         private static MethodInfo _drawWorkBoxBackgroundMethodInfo;
         public static void DrawWorkBoxBackground(Rect box, Pawn pawn, WorkTypeDef worktype)
         {

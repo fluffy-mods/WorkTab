@@ -47,7 +47,7 @@ namespace WorkTab
             var box = new Rect( pos.x, pos.y, WorkTypeBoxSize, WorkTypeBoxSize );
 
             // plop in the tooltip
-            Func<string> tipGetter = delegate { return WorkUtilities.TipForPawnWorker( pawn, worktype, incapable ); };
+            Func<string> tipGetter = delegate { return DrawUtilities.TipForPawnWorker( pawn, worktype, incapable ); };
             TooltipHandler.TipRegion( box, tipGetter, pawn.thingIDNumber ^ worktype.GetHashCode() );
 
             // bail out if worktype is disabled (or pawn has no background story).
@@ -67,18 +67,18 @@ namespace WorkTab
         {
             // draw background
             GUI.color = incapable ? new Color( 1f, .3f, .3f ) : Color.white;
-            WorkUtilities.DrawWorkBoxBackground( box, pawn, worktype );
+            DrawUtilities.DrawWorkBoxBackground( box, pawn, worktype );
             GUI.color = Color.white;
 
             // draw extras
             var tracker = PriorityManager.Get[pawn];
             if (tracker.TimeScheduled(worktype))
-                WorkUtilities.DrawTimeScheduled(box);
+                DrawUtilities.DrawTimeScheduled(box);
             if (tracker.PartScheduled(worktype))
-                WorkUtilities.DrawPartScheduled(box);
+                DrawUtilities.DrawPartScheduled(box);
 
             // draw priorities / checks
-            WorkUtilities.DrawPriority( box, pawn.GetPriority( worktype, VisibleHour ) );
+            DrawUtilities.DrawPriority( box, pawn.GetPriority( worktype, VisibleHour ) );
         }
 
         protected virtual void HandleInteractions( Rect rect, Pawn pawn )
@@ -174,26 +174,12 @@ namespace WorkTab
         {
             // make sure we're at the correct font size
             Text.Font = GameFont.Small;
+            Rect labelRect = rect;
 
-            // get offset rect
-            var labelRect = GetLabelRect( rect );
-
-            // draw label
-            Widgets.Label( labelRect, def.workType.labelShort.Truncate( labelRect.width, TruncationCache ) );
-
-            // get bottom center of label
-            var start = new Vector2( labelRect.center.x, labelRect.yMax );
-            var length = rect.yMax - start.y;
-
-            // make sure we're not at a whole pixel
-            if ( start.x - (int) start.x < 1e-4 )
-                start.x += .5f;
-
-            // draw the lines - two separate lines give a clearer edge than one 2px line...
-            GUI.color = new Color( 1f, 1f, 1f, 0.3f );
-            Widgets.DrawLineVertical( Mathf.FloorToInt( start.x ), start.y, length );
-            Widgets.DrawLineVertical( Mathf.CeilToInt( start.x ), start.y, length );
-            GUI.color = Color.white;
+            if ( Settings.verticalLabels )
+                DrawVerticalHeader( rect, table );
+            else
+                DrawHorizontalHeader( rect, table, out labelRect );
 
             // handle interactions (click + scroll)
             HeaderInteractions( labelRect, table );
@@ -210,6 +196,38 @@ namespace WorkTab
                                              sortIcon.width, sortIcon.height );
                 GUI.DrawTexture( bottomRight, sortIcon );
             }
+        }
+
+        public void DrawVerticalHeader( Rect rect, PawnTable table )
+        {
+            GUI.color = new Color(.8f, .8f, .8f);
+            Text.Anchor = TextAnchor.MiddleLeft;
+            DrawUtilities.VerticalLabel(rect, def.workType.labelShort.Truncate(rect.height, VerticalTruncationCache));
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        public void DrawHorizontalHeader( Rect rect, PawnTable table, out Rect labelRect )
+        {
+            // get offset rect
+            labelRect = GetLabelRect(rect);
+
+            // draw label
+            Widgets.Label(labelRect, def.workType.labelShort.Truncate(labelRect.width, TruncationCache));
+
+            // get bottom center of label
+            var start = new Vector2(labelRect.center.x, labelRect.yMax);
+            var length = rect.yMax - start.y;
+
+            // make sure we're not at a whole pixel
+            if (start.x - (int)start.x < 1e-4)
+                start.x += .5f;
+
+            // draw the lines - two separate lines give a clearer edge than one 2px line...
+            GUI.color = new Color(1f, 1f, 1f, 0.3f);
+            Widgets.DrawLineVertical(Mathf.FloorToInt(start.x), start.y, length);
+            Widgets.DrawLineVertical(Mathf.CeilToInt(start.x), start.y, length);
+            GUI.color = Color.white;
         }
 
         public override int Compare( Pawn a, Pawn b )
@@ -271,7 +289,7 @@ namespace WorkTab
             }
         }
 
-        public override int GetMinHeaderHeight( PawnTable table ) { return HeaderHeight; }
+        public override int GetMinHeaderHeight( PawnTable table ) { return Settings.verticalLabels ? VerticalHeaderHeight : HorizontalHeaderHeight; }
 
         private Rect GetLabelRect( Rect headerRect )
         {

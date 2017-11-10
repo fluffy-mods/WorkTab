@@ -77,8 +77,8 @@ namespace WorkTab
         
         public PawnTable Table
         {
-            get { return _tableFieldInfo.GetValue(this) as PawnTable; }
-            private set { _tableFieldInfo.SetValue(this, value); }
+            get => _tableFieldInfo.GetValue(this) as PawnTable;
+            private set => _tableFieldInfo.SetValue(this, value);
         }
 
         public static void RebuildTable()

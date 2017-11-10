@@ -80,7 +80,7 @@
     <Compile Include="Utilities\TimeUtilities.cs" />
     <Compile Include="Core\VanillaWorkSettings.cs" />
     <Compile Include="Utilities\UIUtilities.cs" />
-    <Compile Include="Utilities\WorkUtilities.cs" />
+    <Compile Include="Utilities\DrawUtilities.cs" />
     <Compile Include="Extensions\Pawn_Extensions.cs" />
     <Compile Include="Extensions\WorkType_Extensions.cs" />
     <Compile Include="HarmonyPatches\DefGenerator_GenerateImpliedDefs_PreResolve.cs" />

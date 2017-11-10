@@ -83,7 +83,7 @@ namespace WorkTab
             var priorities = pawn.GetPriorities(workgiver);
             _everScheduledWorkGiver[workgiver] = priorities.Any(p => p > 0);
             _timeScheduledWorkGiver[workgiver] = priorities.Distinct().Count() > 1;
-            _timeScheduledWorkGiverTip[workgiver] = WorkUtilities.TimeScheduledTip(pawn, priorities, workgiver.label);
+            _timeScheduledWorkGiverTip[workgiver] = DrawUtilities.TimeScheduledTip(pawn, priorities, workgiver.label);
 
             // also recache worktype
             if (bubble)
@@ -103,7 +103,7 @@ namespace WorkTab
             // recache worktype stuff
             _everScheduledWorkType[worktype] = workgivers.Any(wg => _everScheduledWorkGiver[wg]);
             _timeScheduledWorkType[worktype] = workgivers.Any(wg => _timeScheduledWorkGiver[wg]);
-            _timeScheduledWorkTypeTip[worktype] = WorkUtilities.TimeScheduledTip(pawn, priorities, worktype.gerundLabel);
+            _timeScheduledWorkTypeTip[worktype] = DrawUtilities.TimeScheduledTip(pawn, priorities, worktype.gerundLabel);
 
             // is any workgiver different from the whole at any time during the day?
             _partScheduledWorkType[worktype] = TimeUtilities.WholeDay
