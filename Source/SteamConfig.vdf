@@ -34,6 +34,8 @@ Finally, there will never be an ‘autolabour’ mode where a mod sets prioritie
  - Duduluu: Chinese translation
  - Eric Swanson: Help with time-dependent tooltips
  - DoctorVanGogh: Help with typos in build script
+ - MrClon: Russian translation
+ - mercutiodesign: Optional scrollwheel usage setting
  
 
 [h1]Think you found a bug?[/h1]
@@ -53,11 +55,26 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.0.0
+This is version v0.18.0.1
 
 "
-  "changenote" "A18 (compiling)
-remove legacy source"
+  "changenote" "re-implement vertical labels as an option (default: on). Should help reduce horizontal clutter (#67).
+apply scrollwheel usage setting in simple mode
+recover from added workgivers during a save
+Russian translation (#76)
+make scrollwheel usage optional (#69)"
   "publishedfileid" "725219116"
+  "stylize" "function (styleId) {
+        if (args['--nostyle'])
+            return (prefixes[styleId] ? prefixes[styleId] : "") + this;
+        var val = styles[styleId];
+        return '\u001b[' + val[0] + 'm' + this + '\u001b[' + val[1] + 'm';
+    }"
 }
 
+"stylize" "function (styleId) {
+        if (args['--nostyle'])
+            return (prefixes[styleId] ? prefixes[styleId] : "") + this;
+        var val = styles[styleId];
+        return '\u001b[' + val[0] + 'm' + this + '\u001b[' + val[1] + 'm';
+    }"
