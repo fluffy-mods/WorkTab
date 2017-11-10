@@ -26,6 +26,8 @@
     <WorkTab.PlayCrunch>Crunchy sounds</WorkTab.PlayCrunch>
     <WorkTab.PlayCrunchTip>Play a crunchy sound when a pawn is assigned to a job they are not skilled at?</WorkTab.PlayCrunchTip>
     
+    <WorkTab.DisableScrollwheel>Disable Scrollwheel</WorkTab.DisableScrollwheel>
+    <WorkTab.DisableScrollwheelTip>Disable the scrollwheel functions (when hovering over skills)</WorkTab.DisableScrollwheelTip>
     <!-- scheduler -->
     <WorkTab.SchedulerHourTip>{0}-{1} is currently {2}\n\n{3}</WorkTab.SchedulerHourTip>
     <WorkTab.Selected>selected</WorkTab.Selected>

@@ -33,6 +33,9 @@ namespace WorkTab
 
         public static bool Scrolled( Rect rect, ScrollDirection direction, bool stopPropagation )
         {
+            if (Settings.disableScrollwheel)
+                return false;
+
             bool scrolled = Event.current.type == EventType.ScrollWheel &&
                    ( ( Event.current.delta.y > 0 && direction == ScrollDirection.Up ) ||
                      ( Event.current.delta.y < 0 && direction == ScrollDirection.Down ) ) &&
