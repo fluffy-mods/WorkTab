@@ -1,12 +1,11 @@
-
 "workshopitem"
 {
-  "appid" "294100"
-  "contentfolder" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab"
-  "previewfile" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
-  "visibilitiy" "0"
-  "title" "Work Tab"
-  "description" "Provides a vastly more customizable work tab.
+"appid" "294100"
+"contentfolder" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab"
+"previewfile" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
+"visibilitiy" "0"
+"title" "Work Tab"
+"description" "Provides a vastly more customizable work tab.
 
 [h1]Important[/h1]
 Work Tab completely takes over job priorities from the vanilla game. In order to support core functionalities and other mods, it intercepts calls to get/set priorities. However, when it is told to set priorities by other modded or vanilla code, that code is not aware of the time schedule, and the priority will be set for the whole day. As such, this mod is currently [i]incompatible[/i] with mods that dynamically change priorities (e.g. [url=http://steamcommunity.com/sharedfiles/filedetails/?id=937170538]Force Pawn to do a Job[/url]).
@@ -58,19 +57,6 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 This is version v0.18.1.0
 
 "
-  "changenote" ""
-  "publishedfileid" "725219116"
-  "stylize" "function (styleId) {
-        if (args['--nostyle'])
-            return (prefixes[styleId] ? prefixes[styleId] : "") + this;
-        var val = styles[styleId];
-        return '\u001b[' + val[0] + 'm' + this + '\u001b[' + val[1] + 'm';
-    }"
+"changenote" ""
+"publishedfileid" "725219116"
 }
-
-"stylize" "function (styleId) {
-        if (args['--nostyle'])
-            return (prefixes[styleId] ? prefixes[styleId] : "") + this;
-        var val = styles[styleId];
-        return '\u001b[' + val[0] + 'm' + this + '\u001b[' + val[1] + 'm';
-    }"
