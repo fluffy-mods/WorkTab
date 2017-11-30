@@ -18,18 +18,23 @@ namespace WorkTab
     {
         public static void VerticalLabel( Rect rect, string text, float margin = Constants.Margin )
         {
+            // the offset appears to be ( 1 - UIScale ) * ( Screen.height - Tab.height )? // Nope, close, but no sigar.
+            //var offsetDistance = (1 - Prefs.UIScale) *
+            //                     (UI.screenHeight - MainTabWindow_WorkTab.Instance.windowRect.height - 30f);
+            //var offset = new Vector2(offsetDistance, -offsetDistance);
             var pivot = rect.center;
             var pivotRect = new Rect(0, 0, 2, 2) { center = pivot };
+            var flipped = new Rect(0f, 0f, rect.height, rect.width) { center = pivot };
 
-            Widgets.DrawBox( pivotRect );
+            Widgets.DrawBox(pivotRect);
             Widgets.DrawBox(rect);
 
             UI.RotateAroundPivot( 90, pivot );
-            var flipped = new Rect(0f, 0f, rect.height, rect.width) { center = pivot };
+
 
             GUI.color = Color.blue;
             Widgets.DrawBox( flipped );
-            Widgets.DrawBox( pivotRect );
+            Widgets.DrawBox( pivotRect);
             Widgets.Label( flipped, text );
 
             UI.RotateAroundPivot( -90, pivot );
