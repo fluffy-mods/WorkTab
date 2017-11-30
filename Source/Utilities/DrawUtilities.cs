@@ -18,10 +18,10 @@ namespace WorkTab
     {
         public static void VerticalLabel( Rect rect, string text, float margin = Constants.Margin )
         {
-            GUIUtility.RotateAroundPivot( -90, rect.center );
+            UI.RotateAroundPivot( -90, rect.center );
             var flipped = new Rect( 0f, 0f, rect.height, rect.width ) {center = rect.center};
             Widgets.Label(flipped, text);
-            GUIUtility.RotateAroundPivot(90, rect.center);
+            UI.RotateAroundPivot( 90, rect.center );
         }
 
         private static MethodInfo _drawWorkBoxBackgroundMethodInfo;
