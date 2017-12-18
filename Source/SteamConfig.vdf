@@ -35,6 +35,7 @@ Finally, there will never be an ‘autolabour’ mode where a mod sets prioritie
  - DoctorVanGogh: Help with typos in build script
  - MrClon: Russian translation
  - mercutiodesign: Optional scrollwheel usage setting
+ - Bugo:
  
 
 [h1]Think you found a bug?[/h1]
@@ -54,9 +55,12 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.1.0
+This is version v0.18.1.1
 
 "
-"changenote" ""
+"changenote" "Update ModSync.xml
+Create ModSync.xml
+Update Russian translation
+slightly improve scaled rotation (#77) by using Verse.UI.RotateAroundPivot() instead of Unity.GUI.RotateAroundPivot()."
 "publishedfileid" "725219116"
 }
