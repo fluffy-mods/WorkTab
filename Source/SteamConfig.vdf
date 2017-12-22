@@ -20,6 +20,9 @@ Various usability extentions to the ‘vanilla’ work tab;
  - [b]All functions are detailed in the tooltips, take a moment to hover over and read them![/b]
  
 
+[h1]Known Issues[/h1]
+With UI scaling turned on, vertical labels are drawn in the wrong position. I’ve been working on this problem for a while, but have been unable to come up with a solution. Workarounds are to not use UI scaling, or to turn vertical labels off in the mod options. See the [url=https://steamcommunity.com/linkfilter/?url=https://github.com/FluffierThanThou/WorkTab/issues/77]issue[/url] for more details.
+
 [h1]Notes[/h1]
 With great power comes great responsibility. The default priorities of tasks within a job is set for a good reason; it’s (usually) a sensible default. Changing these can lead to deadlock situations, so change the priorities of individual jobs at your own risk!
 
@@ -55,12 +58,9 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.1.2
+This is version v0.18.1.3
 
 "
-"changenote" "Update ModSync.xml
-Create ModSync.xml
-Update Russian translation
-slightly improve scaled rotation (#77) by using Verse.UI.RotateAroundPivot() instead of Unity.GUI.RotateAroundPivot()."
+"changenote" "add ui scaling/vertical labels issue to known issues section"
 "publishedfileid" "725219116"
 }
