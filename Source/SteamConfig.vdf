@@ -39,6 +39,7 @@ Finally, there will never be an ‘autolabour’ mode where a mod sets prioritie
  - MrClon: Russian translation
  - mercutiodesign: Optional scrollwheel usage setting
  - Bugo:
+ - Arex-rus:
  
 
 [h1]Think you found a bug?[/h1]
@@ -58,9 +59,9 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.1.4
+This is version v0.18.1.5
 
 "
-"changenote" ""
+"changenote" "Fix Russian translation (#81)"
 "publishedfileid" "725219116"
 }
