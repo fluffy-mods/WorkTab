@@ -83,20 +83,30 @@ namespace WorkTab
 
         private static Color ColorOfPriority(int priority)
         {
-            // first 1/3rd of priority levels lerp from green to white, then lerp to grey
+            // use custom colors for priority levels, then lerp to last
             if (priority == 0)
                 return Color.grey;
 
-            // define sizes of colour ranges 
-            int firstThird = Settings.maxPriority / 3;
-            int rest = Settings.maxPriority - firstThird;
+            // define sizes of color ranges 
+            int staticColors = Settings.priorityColors.Count;
+            int rest = Settings.maxPriority - staticColors + 1;
 
-            // from green to white
-            if ( priority <= firstThird )
-                return Color.Lerp( Color.green, Color.white, ((float) priority) / firstThird );
+            if (staticColors < 2) //Just in case!
+                return Color.Lerp(Color.green, Color.grey, ((float)(priority - 1)) / (Settings.maxPriority - 1));
 
-            // white to grey
-            return Color.Lerp( Color.white, Color.grey, ( (float) ( priority - firstThird ) ) / rest );
+            if (priority < staticColors)
+            {
+                Color c = new Color();
+                ColorUtility.TryParseHtmlString("#" + Settings.priorityColors[priority - 1], out c);
+                return c;
+            }
+            
+            // lerp the last two colors
+            Color color = new Color();
+            ColorUtility.TryParseHtmlString("#" + Settings.priorityColors[staticColors - 2], out color);
+            Color lastColor = new Color();
+            ColorUtility.TryParseHtmlString("#" + Settings.priorityColors[staticColors - 1], out lastColor);
+            return Color.Lerp( color, lastColor, ( (float) ( priority - staticColors + 1) ) / rest );
         }
 
 
