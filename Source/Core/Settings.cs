@@ -2,6 +2,7 @@
 // Settings.cs
 // 2017-05-22
 
+using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 using Verse;
@@ -12,6 +13,8 @@ namespace WorkTab
     {
 
         public int maxPriority = 9;
+        public bool showPriorityColors = false;
+        public List<string> priorityColors;
         public bool playCrunch = true;
         public bool playSounds = true;
         public bool TwentyFourHourMode = true;
@@ -26,6 +29,7 @@ namespace WorkTab
         public Settings()
         {
             ApplyFontFix( _fontFix );
+            priorityColors = new List<string> { "00ff00", "e6cf89", "808080" };
         }
 
         public void ApplyFontFix( bool state )
@@ -42,6 +46,9 @@ namespace WorkTab
             var options = new Listing_Standard();
             options.Begin(rect);
             options.TextFieldNumericLabeled<int>("WorkTab.MaxPriority".Translate(), ref maxPriority, maxPriority.ToString(), 4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
+            options.CheckboxLabeled("WorkTab.ShowPriorityColors".Translate(), ref showPriorityColors, "WorkTab.PriorityColorsTip".Translate()); 
+            if (showPriorityColors)
+                options.ColorBoxes(ref priorityColors, "WorkTab.PriorityColorsTip".Translate());
             options.CheckboxLabeled("WorkTab.24HourMode".Translate(), ref TwentyFourHourMode, "WorkTab.24HourModeTip".Translate() );
             options.CheckboxLabeled("WorkTab.PlaySounds".Translate(), ref playSounds, "WorkTab.PlaySoundsTip".Translate());
             playCrunch = playSounds && playCrunch; // disabling sounds also disables crunch.
@@ -74,7 +81,11 @@ namespace WorkTab
 
         public override void ExposeData()
         {
+            List<string> priorityColorsHelper = new List<string>(priorityColors);// ref send to Scribe_Collections is set to null for some reason?
+
             Scribe_Values.Look(ref maxPriority, "MaxPriority", 9);
+            Scribe_Values.Look(ref showPriorityColors, "ShowCustomColors", false);
+            Scribe_Collections.Look(ref priorityColorsHelper, "PriorityColors");    // Doesn't seem to accept defaults
             Scribe_Values.Look(ref TwentyFourHourMode, "TwentyFourHourMode", true);
             Scribe_Values.Look(ref playSounds, "PlaySounds", true);
             Scribe_Values.Look(ref playCrunch, "PlayCrunch", true);
@@ -85,6 +96,9 @@ namespace WorkTab
             // apply font-fix on load
             if ( Scribe.mode == LoadSaveMode.PostLoadInit )
                 ApplyFontFix( _fontFix );
+
+            if (priorityColorsHelper != null)
+                priorityColors = priorityColorsHelper;
         }
 
         #endregion
