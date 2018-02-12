@@ -15,7 +15,7 @@ namespace WorkTab
             listing.Gap(listing.verticalSpacing);
         }
 
-        public static void TextFieldNumericLabeled<T>(this Listing_Standard listing, string label, ref T value, ref string buffer, float min = 0, float max = float.MaxValue, string tooltip = null, float textfieldWidthFraction = 1 / 3f) where T : struct
+        public static void TextFieldNumericLabeled<T>(this Listing_Standard listing, string label, ref T value, string buffer, float min = 0, float max = float.MaxValue, string tooltip = null, float textfieldWidthFraction = 1 / 3f) where T : struct
         {
             Rect rect = listing.GetRect(Text.LineHeight);
             Rect fieldRect = rect;

@@ -33,7 +33,7 @@ namespace WorkTab
 
         public static bool Scrolled( Rect rect, ScrollDirection direction, bool stopPropagation )
         {
-            if (Settings.disableScrollwheel)
+            if (Settings.Get().disableScrollwheel)
                 return false;
 
             bool scrolled = Event.current.type == EventType.ScrollWheel &&

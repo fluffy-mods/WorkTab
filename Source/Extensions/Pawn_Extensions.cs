@@ -90,10 +90,10 @@ namespace WorkTab
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
-            if ( priority > Settings.maxPriority )
+            if ( priority > Settings.Get().maxPriority )
                 priority = 0;
             if ( priority < 0 )
-                priority = Settings.maxPriority;
+                priority = Settings.Get().maxPriority;
 
             Logger.Trace( $"Setting {pawn.LabelShort}'s {workgiver.defName} priority for {hour} to {priority}"  );
             PriorityManager.Set[pawn][workgiver][hour] = priority;

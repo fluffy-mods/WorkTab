@@ -112,7 +112,7 @@ namespace WorkTab
 
                 // get new priority, play crunch if it wasn't pretty
                 int newPriority = pawn.GetPriority( WorkGiver, VisibleHour );
-                if ( Settings.playSounds && Settings.playCrunch &&
+                if (Settings.Get().playSounds && Settings.Get().playCrunch &&
                      oldpriority == 0 && newPriority > 0 &&
                      pawn.skills.AverageOfRelevantSkillsFor( WorkGiver.workType ) <= 2f )
                 {
@@ -128,7 +128,7 @@ namespace WorkTab
 
         private void HandleInteractionsToggle( Rect rect, Pawn pawn )
         {
-            if ( ( Event.current.type == EventType.MouseDown || ( Event.current.type == EventType.ScrollWheel && !Settings.disableScrollwheel ) )
+            if ( ( Event.current.type == EventType.MouseDown || ( Event.current.type == EventType.ScrollWheel && !Settings.Get().disableScrollwheel ) )
                  && Mouse.IsOver( rect ) )
             {
                 // track priority so we can play appropriate sounds
@@ -137,15 +137,15 @@ namespace WorkTab
                 if ( active )
                 {
                     pawn.SetPriority( WorkGiver, 0, SelectedHours );
-                    if (Settings.playSounds)
+                    if (Settings.Get().playSounds)
                         SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                 }
                 else
                 {
-                    pawn.SetPriority( WorkGiver, Mathf.Min( Settings.maxPriority, 3 ), SelectedHours );
-                    if (Settings.playSounds )
+                    pawn.SetPriority( WorkGiver, Mathf.Min(Settings.Get().maxPriority, 3 ), SelectedHours );
+                    if (Settings.Get().playSounds )
                         SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-                    if ( Settings.playSounds && Settings.playCrunch && pawn.skills.AverageOfRelevantSkillsFor( WorkGiver.workType ) <= 2f )
+                    if (Settings.Get().playSounds && Settings.Get().playCrunch && pawn.skills.AverageOfRelevantSkillsFor( WorkGiver.workType ) <= 2f )
                         SoundDefOf.Crunch.PlayOneShotOnCamera();
                 }
 
@@ -169,7 +169,7 @@ namespace WorkTab
             Text.Font = GameFont.Tiny;
             Rect labelRect = rect;
 
-            if ( Settings.verticalLabels )
+            if (Settings.Get().verticalLabels )
                 DrawVerticalHeader( rect, table );
             else
                 DrawHorizontalHeader( rect, table, out labelRect );    
@@ -279,7 +279,7 @@ namespace WorkTab
             }
         }
 
-        public override int GetMinHeaderHeight( PawnTable table ) { return Settings.verticalLabels ? VerticalHeaderHeight : HorizontalHeaderHeight; }
+        public override int GetMinHeaderHeight( PawnTable table ) { return Settings.Get().verticalLabels ? VerticalHeaderHeight : HorizontalHeaderHeight; }
 
         private Rect GetLabelRect( Rect headerRect )
         {
@@ -321,7 +321,7 @@ namespace WorkTab
                     {
                         if ( pawns.Any( p => p.GetPriority( WorkGiver, VisibleHour ) != 0 ) )
                         {
-                            if (Settings.playSounds)
+                            if (Settings.Get().playSounds)
                                 SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                             foreach ( Pawn pawn in pawns )
                                 pawn.SetPriority( WorkGiver, 0, SelectedHours );
@@ -332,7 +332,7 @@ namespace WorkTab
                     {
                         if ( pawns.Any( p => p.GetPriority( WorkGiver, VisibleHour ) == 0 ) )
                         {
-                            if (Settings.playSounds)
+                            if (Settings.Get().playSounds)
                                 SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                             foreach ( Pawn pawn in pawns )
                                 pawn.SetPriority( WorkGiver, 3, SelectedHours );

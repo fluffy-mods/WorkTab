@@ -62,7 +62,7 @@ namespace WorkTab
                 {
                     if (priority == 0)
                     {
-                        priority = Settings.maxPriority;
+                        priority = Settings.Get().maxPriority;
                         actionTaken = true;
                     }
                     else if (priority != 1)
@@ -82,7 +82,7 @@ namespace WorkTab
                 pawn.SetPriority(workgiver, priority, MainTabWindow_WorkTab.SelectedHours);
             }
 
-            if (actionTaken && Settings.playSounds)
+            if (actionTaken && Settings.Get().playSounds)
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
         }
 
@@ -101,7 +101,7 @@ namespace WorkTab
                 // detailed mode
                 if (PriorityManager.Get.ShowPriorities)
                 {
-                    if (priority == Settings.maxPriority)
+                    if (priority == Settings.Get().maxPriority)
                     {
                         priority = 0;
                         actionTaken = true;
@@ -124,7 +124,7 @@ namespace WorkTab
                 pawn.SetPriority(workgiver, priority, MainTabWindow_WorkTab.SelectedHours);
             }
 
-            if (actionTaken && Settings.playSounds)
+            if (actionTaken && Settings.Get().playSounds)
                 SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
         }
     }

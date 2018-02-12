@@ -10,35 +10,38 @@ namespace WorkTab
 {
     public class Settings: ModSettings
     {
-        public static int maxPriority = 9;
-        public static bool playCrunch = true;
-        public static bool playSounds = true;
-        public static bool TwentyFourHourMode = true;
-        public static bool disableScrollwheel = false;
-        public static bool verticalLabels = true;
-        private static bool _fontFix = true;
 
+        public int maxPriority = 9;
+        public bool playCrunch = true;
+        public bool playSounds = true;
+        public bool TwentyFourHourMode = true;
+        public bool disableScrollwheel = false;
+        public bool verticalLabels = true;
+        private bool _fontFix = true;
+
+        public static Settings Get()
+        {
+            return LoadedModManager.GetMod<WorkTab.Mod>().GetSettings<Settings>();
+        }
         public Settings()
         {
             ApplyFontFix( _fontFix );
         }
 
-        public static void ApplyFontFix( bool state )
+        public void ApplyFontFix( bool state )
         {
             Logger.Debug( state ? "Applying font fix" : "Disabling font fix" );
             _fontFix = state;
             Text.fontStyles[0].font.material.mainTexture.filterMode = state ? FilterMode.Point : FilterMode.Trilinear;
         }
 
-        // buffers
-        private static bool _fontFixBuffer = _fontFix;
-        private static string _maxPriorityBuffer = maxPriority.ToString();
+        // buffers;
 
-        public static void DoWindowContents( Rect rect )
-        { 
+        public void DoWindowContents( Rect rect )
+        {
             var options = new Listing_Standard();
             options.Begin(rect);
-            options.TextFieldNumericLabeled<int>("WorkTab.MaxPriority".Translate(), ref maxPriority, ref _maxPriorityBuffer, 4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
+            options.TextFieldNumericLabeled<int>("WorkTab.MaxPriority".Translate(), ref maxPriority, maxPriority.ToString(), 4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
             options.CheckboxLabeled("WorkTab.24HourMode".Translate(), ref TwentyFourHourMode, "WorkTab.24HourModeTip".Translate() );
             options.CheckboxLabeled("WorkTab.PlaySounds".Translate(), ref playSounds, "WorkTab.PlaySoundsTip".Translate());
             playCrunch = playSounds && playCrunch; // disabling sounds also disables crunch.

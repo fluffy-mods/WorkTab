@@ -27,7 +27,7 @@ namespace WorkTab
         public override void DoSettingsWindowContents(Rect inRect)
         {
             base.DoSettingsWindowContents(inRect);
-            Settings.DoWindowContents(inRect);
+            GetSettings<Settings>().DoWindowContents(inRect);
         }
 
         public override string SettingsCategory()

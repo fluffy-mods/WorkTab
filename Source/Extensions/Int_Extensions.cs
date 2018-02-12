@@ -12,7 +12,7 @@ namespace WorkTab
         public static string FormatHour( this int hour )
         {
             // 24-hour is simple
-            if ( Settings.TwentyFourHourMode )
+            if (Settings.Get().TwentyFourHourMode )
                 return hour.ToString( "D2" ) + ":00";
 
             // noon/midnight are special

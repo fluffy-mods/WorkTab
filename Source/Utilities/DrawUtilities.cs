@@ -88,8 +88,8 @@ namespace WorkTab
                 return Color.grey;
 
             // define sizes of colour ranges 
-            int firstThird = Settings.maxPriority / 3;
-            int rest = Settings.maxPriority - firstThird;
+            int firstThird = Settings.Get().maxPriority / 3;
+            int rest = Settings.Get().maxPriority - firstThird;
 
             // from green to white
             if ( priority <= firstThird )
