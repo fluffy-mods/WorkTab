@@ -24,9 +24,30 @@ namespace WorkTab
             if ( !priorities.Any() )
                 return 0;
 
-            // otherwise, return the lowest number (highest priority).
+            // otherwise, return the most common number
             if (Find.PlaySettings.useWorkPriorities)
-                return priorities.Min();
+            {
+                //count each priority level, track highest
+                Dictionary<int, int> priorityCount = new Dictionary<int, int>();
+                int highestCount = 0;
+                int commonPriority = 0;
+
+                foreach(var p in priorities)
+                {
+                    int count = 1;
+                    if (priorityCount.TryGetValue(p, out count))
+                        count++;
+                    priorityCount[p] = count;
+
+                    if (count > highestCount)
+                    {
+                        highestCount = count;
+                        commonPriority = p;
+                    }
+                }
+
+                return commonPriority;
+            }
 
             // or, in simple mode, just 3.
             return 3;
