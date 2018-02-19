@@ -18,7 +18,7 @@ namespace WorkTab
                 hour = GenLocalDate.HourOfDay(pawn);
 
             // get priorities for all workgivers in worktype
-            var priorities = worktype.WorkGivers().Select( wg => GetPriority( pawn, wg, hour ) ).Where( p => p > 0 );
+            var priorities = worktype.WorkGivers().Select( wg => GetPriority( pawn, wg, hour ) );
 
             // if there are no active priorities, return zero
             if ( !priorities.Any() )
