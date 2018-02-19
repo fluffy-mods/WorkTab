@@ -35,8 +35,8 @@ namespace WorkTab
                 foreach(var p in priorities)
                 {
                     int count = 1;
-                    if (priorityCount.TryGetValue(p, out count))
-                        count++;
+                    if (priorityCount.ContainsKey(p))
+                        count = priorityCount[p] + 1;
                     priorityCount[p] = count;
 
                     if (count > highestCount)
