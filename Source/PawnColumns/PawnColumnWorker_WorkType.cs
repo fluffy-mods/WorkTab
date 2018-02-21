@@ -322,7 +322,7 @@ namespace WorkTab
                     var pawns = CapablePawns;
                     if ( ScrolledUp( rect, true ) || RightClicked( rect ) )
                     {
-                        if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) != 0 ) )
+                        if ( pawns.Any( p => p.GetMinPriority( def.workType, VisibleHour ) != 0 ) )
                         {
                             if (Settings.Get().playSounds)
                                 SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
@@ -333,7 +333,7 @@ namespace WorkTab
 
                     if ( ScrolledDown( rect, true ) || LeftClicked( rect ) )
                     {
-                        if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) == 0 ) )
+                        if ( pawns.Any( p => p.GetMaxPriority( def.workType, VisibleHour ) == 0 ) )
                         {
                             if (Settings.Get().playSounds)
                                 SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();

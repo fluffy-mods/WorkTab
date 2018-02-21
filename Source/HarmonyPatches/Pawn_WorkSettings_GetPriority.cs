@@ -15,7 +15,7 @@ namespace WorkTab
     {
         static bool Prefix( WorkTypeDef w, Pawn_WorkSettings __instance, ref int __result )
         {
-            __result = __instance.Pawn().GetPriority( w, -1 );
+            __result = __instance.Pawn().GetMinPriority( w, -1 );
             return false;
         }
     }
