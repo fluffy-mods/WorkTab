@@ -61,7 +61,8 @@
     <Compile Include="Extensions\Listing_Extensions.cs" />
     <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
-    <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
+    <Compile Include="HarmonyPatches\PawnTable\PawnTable_RecacheIfDirty.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
     <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
     <Compile Include="PawnColumns\IAlternatingColumn.cs" />
     <Compile Include="PawnColumns\IExpandableColumn.cs" />
@@ -84,8 +85,8 @@
     <Compile Include="Extensions\Pawn_Extensions.cs" />
     <Compile Include="Extensions\WorkType_Extensions.cs" />
     <Compile Include="HarmonyPatches\DefGenerator_GenerateImpliedDefs_PreResolve.cs" />
-    <Compile Include="HarmonyPatches\Pawn_WorkSettings_GetPriority.cs" />
-    <Compile Include="HarmonyPatches\Pawn_WorkSettings_SetPriority.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_GetPriority.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_SetPriority.cs" />
     <Compile Include="PawnColumns\PawnColumnDef_WorkGiver.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_WorkGiver.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_WorkType.cs" />

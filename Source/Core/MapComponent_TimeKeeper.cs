@@ -2,7 +2,9 @@
 // MapComponent_TimeKeeper.cs
 // 2017-06-15
 
+using System.Reflection;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace WorkTab
@@ -30,5 +32,14 @@ namespace WorkTab
                     pawn.workSettings.Notify_UseWorkPrioritiesChanged();
             }
         }
+
+#if DEBUG
+        public override void MapComponentOnGUI()
+        {
+            base.MapComponentOnGUI();
+            Rect statusRect = new Rect( 6f, UI.screenHeight / 2f, 150f, 50f );
+            Widgets.Label( statusRect, typeof( MainTabWindow_WorkTab ).Assembly.GetName().Version.ToString() );
+        }
+#endif
     }
 }
