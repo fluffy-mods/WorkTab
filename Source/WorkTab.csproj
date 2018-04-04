@@ -61,6 +61,7 @@
     <Compile Include="Extensions\Listing_Extensions.cs" />
     <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
+    <Compile Include="HarmonyPatches\PawnTable\PawnTable_PawnTableOnGUI.cs" />
     <Compile Include="HarmonyPatches\PawnTable\PawnTable_RecacheIfDirty.cs" />
     <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
     <Compile Include="PawnColumns\IAlternatingColumn.cs" />
