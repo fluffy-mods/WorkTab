@@ -63,7 +63,6 @@
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
     <Compile Include="HarmonyPatches\PawnTable\PawnTable_RecacheIfDirty.cs" />
     <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
-    <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
     <Compile Include="PawnColumns\IAlternatingColumn.cs" />
     <Compile Include="PawnColumns\IExpandableColumn.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_CopyPasteDetailedWorkPriorities.cs" />
