@@ -366,7 +366,7 @@ namespace WorkTab
         private void ExpandAll( bool expand )
         {
             foreach (var expandableColumn in PawnTableDef.columns.Select( c => c.Worker ).OfType<IExpandableColumn>())
-                if (expandableColumn.Expanded != expand)
+                if ( expandableColumn.Expanded != expand && expandableColumn.CanExpand )
                     expandableColumn.Expanded = expand;
         }
 
