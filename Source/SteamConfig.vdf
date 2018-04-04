@@ -38,8 +38,9 @@ Finally, there will never be an ‘autolabour’ mode where a mod sets prioritie
  - DoctorVanGogh: Help with typos in build script
  - MrClon: Russian translation
  - mercutiodesign: Optional scrollwheel usage setting
- - Bugo:
- - Arex-rus:
+ - Bugo: Russian translation (update)
+ - Arex-rus: Russian translation (fixes)
+ - mora145: Spanish translation
  
 
 [h1]Think you found a bug?[/h1]
@@ -59,9 +60,14 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.1.5
+This is version v0.18.1.6
 
 "
-"changenote" "Fix Russian translation (#81)"
+"changenote" "Spanish translation (#90)
+limit maximum size of time bar to available size
+do not expand columns with only one sub-task
+implement horizontal scrollbar
+remove obsolete Widgets.BeginScrollView detour
+force pawnTable columns to have at least their minimum size"
 "publishedfileid" "725219116"
 }

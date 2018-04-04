@@ -31,8 +31,9 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - DoctorVanGogh:	Help with typos in build script
  - MrClon:	Russian translation
  - mercutiodesign:	Optional scrollwheel usage setting
- - Bugo:	
- - Arex-rus:	
+ - Bugo:	Russian translation (update)
+ - Arex-rus:	Russian translation (fixes)
+ - mora145:	Spanish translation
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
@@ -53,4 +54,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![Buy Me a Coffee](http://i.imgur.com/EjWiUwx.gif)](https://ko-fi.com/fluffymods)
 
 # Version
-This is version v0.18.1.5
+This is version v0.18.1.6
