@@ -310,10 +310,14 @@ namespace WorkTab
             }
 
             // build the rect
-            _timeBarRect = new Rect(start,
+            _timeBarRect = new Rect(
+                start,
                 windowRect.height - base.ExtraBottomSpace, // note that we're not subtracting the time bar height itself, as at this point the window's height has not yet been updated to include it.
                 width,
                 TimeBarHeight);
+
+            // limit maximum size
+            _timeBarRect.xMax = Mathf.Min( _timeBarRect.xMax, UI.screenWidth - StandardMargin );
 
             Logger.Debug("created time bar rect: " + _timeBarRect);
         }
