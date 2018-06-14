@@ -70,7 +70,7 @@ namespace WorkTab
                 job == JobDefOf.AttackStatic || 
                 job == JobDefOf.FleeAndCower || 
                 job == JobDefOf.ManTurret || 
-                job == JobDefOf.WaitCombat ||
+                job == JobDefOf.Wait_Combat ||
                 job == JobDefOf.Flee )
                 return "UI/Icons/Various/combat";
 
@@ -105,9 +105,9 @@ namespace WorkTab
                 return "UI/Icons/Various/hearts";
 
             // games 
-            if ( job == JobDefOf2.PlayBilliards ||
-                 job == JobDefOf2.PlayChess ||
-                 job == JobDefOf2.PlayHorseshoes || 
+            if ( job == JobDefOf2.Play_Billiards ||
+                 job == JobDefOf2.Play_Chess ||
+                 job == JobDefOf2.Play_Horseshoes || 
                  job == JobDefOf2.BuildSnowman )
                 return "UI/Icons/Various/dice";
 
@@ -134,14 +134,16 @@ namespace WorkTab
 
             // haul
             if (job == JobDefOf.CarryToCryptosleepCasket || 
-                job == JobDefOf.BuryCorpse || 
+                job == JobDefOf.HaulCorpseToPublicPlace || 
                 job == JobDefOf.HaulToCell || 
                 job == JobDefOf.HaulToContainer || 
                 job == JobDefOf.Refuel || 
                 job == JobDefOf.PrepareCaravan_GatherItems ||
                 job == JobDefOf.FillFermentingBarrel ||
                 job == JobDefOf.TakeBeerOutOfFermentingBarrel || 
-                job == JobDefOf.GiveToPackAnimal )
+                job == JobDefOf.GiveToPackAnimal ||
+                job == JobDefOf.RearmTurret || 
+                job == JobDefOf.RearmTurretAtomic )
                 return "UI/Icons/Various/haul";
 
             // clean
@@ -175,6 +177,7 @@ namespace WorkTab
             if (job == JobDefOf.SocialRelax || 
                 job == JobDefOf.SpectateCeremony || 
                 job == JobDefOf.StandAndBeSociallyActive ||
+                job == JobDefOf.Insult ||
                 job == JobDefOf.UseCommsConsole )
                 return "UI/Icons/Various/social";
 
@@ -206,9 +209,9 @@ namespace WorkTab
 
             // waiting
             if ( job == JobDefOf.Wait ||
-                 job == JobDefOf.WaitMaintainPosture ||
-                 job == JobDefOf.WaitSafeTemperature ||
-                 job == JobDefOf.WaitWander )
+                 job == JobDefOf.Wait_MaintainPosture ||
+                 job == JobDefOf.Wait_SafeTemperature ||
+                 job == JobDefOf.Wait_Wander )
                 return "UI/Icons/Various/clock";
 
             // construct
@@ -216,6 +219,7 @@ namespace WorkTab
                 job == JobDefOf.PlaceNoCostFrame || 
                 job == JobDefOf.RemoveFloor || 
                 job == JobDefOf.SmoothFloor || 
+                job == JobDefOf.SmoothWall ||
                 job == JobDefOf.Uninstall || 
                 job == JobDefOf.Deconstruct ||
                 job == JobDefOf.BuildRoof || 
@@ -225,7 +229,7 @@ namespace WorkTab
             // repair
             if (job == JobDefOf.FixBrokenDownBuilding || 
                 job == JobDefOf.Repair ||
-                job == JobDefOf2.Maintain ||
+                job == JobDefOf.Maintain ||
                 job == JobDefOf.RearmTrap )
                 return "UI/Icons/Various/wrench";
 
@@ -234,7 +238,7 @@ namespace WorkTab
                 return "UI/Icons/Various/chef";
 
             // sick
-            if (job == JobDefOf.WaitDowned ||
+            if (job == JobDefOf.Wait_Downed ||
                 job == JobDefOf.Vomit )
                 return "UI/Icons/Various/sick";
 
@@ -265,6 +269,8 @@ namespace WorkTab
                 job == JobDefOf.UseArtifact ||
                 job == JobDefOf.Flick ||
                 job == JobDefOf.EnterTransporter ||
+                job == JobDefOf2.UseItem ||
+                job == JobDefOf.Ignite ||
                 job == JobDefOf.Steal)
                 return "UI/Icons/Various/hand";
 

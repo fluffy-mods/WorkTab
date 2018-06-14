@@ -25,9 +25,13 @@ namespace WorkTab
 
         public static void ApplyFontFix( bool state )
         {
-            Logger.Debug( state ? "Applying font fix" : "Disabling font fix" );
-            _fontFix = state;
-            Text.fontStyles[0].font.material.mainTexture.filterMode = state ? FilterMode.Point : FilterMode.Trilinear;
+            LongEventHandler.ExecuteWhenFinished( delegate
+            {
+                Logger.Debug( state ? "Applying font fix" : "Disabling font fix" );
+                _fontFix = state;
+                Text.fontStyles[0].font.material.mainTexture.filterMode =
+                    state ? FilterMode.Point : FilterMode.Trilinear;
+            } );
         }
 
         // buffers

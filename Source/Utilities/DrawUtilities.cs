@@ -104,7 +104,7 @@ namespace WorkTab
         {
             var tip = $"{workgiver.LabelCap} ({workgiver.workType.gerundLabel})";
             if (pawn.story.WorkTypeIsDisabled(workgiver.workType))
-                tip += "\n\n" + "CannotDoThisWork".Translate( pawn.NameStringShort );
+                tip += "\n\n" + "CannotDoThisWork".Translate( pawn.Name.ToStringShort );
             else
             {
                 if ( workgiver.workType.relevantSkills.Count > 0 )

@@ -32,7 +32,7 @@ namespace WorkTab
             catch ( ArgumentOutOfRangeException )
             {
                 priority = 0; 
-                Logger.Message( $"Priority requested for a workgiver that did not yet exist for {pawn.NameStringShort}. Did you add mods in an existing game?" );
+                Logger.Message( $"Priority requested for a workgiver that did not yet exist for {pawn.Name.ToStringShort}. Did you add mods in an existing game?" );
             }
             return priority;
         }

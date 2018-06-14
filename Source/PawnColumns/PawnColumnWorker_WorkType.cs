@@ -145,13 +145,13 @@ namespace WorkTab
                 {
                     pawn.SetPriority( def.workType, 0, SelectedHours );
                     if (Settings.playSounds)
-                        SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                        SoundDefOf.Checkbox_TurnedOff.PlayOneShotOnCamera();
                 }
                 else
                 {
                     pawn.SetPriority( def.workType, Mathf.Min( Settings.maxPriority, 3 ), SelectedHours );
                     if (Settings.playSounds)
-                        SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                        SoundDefOf.Checkbox_TurnedOn.PlayOneShotOnCamera();
                     if (Settings.playSounds && Settings.playCrunch && pawn.skills.AverageOfRelevantSkillsFor( def.workType ) <= 2f )
                     {
                         SoundDefOf.Crunch.PlayOneShotOnCamera();
@@ -325,7 +325,7 @@ namespace WorkTab
                         if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) != 0 ) )
                         {
                             if (Settings.playSounds)
-                                SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                                SoundDefOf.Checkbox_TurnedOff.PlayOneShotOnCamera();
                             foreach ( Pawn pawn in pawns )
                                 pawn.SetPriority( def.workType, 0, SelectedHours );
                         }
@@ -336,7 +336,7 @@ namespace WorkTab
                         if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) == 0 ) )
                         {
                             if (Settings.playSounds)
-                                SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                                SoundDefOf.Checkbox_TurnedOn.PlayOneShotOnCamera();
                             foreach ( Pawn pawn in pawns )
                                 pawn.SetPriority( def.workType, 3, SelectedHours );
                         }
@@ -364,17 +364,17 @@ namespace WorkTab
                 if ( table.SortingBy != def )
                 {
                     table.SortBy( def, true );
-                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                    SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 }
                 else if ( table.SortingDescending )
                 {
                     table.SortBy( def, false );
-                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                    SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 }
                 else
                 {
                     table.SortBy( null, false );
-                    SoundDefOf.TickLow.PlayOneShotOnCamera();
+                    SoundDefOf.Tick_Low.PlayOneShotOnCamera();
                 }
             }
             else
@@ -382,17 +382,17 @@ namespace WorkTab
                 if ( table.SortingBy != def )
                 {
                     table.SortBy( def, false );
-                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                    SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 }
                 else if ( table.SortingDescending )
                 {
                     table.SortBy( null, false );
-                    SoundDefOf.TickLow.PlayOneShotOnCamera();
+                    SoundDefOf.Tick_Low.PlayOneShotOnCamera();
                 }
                 else
                 {
                     table.SortBy( def, true );
-                    SoundDefOf.TickHigh.PlayOneShotOnCamera();
+                    SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 }
             }
         }
