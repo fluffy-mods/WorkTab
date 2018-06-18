@@ -60,14 +60,9 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.1.7
+This is version 2.2.136, for RimWorld 1.0.1937.
 
 "
-"changenote" "Spanish translation (#90)
-limit maximum size of time bar to available size
-do not expand columns with only one sub-task
-implement horizontal scrollbar
-remove obsolete Widgets.BeginScrollView detour
-force pawnTable columns to have at least their minimum size"
+"changenote" "initial v1.0 update"
 "publishedfileid" "725219116"
 }
