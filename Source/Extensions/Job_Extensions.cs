@@ -84,7 +84,6 @@ namespace WorkTab
                 job == JobDefOf.EscortPrisonerToBed || 
                 job == JobDefOf.PrisonerAttemptRecruit || 
                 job == JobDefOf.PrisonerExecution || 
-                job == JobDefOf.PrisonerFriendlyChat || 
                 job == JobDefOf.ReleasePrisoner || 
                 job == JobDefOf.TakeWoundedPrisonerToBed ||
                 job == JobDefOf.Kidnap ||
