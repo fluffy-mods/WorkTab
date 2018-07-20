@@ -1,8 +1,8 @@
 "workshopitem"
 {
 "appid" "294100"
-"contentfolder" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab"
-"previewfile" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
+"contentfolder" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\WorkTab"
+"previewfile" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
 "visibilitiy" "0"
 "title" "Work Tab"
 "description" "Provides a vastly more customizable work tab.
@@ -60,9 +60,9 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version 2.2.136, for RimWorld 1.0.1937.
+This is version 2.3.142, for RimWorld 1.0.1970.
 
 "
-"changenote" "initial v1.0 update"
+"changenote" "update for 1.0.1970"
 "publishedfileid" "725219116"
 }
