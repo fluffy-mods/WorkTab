@@ -228,8 +228,7 @@ namespace WorkTab
             // repair
             if (job == JobDefOf.FixBrokenDownBuilding || 
                 job == JobDefOf.Repair ||
-                job == JobDefOf.Maintain ||
-                job == JobDefOf.RearmTrap )
+                job == JobDefOf.Maintain )
                 return "UI/Icons/Various/wrench";
 
             // cook

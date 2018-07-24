@@ -34,7 +34,7 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\..\harmony\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp, Version=1.0.6775.37815, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\dlls\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -93,6 +93,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>node ../../postbuild update -x -n "Work Tab"</PostBuildEvent>
+    <PostBuildEvent>mod update -x -n "Work Tab"</PostBuildEvent>
   </PropertyGroup>
 </Project>
