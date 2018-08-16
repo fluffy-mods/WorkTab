@@ -34,6 +34,10 @@ namespace WorkTab
                 priority = 0; 
                 Logger.Message( $"Priority requested for a workgiver that did not yet exist for {pawn.Name.ToStringShort}. Did you add mods in an existing game?" );
             }
+            catch ( TargetException ){
+                priority = 0;
+                Logger.Message( $"Priority requested for a pawn that did not have worksettings ({pawn.Name.ToStringShort})" );
+            }
             return priority;
         }
 
