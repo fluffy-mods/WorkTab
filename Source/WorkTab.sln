@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTab", "WorkTab.csproj", "{5C909B0F-E82A-46B1-AE39-E56285B236A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicPawnTable", "..\..\DynamicPawnTable\DynamicPawnTable\DynamicPawnTable.csproj", "{E93B85A6-EEFF-4BDE-A6F4-CCE6D3487F9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicPawnTable", "..\..\..\TOOLS\DynamicPawnTable\DynamicPawnTable\DynamicPawnTable.csproj", "{E93B85A6-EEFF-4BDE-A6F4-CCE6D3487F9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
