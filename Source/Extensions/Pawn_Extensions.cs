@@ -65,7 +65,7 @@ namespace WorkTab
             foreach (int hour in (hours ?? WholeDay))
                 SetPriority(pawn, worktype, priority, hour, false);
 
-            PriorityManager.Get[pawn].Recache(worktype);
+            PriorityManager.Get[pawn].InvalidateCache( worktype );
         }
 
         public static void SetPriority(Pawn pawn, WorkTypeDef worktype, int priority, int hour, bool recache = true )
@@ -76,8 +76,8 @@ namespace WorkTab
             foreach (WorkGiverDef workgiver in worktype.WorkGivers())
                 SetPriority(pawn, workgiver, priority, hour, false);
 
-            if (recache)
-                PriorityManager.Get[pawn].Recache(worktype);
+            if ( recache )
+                PriorityManager.Get[pawn].InvalidateCache( worktype );
         }
 
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, List<int> hours )
@@ -85,7 +85,7 @@ namespace WorkTab
             foreach (int hour in (hours ?? WholeDay))
                 SetPriority(pawn, workgiver, priority, hour, false);
 
-            PriorityManager.Get[pawn].Recache(workgiver);
+            PriorityManager.Get[pawn].InvalidateCache( workgiver );
         }
 
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, int hour, bool recache = true )
@@ -99,9 +99,15 @@ namespace WorkTab
 
             Logger.Trace( $"Setting {pawn.LabelShort}'s {workgiver.defName} priority for {hour} to {priority}"  );
             PriorityManager.Set[pawn][workgiver][hour] = priority;
-            
-            if (recache)
-                PriorityManager.Get[pawn].Recache(workgiver);
+
+            if ( recache )
+                PriorityManager.Get[pawn].InvalidateCache( workgiver );
+        }
+
+        public static void DisableAll( this Pawn pawn )
+        {
+            foreach ( var worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )
+                pawn.SetPriority( worktype, 0, null );
         }
 
         public static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )

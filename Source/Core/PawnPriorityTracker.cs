@@ -77,28 +77,44 @@ namespace WorkTab
             return _partScheduledWorkType[worktype];
         }
 
-        public void Recache(WorkGiverDef workgiver, bool bubble = true)
+        public void InvalidateCache( WorkGiverDef workgiver, bool bubble = true )
+        {
+            _everScheduledWorkGiver.Remove( workgiver );
+            _timeScheduledWorkGiver.Remove( workgiver );
+            _timeScheduledWorkGiverTip.Remove( workgiver );
+
+            if ( bubble )
+                InvalidateCache( workgiver.workType, false );
+        }
+
+        public void InvalidateCache( WorkTypeDef worktype, bool bubble = true )
+        {
+            _everScheduledWorkType.Remove( worktype );
+            _timeScheduledWorkType.Remove( worktype );
+            _timeScheduledWorkTypeTip.Remove( worktype );
+
+            if ( bubble )
+                worktype.WorkGivers().ForEach( wg => InvalidateCache( wg, false ) );
+        }
+
+        public void Recache(WorkGiverDef workgiver )
         {
             // recache workgiver stuff
             var priorities = pawn.GetPriorities(workgiver);
             _everScheduledWorkGiver[workgiver] = priorities.Any(p => p > 0);
             _timeScheduledWorkGiver[workgiver] = priorities.Distinct().Count() > 1;
             _timeScheduledWorkGiverTip[workgiver] = DrawUtilities.TimeScheduledTip(pawn, priorities, workgiver.label);
-
-            // also recache worktype
-            if (bubble)
-                Recache(workgiver.workType, false);
         }
 
-        public void Recache(WorkTypeDef worktype, bool bubble = true)
+        public void Recache( WorkTypeDef worktype )
         {
             var workgivers = worktype.WorkGivers();
             var priorities = pawn.GetPriorities(worktype);
 
-            // first update all the workgivers (if bubbling down, or not yet set)
+            // first make sure all workgivers are cached
             foreach (var workgiver in workgivers)
-                if (bubble || !_everScheduledWorkGiver.ContainsKey(workgiver)) // using _everScheduled as a proxy - assumes all these are cached at the same time!
-                    Recache(workgiver, false);
+                if ( !_everScheduledWorkGiver.ContainsKey( workgiver ) )
+                    Recache( workgiver );
 
             // recache worktype stuff
             _everScheduledWorkType[worktype] = workgivers.Any(wg => _everScheduledWorkGiver[wg]);
@@ -134,7 +150,7 @@ namespace WorkTab
             foreach ( WorkGiverDef workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                 priorities.Add( workgiver, new WorkPriorityTracker( pawn, workgiver ) );
         }
-
+        
         public void ExposeData()
         {
             Scribe_References.Look( ref pawn, "Pawn" );
