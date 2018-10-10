@@ -32,14 +32,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\harmony\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\harmony\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\Games\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\dlls\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="harmonycheck">
-      <HintPath>..\..\..\harmony\harmonycheck.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,8 +44,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\Games\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\dlls\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -61,8 +58,10 @@
     <Compile Include="Extensions\Listing_Extensions.cs" />
     <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
-    <Compile Include="HarmonyPatches\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
-    <Compile Include="HarmonyPatches\Widgets_BeginScrollView.cs" />
+    <Compile Include="HarmonyPatches\PawnTable\PawnTable_PawnTableOnGUI.cs" />
+    <Compile Include="HarmonyPatches\PawnTable\PawnTable_RecacheIfDirty.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_DisableAll.cs" />
     <Compile Include="PawnColumns\IAlternatingColumn.cs" />
     <Compile Include="PawnColumns\IExpandableColumn.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_CopyPasteDetailedWorkPriorities.cs" />
@@ -84,8 +83,8 @@
     <Compile Include="Extensions\Pawn_Extensions.cs" />
     <Compile Include="Extensions\WorkType_Extensions.cs" />
     <Compile Include="HarmonyPatches\DefGenerator_GenerateImpliedDefs_PreResolve.cs" />
-    <Compile Include="HarmonyPatches\Pawn_WorkSettings_GetPriority.cs" />
-    <Compile Include="HarmonyPatches\Pawn_WorkSettings_SetPriority.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_GetPriority.cs" />
+    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_SetPriority.cs" />
     <Compile Include="PawnColumns\PawnColumnDef_WorkGiver.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_WorkGiver.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_WorkType.cs" />
@@ -95,6 +94,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>node ../../postbuild update -x -n "Work Tab"</PostBuildEvent>
+    <PostBuildEvent>mod update -x -n "Work Tab"</PostBuildEvent>
   </PropertyGroup>
 </Project>

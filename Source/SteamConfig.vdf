@@ -1,8 +1,8 @@
 "workshopitem"
 {
 "appid" "294100"
-"contentfolder" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab"
-"previewfile" "D:\Games\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
+"contentfolder" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\WorkTab"
+"previewfile" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\WorkTab\About\Preview.png"
 "visibilitiy" "0"
 "title" "Work Tab"
 "description" "Provides a vastly more customizable work tab.
@@ -38,7 +38,9 @@ Finally, there will never be an ‘autolabour’ mode where a mod sets prioritie
  - DoctorVanGogh: Help with typos in build script
  - MrClon: Russian translation
  - mercutiodesign: Optional scrollwheel usage setting
- - Bugo:
+ - Bugo: Russian translation (update)
+ - Arex-rus: Russian translation (fixes)
+ - mora145: Spanish translation
  
 
 [h1]Think you found a bug?[/h1]
@@ -58,7 +60,7 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [url=https://ko-fi.com/fluffymods][img]http://i.imgur.com/6P7Ap79.gif[/img][/url]
 
 [h1]Version[/h1]
-This is version v0.18.1.4
+This is version 2.7.153, for RimWorld 0.19.2009.
 
 "
 "changenote" ""

@@ -51,12 +51,9 @@ namespace WorkTab
                 {
                     case MentalStateCategory.Aggro:
                         return Color.red;
-                    case MentalStateCategory.Sad:
-                        return Color.cyan;
-                    case MentalStateCategory.Panic:
-                        return new Color( .4f, .008f, .235f );
+                    case MentalStateCategory.Malicious:
+                        return Color.yellow;
                     case MentalStateCategory.Misc:
-                    case MentalStateCategory.Indulgent:
                     case MentalStateCategory.Undefined:
                         return new Color( 207 / 256f, 83 / 256f, 0f );
                     default:

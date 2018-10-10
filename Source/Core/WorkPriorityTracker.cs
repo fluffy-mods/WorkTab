@@ -8,8 +8,6 @@ namespace WorkTab {
         private WorkGiverDef workgiver;
         private int[] priorities;
         protected internal Pawn pawn;
-        private string _tooltip;
-        private bool _variesOverTime;
         
         public WorkPriorityTracker(){ 
             // Scribe

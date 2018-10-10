@@ -109,7 +109,8 @@ namespace WorkTab
             }
 
             // rebuild table
-            Instance.Table = new PawnTable( columns, () => Instance.Pawns, 998, UI.screenWidth - (int)(Instance.Margin * 2f), 0,
+            PawnTableDefOf.Work.columns = columns;
+            Instance.Table = new PawnTable( PawnTableDefOf.Work, () => Instance.Pawns, UI.screenWidth - (int)(Instance.Margin * 2f), 
                                    (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
 
             // force recache of table sizes: set the table to be dirty, then get the size - which calls the private recache routine.
@@ -125,7 +126,7 @@ namespace WorkTab
             get
             {
                 // get clean copy of base columns
-                List<PawnColumnDef> columns = new List<PawnColumnDef>(_instance.PawnTableDef.columns);
+                List<PawnColumnDef> columns = new List<PawnColumnDef>( Mod.allColumns );
 
                 // add workgiver columns for expanded worktypes
                 var templist = new List<PawnColumnDef>(columns);
@@ -176,7 +177,7 @@ namespace WorkTab
             button.x -= button.height + Constants.Margin;
             TooltipHandler.TipRegion(button, "WorkTab.SelectCurrentHourTip".Translate());
             if (Widgets.ButtonImage(button, Now, Color.white, GenUI.MouseoverColor))
-                AddSelectedHour(GenLocalDate.HourOfDay(Find.VisibleMap), true);
+                AddSelectedHour(GenLocalDate.HourOfDay(Find.CurrentMap), true);
 
             // draw first tick
             GUI.color = Color.grey;
@@ -251,7 +252,7 @@ namespace WorkTab
                 }
 
                 // if this is currently the 'main' timeslot, and not the actual time, draw an eye
-                if ( focused && hour != GenLocalDate.HourOfDay(Find.VisibleMap) )
+                if ( focused && hour != GenLocalDate.HourOfDay(Find.CurrentMap) )
                 {
                     Rect eyeRect = new Rect(hourRect.center.x - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize);
                     GUI.DrawTexture(eyeRect, PinEye);
@@ -272,7 +273,7 @@ namespace WorkTab
             UIUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
 
             // draw current time indicator
-            float curTimeX = GenLocalDate.DayPercent(Find.VisibleMap) * bar.width;
+            float curTimeX = GenLocalDate.DayPercent(Find.CurrentMap) * bar.width;
             Rect curTimeRect = new Rect(bar.xMin + curTimeX - timeIndicatorSize * 1 / 2f, hourRect.yMax - timeIndicatorSize - hourRect.height * 1 / 6f, timeIndicatorSize, timeIndicatorSize);
             GUI.DrawTexture(curTimeRect, PinClock);
         }
@@ -310,10 +311,14 @@ namespace WorkTab
             }
 
             // build the rect
-            _timeBarRect = new Rect(start,
+            _timeBarRect = new Rect(
+                start,
                 windowRect.height - base.ExtraBottomSpace, // note that we're not subtracting the time bar height itself, as at this point the window's height has not yet been updated to include it.
                 width,
                 TimeBarHeight);
+
+            // limit maximum size
+            _timeBarRect.xMax = Mathf.Min( _timeBarRect.xMax, UI.screenWidth - StandardMargin );
 
             Logger.Debug("created time bar rect: " + _timeBarRect);
         }
@@ -366,7 +371,7 @@ namespace WorkTab
         private void ExpandAll( bool expand )
         {
             foreach (var expandableColumn in PawnTableDef.columns.Select( c => c.Worker ).OfType<IExpandableColumn>())
-                if (expandableColumn.Expanded != expand)
+                if ( expandableColumn.Expanded != expand && expandableColumn.CanExpand )
                     expandableColumn.Expanded = expand;
         }
 

@@ -1,4 +1,4 @@
-[![RimWorld Alpha 18](https://img.shields.io/badge/RimWorld-Alpha%2018-brightgreen.svg)](http://rimworldgame.com/)
+[![RimWorld Alpha undefined](https://img.shields.io/badge/RimWorld-Alpha%20undefined-brightgreen.svg)](http://rimworldgame.com/)
 
 Provides a vastly more customizable work tab. 
 
@@ -31,7 +31,9 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - DoctorVanGogh:	Help with typos in build script
  - MrClon:	Russian translation
  - mercutiodesign:	Optional scrollwheel usage setting
- - Bugo:	
+ - Bugo:	Russian translation (update)
+ - Arex-rus:	Russian translation (fixes)
+ - mora145:	Spanish translation
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
@@ -52,4 +54,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![Buy Me a Coffee](http://i.imgur.com/EjWiUwx.gif)](https://ko-fi.com/fluffymods)
 
 # Version
-This is version v0.18.1.4
+This is version 2.13.167, for RimWorld 0.19.2009.

@@ -37,7 +37,7 @@ namespace WorkTab
 
         public override int Compare(Pawn a, Pawn b)
         {
-            return String.Compare( a.NameStringShort, b.NameStringShort, StringComparison.CurrentCultureIgnoreCase );
+            return String.Compare( a.Name.ToStringShort, b.Name.ToStringShort, StringComparison.CurrentCultureIgnoreCase );
         }
 
         public string GetTooltip(Pawn pawn)

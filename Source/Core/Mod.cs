@@ -2,8 +2,10 @@
 // Controller.cs
 // 2017-05-22
 
+using System.Collections.Generic;
 using System.Reflection;
 using Harmony;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -34,5 +36,7 @@ namespace WorkTab
         {
             return "WorkTab".Translate();
         }
+
+        public static List<PawnColumnDef> allColumns;
     }
 }

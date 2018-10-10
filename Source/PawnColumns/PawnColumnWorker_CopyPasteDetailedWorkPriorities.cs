@@ -32,7 +32,7 @@ namespace WorkTab
                         pawn.SetPriority(workgiver, clipboard[workgiver][hour], hour);
 
                 // recache the type (bubbles down to workgivers).
-                PriorityManager.Get[pawn].Recache(worktype, true);
+                PriorityManager.Get[pawn].InvalidateCache( worktype );
             }
         }
     }

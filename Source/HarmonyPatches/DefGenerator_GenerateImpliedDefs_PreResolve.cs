@@ -2,13 +2,14 @@
 // DefGenerator_GenerateImpliedDefs_PreResolve.cs
 // 2017-05-22
 
+using System.Collections.Generic;
 using Harmony;
 using RimWorld;
 using Verse;
 
 namespace WorkTab
 {
-    [HarmonyPatch(typeof( DefGenerator), "GenerateImpliedDefs_PreResolve")]
+    [HarmonyPatch( typeof( DefGenerator), "GenerateImpliedDefs_PreResolve")]
     public class DefGenerator_GenerateImpliedDefs_PreResolve
     {
         static void Postfix()
@@ -54,6 +55,9 @@ namespace WorkTab
             workTable.columns.Remove(copyPasteColumn);
             // Note; the far right column is a spacer to take all remaining available space, so index should be count - 2 (count - 1 before insert).
             workTable.columns.Insert( workTable.columns.Count - 1, DefDatabase<PawnColumnDef>.GetNamed("CopyPasteDetailedWorkPriorities"));
+            
+            // store this list of all columns
+            Mod.allColumns = new List<PawnColumnDef>( workTable.columns );
         }
     }
 }

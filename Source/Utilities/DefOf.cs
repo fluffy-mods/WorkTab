@@ -19,9 +19,9 @@ namespace WorkTab
     [DefOf]
     public static class JobDefOf2
     {
-        public static JobDef PlayHorseshoes;
-        public static JobDef PlayChess;
-        public static JobDef PlayBilliards;
+        public static JobDef Play_Horseshoes;
+        public static JobDef Play_Chess;
+        public static JobDef Play_Billiards;
         public static JobDef Meditate;
         public static JobDef Pray;
         public static JobDef VisitGrave;
@@ -31,6 +31,6 @@ namespace WorkTab
         public static JobDef ViewArt;
         public static JobDef GoForWalk;
         public static JobDef BuildSnowman;
-        public static JobDef Maintain;
+        public static JobDef UseItem;
     }
 }
