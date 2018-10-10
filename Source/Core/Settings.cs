@@ -85,11 +85,9 @@ namespace WorkTab
 
         public override void ExposeData()
         {
-            List<string> priorityColorsHelper = new List<string>(priorityColors);// ref send to Scribe_Collections is set to null for some reason?
-
             Scribe_Values.Look(ref maxPriority, "MaxPriority", 9);
             Scribe_Values.Look(ref showPriorityColors, "ShowCustomColors", false);
-            Scribe_Collections.Look(ref priorityColorsHelper, "PriorityColors");    // Doesn't seem to accept defaults
+            Scribe_Collections.Look(ref priorityColors, "PriorityColors");    // Doesn't seem to accept defaults
             Scribe_Values.Look(ref TwentyFourHourMode, "TwentyFourHourMode", true);
             Scribe_Values.Look(ref playSounds, "PlaySounds", true);
             Scribe_Values.Look(ref playCrunch, "PlayCrunch", true);
@@ -101,8 +99,8 @@ namespace WorkTab
             if ( Scribe.mode == LoadSaveMode.PostLoadInit )
                 ApplyFontFix( _fontFix );
 
-            if (priorityColorsHelper != null)
-                priorityColors = priorityColorsHelper;
+            if (priorityColors == null)
+                priorityColors = new List<string> { "00ff00", "e6cf89", "808080" };
         }
 
         #endregion
