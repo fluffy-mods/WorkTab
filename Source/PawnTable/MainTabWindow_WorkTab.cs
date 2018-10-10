@@ -110,8 +110,8 @@ namespace WorkTab
 
             // rebuild table
             PawnTableDefOf.Work.columns = columns;
-            Instance.Table = new PawnTable( PawnTableDefOf.Work, () => Instance.Pawns, UI.screenWidth - (int)(Instance.Margin * 2f), 
-                                   (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
+            //Instance.Table = new PawnTable( PawnTableDefOf.Work, () => Instance.Pawns, UI.screenWidth - (int)(Instance.Margin * 2f), 
+            //                       (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
 
             // force recache of table sizes: set the table to be dirty, then get the size - which calls the private recache routine.
             Instance.Table.SetDirty();
