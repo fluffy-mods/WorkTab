@@ -17,6 +17,12 @@ namespace WorkTab
 
         public static int GetVanillaPriority( this Pawn pawn, WorkTypeDef worktype )
         {
+            //public override float GetPriority(Pawn pawn)
+            if (pawn.workSettings == null || !pawn.workSettings.EverWork)
+            {
+                return 0;
+            }
+
             if ( prioritiesFieldInfo == null )
             {
                 prioritiesFieldInfo = typeof( Pawn_WorkSettings ).GetField( "priorities", AccessTools.all );
