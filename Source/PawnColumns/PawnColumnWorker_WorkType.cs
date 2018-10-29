@@ -407,7 +407,7 @@ namespace WorkTab
             set
             {
                 _expanded = value;
-                RebuildTable();
+                Instance.Notify_ColumnsChanged();
             }
         }
 

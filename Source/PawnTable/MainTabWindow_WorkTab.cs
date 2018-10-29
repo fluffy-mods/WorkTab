@@ -81,7 +81,7 @@ namespace WorkTab
             private set => _tableFieldInfo.SetValue(this, value);
         }
 
-        public static void RebuildTable()
+        public void RebuildTable()
         {
             if ( _instance == null )
             {
@@ -110,8 +110,8 @@ namespace WorkTab
 
             // rebuild table
             PawnTableDefOf.Work.columns = columns;
-            Instance.Table = new PawnTable( PawnTableDefOf.Work, () => Instance.Pawns, UI.screenWidth - (int)(Instance.Margin * 2f), 
-                                   (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
+            //Instance.Table = new PawnTable( PawnTableDefOf.Work, () => Instance.Pawns, UI.screenWidth - (int)(Instance.Margin * 2f), 
+            //                       (int)(UI.screenHeight - 35 - Instance.ExtraBottomSpace - Instance.ExtraTopSpace - Instance.Margin * 2f));
 
             // force recache of table sizes: set the table to be dirty, then get the size - which calls the private recache routine.
             Instance.Table.SetDirty();
@@ -119,6 +119,9 @@ namespace WorkTab
 
             // force recache of timeBarRect
             Instance._timeBarRect = default( Rect );
+
+            // clear dirty flag
+            _columnsChanged = false;
         }
 
         private static List<PawnColumnDef> Columns
@@ -144,8 +147,17 @@ namespace WorkTab
             }
         }
 
+        private bool _columnsChanged = false;
+        public void Notify_ColumnsChanged()
+        {
+            _columnsChanged = true;
+        }
+
         public override void DoWindowContents( Rect rect )
         {
+            if (_columnsChanged)
+                RebuildTable();
+
             base.DoWindowContents( rect );
             if (Event.current.type == EventType.Layout)
                 return;
