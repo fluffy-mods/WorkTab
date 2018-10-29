@@ -2,7 +2,6 @@
 // Job_Extensions.cs
 // 2017-05-30
 
-using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -13,7 +12,6 @@ namespace WorkTab
     [StaticConstructorOnStartup]
     public static class Job_Extensions
     {
-        public static Dictionary<JobDef, string> JobIconPaths;
         public static Dictionary<JobDef, Texture2D> JobIcons;
         public const string DefaultJobIconPath = "UI/Icons/Various/unknown";
         public static Texture2D DefaultJobIcon;
@@ -25,38 +23,18 @@ namespace WorkTab
 
         private static void Initialize()
         {
-            // initialize job icon paths
-            JobIconPaths = new Dictionary<JobDef, string>();
-            foreach (var job in DefDatabase<JobDef>.AllDefsListForReading)
-                JobIconPaths.Add(job, job.DefaultIconPath());
-
-            // initialize job icons dictionary
             JobIcons = new Dictionary<JobDef, Texture2D>();
+            foreach ( var job in DefDatabase<JobDef>.AllDefsListForReading )
+                JobIcons.Add( job, ContentFinder<Texture2D>.Get( job.DefaultIconPath() ) );
 
-            // default icon as a fallback
             DefaultJobIcon = ContentFinder<Texture2D>.Get(DefaultJobIconPath);
         }
 
         public static Texture2D StatusIcon( this JobDef job )
         {
-            Texture2D icon;
-            if (JobIcons.TryGetValue(job, out icon))
+            if (JobIcons.TryGetValue(job, out var icon))
                 return icon;
-
-            // TODO: had some odd reports of missing keys - remove the try block once resolved
-            try
-            {
-                Logger.Debug($"Loading icon '{JobIconPaths[job]}' for job '{job.defName}'");
-                icon = ContentFinder<Texture2D>.Get(JobIconPaths[job]);
-                JobIcons.Add(job, icon);
-            }
-            catch ( Exception e )
-            {
-                icon = DefaultJobIcon;
-                Logger.Error( $"Error while loading icon '{JobIconPaths[job]}' for job '{job.defName}';\n{e}");
-            }
-
-            return icon;
+            return DefaultJobIcon;
         }
 
         public static string DefaultIconPath(this JobDef job)
