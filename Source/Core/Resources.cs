@@ -2,6 +2,7 @@
 // Resources.cs
 // 2017-05-28
 
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -28,7 +29,14 @@ namespace WorkTab
             Half,
             Now,
             Expand,
-            Collapse;
+            Collapse,
+            LeftArrow,
+            RightArrow,
+            StarHollow,
+            Star,
+            Edit;
+
+        public static readonly Texture2D[] Icons;
 
         static Resources()
         {
@@ -50,6 +58,12 @@ namespace WorkTab
             Now = ContentFinder<Texture2D>.Get("UI/Icons/now");
             Expand = ContentFinder<Texture2D>.Get("UI/Icons/expand");
             Collapse = ContentFinder<Texture2D>.Get("UI/Icons/collapse");
+            LeftArrow = ContentFinder<Texture2D>.Get( "UI/Icons/LeftArrow" );
+            RightArrow = ContentFinder<Texture2D>.Get( "UI/Icons/RightArrow" );
+            StarHollow = ContentFinder<Texture2D>.Get( "UI/Icons/star-hollow" );
+            Star = ContentFinder<Texture2D>.Get( "UI/Icons/star" );
+            Edit = ContentFinder<Texture2D>.Get( "UI/Icons/edit" );
+            Icons = ContentFinder<Texture2D>.GetAllInFolder( "UI/Icons/Various" ).ToArray();
         }
     }
 }

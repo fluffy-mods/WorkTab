@@ -11,9 +11,9 @@ using Verse;
 
 namespace WorkTab
 {
-    public class Mod: Verse.Mod
+    public class Controller: Mod
     {
-        public Mod( ModContentPack content ) : base( content ) {
+        public Controller( ModContentPack content ) : base( content ) {
             // initialize settings
             GetSettings<Settings>();
 

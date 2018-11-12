@@ -58,7 +58,7 @@ namespace WorkTab
                 var priority = pawn.GetPriority(workgiver, MainTabWindow_WorkTab.VisibleHour);
 
                 // detailed mode
-                if (PriorityManager.Get.ShowPriorities)
+                if (PriorityManager.ShowPriorities)
                 {
                     if (priority == 0)
                     {
@@ -99,7 +99,7 @@ namespace WorkTab
                 var priority = pawn.GetPriority(workgiver, MainTabWindow_WorkTab.VisibleHour);
 
                 // detailed mode
-                if (PriorityManager.Get.ShowPriorities)
+                if (PriorityManager.ShowPriorities)
                 {
                     if (priority == Settings.maxPriority)
                     {

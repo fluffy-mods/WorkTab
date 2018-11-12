@@ -1,5 +1,5 @@
 ﻿// Karel Kroeze
-// UIUtilities.cs
+// LabelUtilities.cs
 // 2017-06-15
 
 using UnityEngine;
@@ -7,7 +7,7 @@ using Verse;
 
 namespace WorkTab
 {
-    public static class UIUtilities
+    public static class LabelUtilities
     {
         public static void Label(Rect canvas, string text, Color color, string tip = "")
         {
@@ -42,7 +42,7 @@ namespace WorkTab
             Text.Anchor = anchor;
 
             // draw label and tip
-            Verse.Widgets.Label(canvas, text);
+            Widgets.Label(canvas, text);
             if (!tip.NullOrEmpty())
                 TooltipHandler.TipRegion(canvas, tip);
 
@@ -50,6 +50,14 @@ namespace WorkTab
             GUI.color = oldColor;
             Text.Font = oldFont;
             Text.Anchor = oldAnchor;
+        }
+
+        public static void VerticalLabel(Rect rect, string text, float margin = Constants.Margin)
+        {
+            UI.RotateAroundPivot(-90, rect.center);
+            var flipped = new Rect(0f, 0f, rect.height, rect.width) { center = rect.center };
+            Widgets.Label(flipped, text);
+            UI.RotateAroundPivot(90, rect.center);
         }
     }
 }

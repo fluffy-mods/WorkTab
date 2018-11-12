@@ -14,6 +14,12 @@ namespace WorkTab
         public static string FormatMessage( string msg ) { return Identifier + " :: " + msg; }
 
         [Conditional( "DEBUG" )]
+        public static void Assert( object obj, string name )
+        {
+            Debug( $"{name} :: {obj ?? "NULL"}" );
+        }
+
+        [Conditional( "DEBUG" )]
         public static void Debug( string msg ) { Log.Message( FormatMessage( msg ) ); }
 
         [Conditional( "TRACE" )]

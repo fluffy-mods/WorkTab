@@ -5,18 +5,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
-using RimWorld;
 using Verse;
 
 namespace WorkTab
 {
     public class PriorityManager: GameComponent
     {
-        public Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
-
-        private bool _showScheduler;
-        public bool ShowScheduler
+        private static Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
+        
+        private static bool _showScheduler;
+        public static bool ShowScheduler
         {
             get { return _showScheduler; }
             set
@@ -29,7 +27,7 @@ namespace WorkTab
             }
         }
 
-        public bool ShowPriorities
+        public static bool ShowPriorities
         {
             get { return Find.PlaySettings.useWorkPriorities; }
             set
@@ -61,22 +59,22 @@ namespace WorkTab
             }
         }
 
-        public static PriorityManager Set => Get;
-
-        public PawnPriorityTracker this[Pawn pawn]
+        public PriorityTracker this[Pawn pawn]
         {
             get
             {
-                PawnPriorityTracker tracker;
-                if ( !priorities.TryGetValue( pawn, out tracker ) )
-                {
-                    tracker = new PawnPriorityTracker( pawn );
-                    priorities.Add( pawn, tracker );
-                }
+                var favourite = FavouriteManager.Get[pawn];
+                if ( favourite != null ) return favourite;
+
+                if ( priorities.TryGetValue( pawn, out var tracker ) )
+                    return tracker;
+
+                tracker = new PawnPriorityTracker( pawn );
+                priorities.Add( pawn, tracker );
                 return tracker;
             }
         }
-
+        
         public PriorityManager( Game game ) : this() {}
         public PriorityManager() { _instance = this; }
 

@@ -51,6 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Constants.cs" />
+    <Compile Include="Favourites\Dialog_CreateFavourite.cs" />
+    <Compile Include="Favourites\Dialog_EditFavourite.cs" />
+    <Compile Include="Favourites\Dialog_Favourite.cs" />
+    <Compile Include="Favourites\FavouriteManager.cs" />
     <Compile Include="Core\MapComponent_TimeKeeper.cs" />
     <Compile Include="Core\Resources.cs" />
     <Compile Include="Extensions\Int_Extensions.cs" />
@@ -58,6 +62,7 @@
     <Compile Include="Extensions\Listing_Extensions.cs" />
     <Compile Include="Extensions\String_Extensions.cs" />
     <Compile Include="Extensions\WorkGiver_Extensions.cs" />
+    <Compile Include="Favourites\Favourite.cs" />
     <Compile Include="HarmonyPatches\PawnTable\PawnTable_PawnTableOnGUI.cs" />
     <Compile Include="HarmonyPatches\PawnTable\PawnTable_RecacheIfDirty.cs" />
     <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
@@ -65,20 +70,22 @@
     <Compile Include="PawnColumns\IAlternatingColumn.cs" />
     <Compile Include="PawnColumns\IExpandableColumn.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_CopyPasteDetailedWorkPriorities.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_Favourite.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Job.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Mood.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_WorkTabLabel.cs" />
+    <Compile Include="Priorities\PriorityTracker.cs" />
     <Compile Include="Utilities\DefOf.cs" />
     <Compile Include="Utilities\InteractionUtilities.cs" />
     <Compile Include="Utilities\Logger.cs" />
-    <Compile Include="Core\Mod.cs" />
-    <Compile Include="Core\PriorityManager.cs" />
-    <Compile Include="Core\PawnPriorityTracker.cs" />
-    <Compile Include="Core\WorkPriorityTracker.cs" />
+    <Compile Include="Core\Controller.cs" />
+    <Compile Include="Priorities\PriorityManager.cs" />
+    <Compile Include="Priorities\PawnPriorityTracker.cs" />
+    <Compile Include="Priorities\WorkPriority.cs" />
     <Compile Include="Core\Settings.cs" />
     <Compile Include="Utilities\TimeUtilities.cs" />
     <Compile Include="Core\VanillaWorkSettings.cs" />
-    <Compile Include="Utilities\UIUtilities.cs" />
+    <Compile Include="Utilities\LabelUtilities.cs" />
     <Compile Include="Utilities\DrawUtilities.cs" />
     <Compile Include="Extensions\Pawn_Extensions.cs" />
     <Compile Include="Extensions\WorkType_Extensions.cs" />
@@ -91,7 +98,12 @@
     <Compile Include="PawnTable\MainTabWindow_WorkTab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TOOLS\FluffyUI\FluffyUI\FluffyUI.csproj">
+      <Project>{3e905175-2540-4c06-b4c6-f955836c0451}</Project>
+      <Name>FluffyUI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mod update -x -n "Work Tab"</PostBuildEvent>

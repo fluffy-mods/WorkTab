@@ -3,10 +3,8 @@
 // 2017-05-22
 
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using Verse;
-using static WorkTab.TimeUtilities;
 
 namespace WorkTab
 {
@@ -17,29 +15,12 @@ namespace WorkTab
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
 
-            // get priorities for all workgivers in worktype
-            var priorities = worktype.WorkGivers()
-                .Select( wg => GetPriority( pawn, wg, hour ) )
-                .Where( p => p > 0 );
-
-            // if there are no active priorities, return zero
-            if ( !priorities.Any() )
-                return 0;
-
-            // otherwise, return the lowest number (highest priority).
-            if (Find.PlaySettings.useWorkPriorities)
-                return priorities.Min();
-
-            // or, in simple mode, just 3.
-            return 3;
+            return PriorityManager.Get[pawn].GetPriority( worktype, hour );
         }
 
         public static int[] GetPriorities(this Pawn pawn, WorkTypeDef worktype)
         {
-            int[] priorities = new int[GenDate.HoursPerDay];
-            for (int hour = 0; hour < GenDate.HoursPerDay; hour++)
-                priorities[hour] = pawn.GetPriority(worktype, hour);
-            return priorities;
+            return PriorityManager.Get[pawn].GetPriorities( worktype );
         }
 
         public static int GetPriority(this Pawn pawn, WorkGiverDef workgiver, int hour )
@@ -47,12 +28,7 @@ namespace WorkTab
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
 
-            Logger.Trace($"Getting {pawn.LabelShort}'s {workgiver.defName} priority for {hour}");
-            if (Find.PlaySettings.useWorkPriorities)
-                return PriorityManager.Get[pawn][workgiver][hour];
-            
-            // or in simple mode, 3 or 0
-            return PriorityManager.Get[pawn][workgiver][hour] > 0 ? 3 : 0;
+            return PriorityManager.Get[pawn].GetPriority( workgiver, hour );
         }
 
         public static int[] GetPriorities(this Pawn pawn, WorkGiverDef workgiver)
@@ -62,10 +38,7 @@ namespace WorkTab
 
         public static void SetPriority( this Pawn pawn, WorkTypeDef worktype, int priority, List<int> hours )
         {
-            foreach (int hour in (hours ?? WholeDay))
-                SetPriority(pawn, worktype, priority, hour, false);
-
-            PriorityManager.Get[pawn].InvalidateCache( worktype );
+            PriorityManager.Get[pawn].SetPriority( worktype, priority, hours );
         }
 
         public static void SetPriority(Pawn pawn, WorkTypeDef worktype, int priority, int hour, bool recache = true )
@@ -73,35 +46,20 @@ namespace WorkTab
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
 
-            foreach (WorkGiverDef workgiver in worktype.WorkGivers())
-                SetPriority(pawn, workgiver, priority, hour, false);
-
-            if ( recache )
-                PriorityManager.Get[pawn].InvalidateCache( worktype );
+            PriorityManager.Get[pawn].SetPriority( worktype, priority, hour, recache );
         }
 
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, List<int> hours )
         {
-            foreach (int hour in (hours ?? WholeDay))
-                SetPriority(pawn, workgiver, priority, hour, false);
-
-            PriorityManager.Get[pawn].InvalidateCache( workgiver );
+            PriorityManager.Get[pawn].SetPriority( workgiver, priority, hours );
         }
 
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, int hour, bool recache = true )
         {
             if (hour < 0)
                 hour = GenLocalDate.HourOfDay(pawn);
-            if ( priority > Settings.maxPriority )
-                priority = 0;
-            if ( priority < 0 )
-                priority = Settings.maxPriority;
 
-            Logger.Trace( $"Setting {pawn.LabelShort}'s {workgiver.defName} priority for {hour} to {priority}"  );
-            PriorityManager.Set[pawn][workgiver][hour] = priority;
-
-            if ( recache )
-                PriorityManager.Get[pawn].InvalidateCache( workgiver );
+            PriorityManager.Get[pawn].SetPriority( workgiver, priority, hour, recache );
         }
 
         public static void DisableAll( this Pawn pawn )
@@ -113,6 +71,15 @@ namespace WorkTab
         public static bool CapableOf( this Pawn pawn, WorkGiverDef workgiver )
         {
             return !workgiver.requiredCapacities.Any( c => !pawn.health.capacities.CapableOf( c ) );
+        }
+
+        public static bool AllowedToDo( this Pawn pawn, WorkGiverDef workgiver )
+        {
+            if ( pawn?.story == null )
+                return true;
+            return !pawn.story.WorkTypeIsDisabled( workgiver.workType ) &&
+                   ( pawn.story.CombinedDisabledWorkTags & workgiver.workTags ) == WorkTags.None &&
+                   ( pawn.story.CombinedDisabledWorkTags & workgiver.workType.workTags ) == WorkTags.None;
         }
     }
 }

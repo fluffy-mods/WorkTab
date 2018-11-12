@@ -24,11 +24,11 @@ namespace WorkTab
         private static List<int> _selectedHours = TimeUtilities.WholeDay;
         private static int _visibleHour = -1;
 
-        public static List<int> SelectedHours => PriorityManager.Get.ShowScheduler
+        public static List<int> SelectedHours => PriorityManager.ShowScheduler
             ? _selectedHours
             : TimeUtilities.WholeDay;
 
-        public static int VisibleHour => PriorityManager.Get.ShowScheduler
+        public static int VisibleHour => PriorityManager.ShowScheduler
             ? _visibleHour
             : -1;
 
@@ -129,7 +129,7 @@ namespace WorkTab
             get
             {
                 // get clean copy of base columns
-                List<PawnColumnDef> columns = new List<PawnColumnDef>( Mod.allColumns );
+                List<PawnColumnDef> columns = new List<PawnColumnDef>( Controller.allColumns );
 
                 // add workgiver columns for expanded worktypes
                 var templist = new List<PawnColumnDef>(columns);
@@ -164,7 +164,7 @@ namespace WorkTab
 
             DoToggleButtons( rect );
             DoPriorityLabels( rect );
-            if (PriorityManager.Get.ShowScheduler)
+            if (PriorityManager.ShowScheduler)
                 DoTimeBar( rect );
         }
 
@@ -224,7 +224,7 @@ namespace WorkTab
                     label = hour.FormatHour();
                     labelRect = new Rect(0f, bar.yMin + bar.height * 1 / 3f, label.NoWrapWidth(), bar.height * 2 / 3f);
                     labelRect.x = hourRect.xMin - labelRect.width / 2f;
-                    UIUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
+                    LabelUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
 
                     lastLabelPosition = labelRect.xMax;
                 }
@@ -282,7 +282,7 @@ namespace WorkTab
             label = 0.FormatHour();
             labelRect = new Rect(0f, bar.yMin + bar.height * 1 / 3f, label.NoWrapWidth(), bar.height * 2 / 3f);
             labelRect.x = hourRect.xMin - labelRect.width / 2f;
-            UIUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
+            LabelUtilities.Label(labelRect, label, Color.grey, GameFont.Tiny, TextAnchor.UpperCenter);
 
             // draw current time indicator
             float curTimeX = GenLocalDate.DayPercent(Find.CurrentMap) * bar.width;
@@ -360,12 +360,12 @@ namespace WorkTab
         {
             Rect button = new Rect( canvas.xMax - 30f, canvas.yMin, 30f, 30f );
 
-            ButtonImageToggle(() => PriorityManager.Get.ShowPriorities, val => PriorityManager.Set.ShowPriorities = val, button,
+            ButtonImageToggle(() => PriorityManager.ShowPriorities, val => PriorityManager.ShowPriorities = val, button,
                                "WorkTab.PrioritiesDetailed".Translate(), PrioritiesDetailed,
                                "WorkTab.PrioritiesSimple".Translate(), PrioritiesSimple );
             button.x -= 30f + Margin;
 
-            ButtonImageToggle( () => PriorityManager.Get.ShowScheduler, val => PriorityManager.Set.ShowScheduler = val, button,
+            ButtonImageToggle( () => PriorityManager.ShowScheduler, val => PriorityManager.ShowScheduler = val, button,
                                "WorkTab.PrioritiesTimed".Translate(), PrioritiesTimed,
                                "WorkTab.PrioritiesWholeDay".Translate(), PrioritiesWholeDay);
             button.x -= 30f + Margin;
@@ -387,7 +387,7 @@ namespace WorkTab
                     expandableColumn.Expanded = expand;
         }
 
-        protected override float ExtraBottomSpace => PriorityManager.Get.ShowScheduler
+        protected override float ExtraBottomSpace => PriorityManager.ShowScheduler
             ? base.ExtraBottomSpace / 2f + TimeBarHeight // slightly less margin if we're showing the scheduler, as it already takes quite a sizeable chunk of screen space
             : base.ExtraBottomSpace;
         protected override float ExtraTopSpace => base.ExtraTopSpace + Constants.ExtraTopSpace;

@@ -79,7 +79,7 @@ namespace WorkTab
 
             // lovin
             if ( job == JobDefOf.Lovin )
-                return "UI/Icons/Various/hearts";
+                return "UI/Icons/Various/suits-hearts";
 
             // games 
             if ( job == JobDefOf2.Play_Billiards ||

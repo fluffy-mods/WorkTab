@@ -195,7 +195,7 @@ namespace WorkTab
         {
             GUI.color = new Color(.8f, .8f, .8f);
             Text.Anchor = TextAnchor.MiddleLeft;
-            DrawUtilities.VerticalLabel(rect, Label.Truncate(rect.height, VerticalTruncationCache));
+            LabelUtilities.VerticalLabel(rect, Label.Truncate(rect.height, VerticalTruncationCache));
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
         }

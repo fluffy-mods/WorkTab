@@ -54,10 +54,13 @@ namespace WorkTab
             var copyPasteColumn = workTable.columns.Find(c => c.defName == "CopyPasteWorkPriorities");
             workTable.columns.Remove(copyPasteColumn);
             // Note; the far right column is a spacer to take all remaining available space, so index should be count - 2 (count - 1 before insert).
-            workTable.columns.Insert( workTable.columns.Count - 1, DefDatabase<PawnColumnDef>.GetNamed("CopyPasteDetailedWorkPriorities"));
+            workTable.columns.Insert( workTable.columns.Count - 1, DefDatabase<PawnColumnDef>.GetNamed( "CopyPasteDetailedWorkPriorities" ) );
             
+            // add favourite column before copy paste
+            workTable.columns.Insert( workTable.columns.Count - 2, DefDatabase<PawnColumnDef>.GetNamed( "Favourite" ) );
+
             // store this list of all columns
-            Mod.allColumns = new List<PawnColumnDef>( workTable.columns );
+            Controller.allColumns = new List<PawnColumnDef>( workTable.columns );
         }
     }
 }

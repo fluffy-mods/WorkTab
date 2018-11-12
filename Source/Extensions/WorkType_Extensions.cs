@@ -100,7 +100,7 @@ namespace WorkTab
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
 
             // decrease priorities that are not 1 only (no wrapping around once we're at max priority)
-            foreach ( Pawn pawn in pawns.Where( p => p.GetPriority( worktype, hour ) != 1 ) )
+            foreach ( Pawn pawn in pawns.Where( p => p.GetPriority( worktype, hour ) != 1 ).DistinctTrackers() )
                 DecrementPriority( worktype, pawn, hour, hours, false );
         }
 
@@ -119,7 +119,7 @@ namespace WorkTab
                 SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
 
             // increase priorities that are > 0 only (no wrapping around once we're at min priority
-            foreach (Pawn pawn in pawns.Where(p => p.GetPriority(worktype, hour) > 0 ))
+            foreach (Pawn pawn in pawns.Where(p => p.GetPriority(worktype, hour) > 0 ).DistinctTrackers() )
                 IncrementPriority(worktype, pawn, hour, hours, false );
         }
     }
