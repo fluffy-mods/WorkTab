@@ -67,7 +67,8 @@ namespace WorkTab
 
         protected override void OnChange()
         {
-            FavouriteManager.Save( this );
+            if ( Scribe.mode == LoadSaveMode.Inactive )
+                FavouriteManager.Save( this );
         }
 
         internal void SetLoadID()
