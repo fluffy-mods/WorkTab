@@ -11,7 +11,7 @@ using Verse;
 
 namespace WorkTab
 {
-    [HarmonyPatch( typeof( PawnTable ), "PawnTableOnGUI" )]
+    [HarmonyPatch( typeof( PawnTable ), nameof ( PawnTable.PawnTableOnGUI ) ) ]
     public class PawnTable_PawnTableOnGUI
     {
         private static Type ptt = typeof( PawnTable );
@@ -30,8 +30,12 @@ namespace WorkTab
             if ( standardMarginField == null ) throw new NullReferenceException( "standardMargin field not found." );
         }
 
-        public static bool Prefix( PawnTable __instance, Vector2 position )
+        public static bool Prefix( PawnTable __instance, Vector2 position, PawnTableDef ___def)
+            //harmony 1.2.0.1 gives access to private fields by ___name.
         {
+            if (___def != PawnTableDefOf.Work) // best practices means we transpile. Nobody is that nuts, right?
+                return true;
+
             if (Event.current.type == EventType.Layout)
             {
                 return false;

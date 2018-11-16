@@ -300,9 +300,9 @@ namespace WorkTab
             return result;
         }
 
-        public void HeaderInteractions( Rect rect, PawnTable table )
+        public void HeaderInteractions( Rect headerRect, PawnTable table )
         {
-            if ( !Mouse.IsOver( rect ) )
+            if ( !Mouse.IsOver( headerRect ) )
                 return;
 
             // handle interactions
@@ -311,16 +311,16 @@ namespace WorkTab
                 // deal with clicks and scrolls
                 if ( Find.PlaySettings.useWorkPriorities )
                 {
-                    if ( ScrolledUp( rect, true ) || RightClicked( rect ) )
+                    if ( ScrolledUp( headerRect, true ) || RightClicked( headerRect ) )
                         def.workType.IncrementPriority( CapablePawns, VisibleHour, SelectedHours );
-                    if ( ScrolledDown( rect, true ) || LeftClicked( rect ) )
+                    if ( ScrolledDown( headerRect, true ) || LeftClicked( headerRect ) )
                         def.workType.DecrementPriority( CapablePawns, VisibleHour, SelectedHours );
                 }
                 else
                 {
                     // this gets slightly more complicated
                     var pawns = CapablePawns;
-                    if ( ScrolledUp( rect, true ) || RightClicked( rect ) )
+                    if ( ScrolledUp( headerRect, true ) || RightClicked( headerRect ) )
                     {
                         if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) != 0 ) )
                         {
@@ -331,7 +331,7 @@ namespace WorkTab
                         }
                     }
 
-                    if ( ScrolledDown( rect, true ) || LeftClicked( rect ) )
+                    if ( ScrolledDown( headerRect, true ) || LeftClicked( headerRect ) )
                     {
                         if ( pawns.Any( p => p.GetPriority( def.workType, VisibleHour ) == 0 ) )
                         {
@@ -345,14 +345,14 @@ namespace WorkTab
             }
             else if ( Event.current.control )
             {
-                if ( CanExpand && Clicked( rect ) )
+                if ( CanExpand && Clicked( headerRect ) )
                     Expanded = !Expanded;
             }
             else if ( def.sortable )
             {
-                if ( LeftClicked( rect ) )
+                if ( LeftClicked( headerRect ) )
                     Sort( table );
-                if ( RightClicked( rect ) )
+                if ( RightClicked( headerRect ) )
                     Sort( table, false );
             }
         }
