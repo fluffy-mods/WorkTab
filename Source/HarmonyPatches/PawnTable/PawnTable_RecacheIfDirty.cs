@@ -24,11 +24,11 @@ namespace WorkTab
             if (cachecColumnWidthsField == null) throw new NullReferenceException("PawnTable.cachecColumnWidths field not found.");
         }
 
-        private static void Prefix( PawnTable __instance, ref bool __state )
+        private static void Prefix( PawnTable __instance, ref bool __state, PawnTableDef ___def )
         {
-            __state = (bool)dirtyField.GetValue( __instance );
+            __state = (bool)dirtyField.GetValue( __instance ) && ___def == PawnTableDefOf.Work;
             if (__state)
-                Logger.Debug( "ColumnWidts dirty" );
+                Logger.Debug( "ColumnWidths dirty" );
         }
 
         private static void Postfix( PawnTable __instance, bool __state )
