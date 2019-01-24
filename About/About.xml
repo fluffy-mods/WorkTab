@@ -3,7 +3,6 @@
   <name>Work Tab</name>
   <author>Fluffy</author>
   <url>https://ludeon.com/forums/index.php?topic=15964.0</url>
-  <targetVersion>1.0.2059</targetVersion>
   <description>Provides a vastly more customizable work tab. 
 
 &lt;size=24&gt;Important&lt;/size&gt;
@@ -43,11 +42,14 @@ Arex-rus:    Russian translation (fixes)
 mora145:    Spanish translation
 Alex TD:    Various tweaks and suggestions
 Suh. Junmin:    Korean translation
-rw-chaos:    
-Mehni:    
+rw-chaos:    German translation
+Mehni:    Compatibility with Numbers mod
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 3.8.283, for RimWorld 1.0.2059.
+This is version 3.9.285, for RimWorld 1.0.2150.
 
 </description>
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
 </ModMetaData>
