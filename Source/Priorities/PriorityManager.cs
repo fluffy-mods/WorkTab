@@ -40,7 +40,7 @@ namespace WorkTab
 
                 // force re-cache of all pawns
                 foreach (var pawn in priorities.Keys.ToList())
-                    pawn.workSettings.Notify_UseWorkPrioritiesChanged();   
+                    pawn?.workSettings?.Notify_UseWorkPrioritiesChanged();   
             }
         }
         private List<Pawn> pawnsScribe;
