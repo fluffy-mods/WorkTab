@@ -16,7 +16,7 @@ namespace WorkTab
         public static bool TwentyFourHourMode = true;
         public static bool disableScrollwheel = false;
         public static bool verticalLabels = true;
-        public static bool sharedFavourites = true;
+        // public static bool sharedFavourites = true;
         private static bool _fontFix = true;
 
         public Settings()
@@ -52,8 +52,8 @@ namespace WorkTab
             bool verticalLabelsBuffer = verticalLabels;
             options.CheckboxLabeled( "WorkTab.VerticalLabels".Translate(), ref verticalLabelsBuffer,
                 "WorkTab.VerticalLabelsTip".Translate() );
-            options.CheckboxLabeled( "WorkTab.SharedFavourites".Translate(), ref sharedFavourites,
-                "WorkTab.SharedFavouritesTip".Translate() );
+            // options.CheckboxLabeled( "WorkTab.SharedFavourites".Translate(), ref sharedFavourites,
+            //     "WorkTab.SharedFavouritesTip".Translate() );
 
             // vertical labels mess up unity's font positioning, and causes anti-aliasing blur
             // setting the filtermode to point removes the blur, but causes slight jitter in letter positioning. 
@@ -68,7 +68,7 @@ namespace WorkTab
             if ( verticalLabelsBuffer != verticalLabels )
             {
                 verticalLabels = verticalLabelsBuffer;
-                MainTabWindow_WorkTab.Instance.Table.SetDirty();
+                MainTabWindow_WorkTab.Instance?.Table?.SetDirty();
             }
 
             options.End();
