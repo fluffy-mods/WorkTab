@@ -306,7 +306,7 @@ namespace WorkTab
                 return;
 
             // handle interactions
-            if ( Event.current.shift )
+            if ( Shift )
             {
                 // deal with clicks and scrolls
                 if ( Find.PlaySettings.useWorkPriorities )
@@ -343,7 +343,7 @@ namespace WorkTab
                     }
                 }
             }
-            else if ( Event.current.control )
+            else if ( Ctrl )
             {
                 if ( CanExpand && Clicked( headerRect ) )
                     Expanded = !Expanded;

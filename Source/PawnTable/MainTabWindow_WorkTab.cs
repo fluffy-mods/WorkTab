@@ -236,7 +236,7 @@ namespace WorkTab
                 if (Mouse.IsOver(hourRect))
                 {
                     if (Input.GetMouseButton(0))
-                        AddSelectedHour( hour, Event.current.shift );
+                        AddSelectedHour( hour, Shift );
 
                     if ( Input.GetMouseButton( 1 ) )
                         RemoveSelectedHour( hour );

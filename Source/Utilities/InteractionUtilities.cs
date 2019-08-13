@@ -47,6 +47,11 @@ namespace WorkTab
             return scrolled;
         }
 
+        public static bool Shift => Input.GetKey( KeyCode.LeftShift ) || Input.GetKey( KeyCode.RightShift );
+        public static bool Ctrl => Input.GetKey( KeyCode.LeftCommand )  || Input.GetKey( KeyCode.LeftControl ) ||
+                                   Input.GetKey( KeyCode.RightCommand ) || Input.GetKey( KeyCode.RightControl );
+        public static bool Alt => Input.GetKey( KeyCode.AltGr ) || Input.GetKey( KeyCode.LeftAlt ) ||
+                                  Input.GetKey( KeyCode.RightAlt );
         public static bool ScrolledUp( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Up, stopPropagation ); }
         public static bool ScrolledDown( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Down, stopPropagation ); }
 

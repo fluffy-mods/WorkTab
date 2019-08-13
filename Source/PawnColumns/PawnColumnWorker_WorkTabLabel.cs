@@ -13,7 +13,7 @@ namespace WorkTab
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
             // intercept interactions before base has a chance to act on them
-            if (Event.current.shift && Mouse.IsOver(rect))
+            if ( Shift && Mouse.IsOver(rect))
             {
                 if (RightClicked(rect) || ScrolledUp(rect))
                 {
