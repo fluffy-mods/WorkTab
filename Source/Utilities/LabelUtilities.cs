@@ -54,10 +54,19 @@ namespace WorkTab
 
         public static void VerticalLabel(Rect rect, string text, float margin = Constants.Margin)
         {
-            UI.RotateAroundPivot(-90, rect.center);
+            // store the scaling matrix
+            Matrix4x4 matrix = GUI.matrix;
+
+            // rotate and then apply the scaling
+            GUI.matrix = Matrix4x4.identity;
+            GUIUtility.RotateAroundPivot(-90f, rect.center);
+            GUI.matrix = matrix * GUI.matrix;
+
             var flipped = new Rect(0f, 0f, rect.height, rect.width) { center = rect.center };
             Widgets.Label(flipped, text);
-            UI.RotateAroundPivot(90, rect.center);
+
+            // restore the original scaling matrix
+            GUI.matrix = matrix;
         }
     }
 }
