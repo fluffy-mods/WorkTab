@@ -14,7 +14,7 @@ Various usability extentions to the 'vanilla' work tab;
  - **All functions are detailed in the tooltips, take a moment to hover over and read them!**
 
 # Known Issues
-With UI scaling turned on, vertical labels are drawn in the wrong position. I've been working on this problem for a while, but have been unable to come up with a solution. Workarounds are to not use UI scaling, or to turn vertical labels off in the mod options. See the [issue](https://github.com/FluffierThanThou/WorkTab/issues/77) for more details.
+None.
 
 # Notes
 With great power comes great responsibility. The default priorities of tasks within a job is set for a good reason; it's (usually) a sensible default. Changing these can lead to deadlock situations, so change the priorities of individual jobs at your own risk! 
@@ -38,7 +38,7 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - Suh. Junmin:	Korean translation
  - rw-chaos:	German translation
  - Mehni:	Compatibility with Numbers mod
- - Silverside:	
+ - Silverside:	Fix UI scaling bug
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,

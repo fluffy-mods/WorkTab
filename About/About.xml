@@ -19,7 +19,7 @@ Various small UX tweaks; scrolling to increase/decrease/toggle priorities, incre
 &lt;b&gt;All functions are detailed in the tooltips, take a moment to hover over and read them!&lt;/b&gt;
 
 &lt;size=24&gt;Known Issues&lt;/size&gt;
-With UI scaling turned on, vertical labels are drawn in the wrong position. I’ve been working on this problem for a while, but have been unable to come up with a solution. Workarounds are to not use UI scaling, or to turn vertical labels off in the mod options. See the issue for more details.
+None.
 
 &lt;size=24&gt;Notes&lt;/size&gt;
 With great power comes great responsibility. The default priorities of tasks within a job is set for a good reason; it’s (usually) a sensible default. Changing these can lead to deadlock situations, so change the priorities of individual jobs at your own risk! 
@@ -44,7 +44,7 @@ Alex TD:    Various tweaks and suggestions
 Suh. Junmin:    Korean translation
 rw-chaos:    German translation
 Mehni:    Compatibility with Numbers mod
-Silverside:    
+Silverside:    Fix UI scaling bug
 
 &lt;size=24&gt;Version&lt;/size&gt;
 This is version 3.11.287, for RimWorld 1.0.2408.
