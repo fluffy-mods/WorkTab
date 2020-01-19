@@ -28,7 +28,7 @@ namespace WorkTab
             }
 
             // call base
-            base.DoCell(rect, pawn, table);
+            base.DoCell( rect, pawn, table );
 
             // override tooltip
             TooltipHandler.ClearTooltipsFrom(rect);

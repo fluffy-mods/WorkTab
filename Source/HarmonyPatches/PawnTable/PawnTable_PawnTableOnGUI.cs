@@ -103,8 +103,8 @@ namespace WorkTab
                 cachedHeightNoScrollbar - cachedHeaderHeight );
 
             // increase height of table to accomodate scrollbar if necessary and possible.
-            if ( viewWidth > outWidth && ( cachedSize.y + 16f ) < UI.screenHeight
-            ) // NOTE: this is probably optimistic about the available height, but it appears to be what vanilla uses.
+            if ( viewWidth > outWidth && ( cachedSize.y + 16f ) < UI.screenHeight )
+                // NOTE: this is probably optimistic about the available height, but it appears to be what vanilla uses.
                 tableOutRect.height += 16f;
 
             // we need to add a scroll area to the column headers to make sure they stay in sync with the rest of the table, but the first (labels) column should be frozen.
@@ -137,6 +137,8 @@ namespace WorkTab
             var labelRect = labelOutRect.AtZero();
             for ( int j = 0; j < cachedPawns.Count; j++ )
             {
+                labelRect.height = (int) cachedRowHeights[j];
+
                 // only draw if on screen
                 if ( tableViewRect.height                                                  <= tableOutRect.height ||
                      (float) labelRect.y - ___scrollPosition.y + (int) cachedRowHeights[j] >= 0f                 &&

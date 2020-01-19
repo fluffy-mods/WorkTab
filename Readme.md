@@ -3,7 +3,7 @@
 Provides a vastly more customizable work tab. 
 
 # Important
-Work Tab completely takes over job priorities from the vanilla game. In order to support core functionalities and other mods, it intercepts calls to get/set priorities. However, when it is told to set priorities by other modded or vanilla code, that code is not aware of the time schedule, and the priority will be set for the whole day. As such, this mod is currently *incompatible* with mods that dynamically change priorities (e.g. [Force Pawn to do a Job](http://steamcommunity.com/sharedfiles/filedetails/?id=937170538)).
+Work Tab completely takes over job priorities from the vanilla game. In order to support core functionalities and other mods, it intercepts calls to get/set priorities. However, when it is told to set priorities by other modded code that is not aware of the time schedule or detailed priorities, the priority will be set for the whole day, and/or for all workgivers in a worktype.
 
 # Features
 Various usability extentions to the 'vanilla' work tab; 
@@ -38,6 +38,7 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - Suh. Junmin:	Korean translation
  - rw-chaos:	German translation
  - Mehni:	Compatibility with Numbers mod
+ - Silverside:	
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
@@ -60,4 +61,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![I Have a Black Dog](https://i.ibb.co/ss59Rwy/New-Project-2.png)](https://www.youtube.com/watch?v=XiCrniLQGYc)
 
 # Version
-This is version 3.10.286, for RimWorld 1.0.2282.
+This is version 3.10.286, for RimWorld 1.0.2408.
