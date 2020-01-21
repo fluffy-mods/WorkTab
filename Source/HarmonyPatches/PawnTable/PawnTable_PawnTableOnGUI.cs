@@ -19,6 +19,8 @@ namespace WorkTab
         private static FieldInfo  cachedColumnWidthsField = AccessTools.Field( ptt, "cachedColumnWidths" );
         private static FieldInfo  cachedRowHeightsField   = AccessTools.Field( ptt, "cachedRowHeights" );
         private static FieldInfo  standardMarginField     = AccessTools.Field( typeof( Window ), "StandardMargin" );
+        private static int _hoveredRowLabel = -1;
+        private static int _hoveredRowContent = -1;
 
         static PawnTable_PawnTableOnGUI()
         {
@@ -41,6 +43,8 @@ namespace WorkTab
 
             if ( Event.current.type == EventType.Layout )
                 return false;
+
+            _hoveredRowLabel = -1;
 
             RecacheIfDirtyMethod.Invoke( __instance, null );
 
@@ -149,6 +153,16 @@ namespace WorkTab
                     GUI.color = Color.white;
 
                     labelCol.Worker.DoCell( labelRect, cachedPawns[j], __instance );
+                    if ( _hoveredRowContent == j )
+                    {
+                        Widgets.DrawHighlight( labelRect );
+                    }
+
+                    if ( Mouse.IsOver( labelRect ) )
+                    {
+                        _hoveredRowLabel = j;
+                    }
+
                     if ( cachedPawns[j].Downed )
                     {
                         GUI.color = new Color( 1f, 0f, 0f, 0.5f );
@@ -161,6 +175,8 @@ namespace WorkTab
             }
             Widgets.EndScrollView();
             ___scrollPosition.y = labelScrollPosition.y;
+
+            _hoveredRowContent = -1;
 
             // And finally, draw the rest of the table - SCROLLS VERTICALLY AND HORIZONTALLY
             Widgets.BeginScrollView( tableOutRect, ref ___scrollPosition, tableViewRect );
@@ -177,7 +193,14 @@ namespace WorkTab
                     GUI.color = Color.white;
                     Rect rowRect = new Rect( 0f, pos.y, tableViewRect.width, (int) cachedRowHeights[j] );
 
-                    Widgets.DrawHighlightIfMouseover( rowRect );
+                    if ( Mouse.IsOver( rowRect ) )
+                    {
+                        Widgets.DrawHighlight( rowRect );
+                        _hoveredRowContent = j;
+                    } else if ( _hoveredRowLabel == j )
+                    {
+                        Widgets.DrawHighlight( rowRect );
+                    }
 
                     for ( int k = 1; k < columns.Count; k++ )
                     {
