@@ -21,6 +21,8 @@ namespace WorkTab
         private static FieldInfo  standardMarginField     = AccessTools.Field( typeof( Window ), "StandardMargin" );
         private static int _hoveredRowLabel = -1;
         private static int _hoveredRowContent = -1;
+        private static int _hoveredColumnLabel = -1;
+        private static int _hoveredColumnContent = -1;
 
         static PawnTable_PawnTableOnGUI()
         {
@@ -130,13 +132,31 @@ namespace WorkTab
                 }
 
                 Rect rect = new Rect( pos.x, 0f, colWidth, (int) cachedHeaderHeight );
+
+                // column highlight sync
+                if ( Mouse.IsOver( rect ) )
+                {
+                    _hoveredColumnLabel = i;
+                }
+
+                if ( _hoveredColumnContent == i )
+                {
+                    Widgets.DrawHighlight( rect );
+                }
+
                 columns[i].Worker.DoHeader( rect, __instance );
                 pos.x += colWidth;
             }
+
+            _hoveredColumnContent = -1;
             Widgets.EndScrollView();
             ___scrollPosition.x = headerScrollPosition.x;
 
             // scrollview for label column - VERTICAL ONLY
+            if ( _hoveredColumnLabel == 0 )
+            {
+                Widgets.DrawHighlight( labelOutRect );
+            }
             Widgets.BeginScrollView( labelOutRect, ref labelScrollPosition, labelViewRect, false );
             var labelRect = labelOutRect.AtZero();
             for ( int j = 0; j < cachedPawns.Count; j++ )
@@ -180,6 +200,33 @@ namespace WorkTab
 
             // And finally, draw the rest of the table - SCROLLS VERTICALLY AND HORIZONTALLY
             Widgets.BeginScrollView( tableOutRect, ref ___scrollPosition, tableViewRect );
+            pos.x = 0;
+            for ( int k = 1; k < columns.Count; k++ )
+            {
+                int columnWidth;
+                if ( k == columns.Count - 1 )
+                {
+                    columnWidth = (int) ( viewWidth - pos.x );
+                }
+                else
+                {
+                    columnWidth = (int) cachedColumnWidths[k];
+                }
+
+                Rect column = new Rect( pos.x, pos.y, columnWidth, (int) tableOutRect.height );
+                if ( Mouse.IsOver( column ) )
+                {
+                    Widgets.DrawHighlight( column );
+                    _hoveredColumnContent = k;
+                }
+
+                if ( _hoveredColumnLabel == k )
+                {
+                    Widgets.DrawHighlight( column );
+                }
+                pos.x += columnWidth;
+            }
+            _hoveredColumnLabel = -1;
             for ( int j = 0; j < cachedPawns.Count; j++ )
             {
                 pos.x = 0;
@@ -193,6 +240,7 @@ namespace WorkTab
                     GUI.color = Color.white;
                     Rect rowRect = new Rect( 0f, pos.y, tableViewRect.width, (int) cachedRowHeights[j] );
 
+                    // synchronize row highlights 
                     if ( Mouse.IsOver( rowRect ) )
                     {
                         Widgets.DrawHighlight( rowRect );
