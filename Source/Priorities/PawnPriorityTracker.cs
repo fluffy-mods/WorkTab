@@ -15,8 +15,7 @@ namespace WorkTab
     public class PawnPriorityTracker: PriorityTracker
     {
         private Pawn pawn;
-
-
+        
         public PawnPriorityTracker(){
             // Scribe
         }

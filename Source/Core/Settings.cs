@@ -16,6 +16,8 @@ namespace WorkTab
         public static bool TwentyFourHourMode = true;
         public static bool disableScrollwheel = false;
         public static bool verticalLabels = true;
+        public static int defaultPriority = 3;
+
         // public static bool sharedFavourites = true;
         private static bool _fontFix = true;
 
@@ -38,12 +40,14 @@ namespace WorkTab
         // buffers
         private static bool _fontFixBuffer = _fontFix;
         private static string _maxPriorityBuffer = maxPriority.ToString();
+        private static string _defaultPriorityBuffer = defaultPriority.ToString();
 
         public static void DoWindowContents( Rect rect )
         { 
             var options = new Listing_Standard();
             options.Begin(rect);
             options.TextFieldNumericLabeled<int>("WorkTab.MaxPriority".Translate(), ref maxPriority, ref _maxPriorityBuffer, 4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
+            options.TextFieldNumericLabeled<int>( "WorkTab.DefaultPriority".Translate(), ref defaultPriority, ref _defaultPriorityBuffer, 1, 9,"WorkTab.DefaultPriorityTip".Translate(), 1 / 8f );
             options.CheckboxLabeled("WorkTab.24HourMode".Translate(), ref TwentyFourHourMode, "WorkTab.24HourModeTip".Translate() );
             options.CheckboxLabeled("WorkTab.PlaySounds".Translate(), ref playSounds, "WorkTab.PlaySoundsTip".Translate());
             playCrunch = playSounds && playCrunch; // disabling sounds also disables crunch.
@@ -79,6 +83,7 @@ namespace WorkTab
         public override void ExposeData()
         {
             Scribe_Values.Look(ref maxPriority, "MaxPriority", 9);
+            Scribe_Values.Look(ref defaultPriority, "DefaultPriority", 3);
             Scribe_Values.Look(ref TwentyFourHourMode, "TwentyFourHourMode", true);
             Scribe_Values.Look(ref playSounds, "PlaySounds", true);
             Scribe_Values.Look(ref playCrunch, "PlayCrunch", true);
