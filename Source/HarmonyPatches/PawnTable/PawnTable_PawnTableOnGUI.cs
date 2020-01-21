@@ -173,10 +173,12 @@ namespace WorkTab
                      (float) pos.y                       - ___scrollPosition.y       <= tableOutRect.height )
                 {
                     GUI.color = new Color( 1f, 1f, 1f, 0.2f );
-                    Widgets.DrawLineHorizontal( 0f, pos.z, tableViewRect.width );
+                    Widgets.DrawLineHorizontal( 0f, pos.y, tableViewRect.width );
                     GUI.color = Color.white;
-                    Rect rowRect = new Rect( 0f, pos.z, tableViewRect.width, (int) cachedRowHeights[j] );
+                    Rect rowRect = new Rect( 0f, pos.y, tableViewRect.width, (int) cachedRowHeights[j] );
+
                     Widgets.DrawHighlightIfMouseover( rowRect );
+
                     for ( int k = 1; k < columns.Count; k++ )
                     {
                         int cellWidth;
