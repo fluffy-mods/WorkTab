@@ -3,8 +3,10 @@
 // 2017-05-25
 
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Reflection;
 using System.Text;
 using Harmony;
@@ -75,22 +77,15 @@ namespace WorkTab
 
         private static Color ColorOfPriority(int priority)
         {
-            // first 1/3rd of priority levels lerp from green to white, then lerp to grey
             if (priority == 0)
                 return Color.grey;
 
-            // define sizes of colour ranges 
-            int firstThird = Settings.maxPriority / 3;
-            int rest = Settings.maxPriority - firstThird;
+            var halfway = Settings.maxPriority / 2f;
 
-            // from green to white
-            if ( priority <= firstThird )
-                return Color.Lerp( Color.green, Color.white, ((float) priority) / firstThird );
-
-            // white to grey
-            return Color.Lerp( Color.white, Color.grey, ( (float) ( priority - firstThird ) ) / rest );
+            if ( priority <= halfway )
+                return Color.Lerp( Color.green, Color.white, Mathf.InverseLerp( 1, halfway, priority ) );
+            return Color.Lerp( Color.white, Color.grey, Mathf.InverseLerp( halfway, Settings.maxPriority, priority ) );
         }
-
 
         public static string TipForPawnWorker(Pawn pawn, WorkGiverDef workgiver, bool incapableBecauseOfCapacities)
         {
