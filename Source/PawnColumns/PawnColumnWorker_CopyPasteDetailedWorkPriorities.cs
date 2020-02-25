@@ -23,7 +23,7 @@ namespace WorkTab
             foreach (var worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading)
             {
                 // do not even try setting priorities for disabled work types.
-                if (pawn.story.WorkTypeIsDisabled(worktype))
+                if (pawn.WorkTypeIsDisabled(worktype))
                     continue;
 
                 // apply all workgivers for this type

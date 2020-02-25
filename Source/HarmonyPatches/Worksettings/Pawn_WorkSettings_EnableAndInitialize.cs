@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -29,7 +30,7 @@ namespace WorkTab
             {
                 if ( instructions[i].opcode == OpCodes.Ldc_I4_3 )
                 {
-                    if ( instructions[i+1].opcode == OpCodes.Call && instructions[i+1].operand == setPriorityMI )
+                    if ( instructions[i+1].Calls( setPriorityMI ) )
                     {
                         yield return new CodeInstruction( OpCodes.Call, getDefaultPriorityMI );
                         continue;

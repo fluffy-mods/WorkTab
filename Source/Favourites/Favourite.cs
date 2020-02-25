@@ -7,7 +7,7 @@ using Verse;
 
 namespace WorkTab
 {
-    public class Favourite: PriorityTracker, ILoadReferenceable
+    public class Favourite: PriorityTracker
     {
         private string _label;
         private string _iconPath;
@@ -47,7 +47,6 @@ namespace WorkTab
             // create from pawn
             var favourite = new Favourite();
             var priorities = PriorityManager.Get[pawn];
-            favourite.SetLoadID();
             foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                 favourite.priorities[workgiver] = priorities[workgiver].Clone( favourite );
 
@@ -69,16 +68,6 @@ namespace WorkTab
         {
             if ( Scribe.mode == LoadSaveMode.Inactive )
                 FavouriteManager.Save( this );
-        }
-
-        internal void SetLoadID()
-        {
-            _loadId = FavouriteManager.GetNextID();
-        }
-
-        public string GetUniqueLoadID()
-        {
-            return $"Fluffy_WorkTab_Favourite_{_loadId}";
         }
     }
 }

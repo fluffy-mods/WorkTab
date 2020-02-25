@@ -2,7 +2,7 @@
 // Pawn_WorkSettings_SetPriority.cs
 // 2017-05-22
 
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;

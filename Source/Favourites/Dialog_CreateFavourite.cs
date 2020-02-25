@@ -1,10 +1,10 @@
 ﻿// Dialog_Favourite.cs
 // Copyright Karel Kroeze, 2018-2018
 
-using FluffyUI;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Grid = FluffyUI.Grid;
 using Widgets = FluffyUI.Widgets;
 
 namespace WorkTab

@@ -51,7 +51,7 @@ namespace WorkTab
             // just go over all workgivers and lower their priority number by one, with a minimum of 1
             foreach (var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading)
             {
-                if (pawn.story.WorkTypeIsDisabled(workgiver.workType))
+                if (pawn.WorkTypeIsDisabled(workgiver.workType))
                     continue;
 
                 // get current priority
@@ -83,7 +83,7 @@ namespace WorkTab
             }
 
             if (actionTaken && Settings.playSounds)
-                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_High.PlayOneShotOnCamera();
         }
 
         public void Increment(Pawn pawn)
@@ -92,7 +92,7 @@ namespace WorkTab
             // just go over all workgivers and increase their priority number by one, with a maximum of maxPriority
             foreach (var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading)
             {
-                if (pawn.story.WorkTypeIsDisabled(workgiver.workType))
+                if (pawn.WorkTypeIsDisabled(workgiver.workType))
                     continue;
 
                 // get current priority
@@ -125,7 +125,7 @@ namespace WorkTab
             }
 
             if (actionTaken && Settings.playSounds)
-                SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
     }
 }

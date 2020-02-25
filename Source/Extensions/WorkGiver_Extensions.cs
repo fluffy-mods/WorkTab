@@ -26,9 +26,9 @@ namespace WorkTab
 
             // play sounds
             if ( Settings.playSounds && playSound && priority > 1 )
-                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_High.PlayOneShotOnCamera();
             if ( Settings.playSounds && playSound && priority == 1 )
-                SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
 
         public static void IncrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour,
@@ -44,9 +44,9 @@ namespace WorkTab
 
             // play sounds
             if ( Settings.playSounds && playSound && priority == 0 )
-                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_High.PlayOneShotOnCamera();
             if ( Settings.playSounds && playSound && priority > 0 )
-                SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
 
         public static void DecrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour,
@@ -62,7 +62,7 @@ namespace WorkTab
 
             // play sounds
             if ( Settings.playSounds && playSound && pawns.Any( p => p.GetPriority( workgiver, hour ) != 1 ) )
-                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_High.PlayOneShotOnCamera();
 
             // decrease priorities that are not 1 only (no wrapping around once we're at max priority)
             foreach ( Pawn pawn in pawns.Where( p => p.GetPriority( workgiver, hour ) != 1 ).DistinctTrackers() )
@@ -82,7 +82,7 @@ namespace WorkTab
 
             // play sounds
             if ( Settings.playSounds && playSound && pawns.Any( p => p.GetPriority( workgiver, hour ) > 0 ) )
-                SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
 
             // increase priorities that are > 0 only (no wrapping around once we're at min priority
             foreach ( Pawn pawn in pawns.Where( p => p.GetPriority( workgiver, hour ) > 0 ).DistinctTrackers() )

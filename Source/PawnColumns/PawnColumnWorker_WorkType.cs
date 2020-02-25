@@ -124,7 +124,7 @@ namespace WorkTab
             if ( pawn?.story == null )
                 return false;
 
-            return !pawn.story.WorkTypeIsDisabled( def.workType );
+            return !pawn.WorkTypeIsDisabled( def.workType );
         }
 
         public List<Pawn> CapablePawns => Instance
@@ -266,7 +266,7 @@ namespace WorkTab
             {
                 return -2f;
             }
-            if ( pawn.story != null && pawn.story.WorkTypeIsDisabled( this.def.workType ) )
+            if ( pawn.story != null && pawn.WorkTypeIsDisabled( this.def.workType ) )
             {
                 return -1f;
             }

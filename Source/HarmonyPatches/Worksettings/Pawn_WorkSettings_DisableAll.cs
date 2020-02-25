@@ -1,7 +1,7 @@
 ﻿// Pawn_WorkSettings_DisableAll.cs
 // Copyright Karel Kroeze, 2018-2018
 
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 
 namespace WorkTab

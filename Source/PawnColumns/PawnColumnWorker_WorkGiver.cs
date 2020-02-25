@@ -69,7 +69,7 @@ namespace WorkTab
             if ( pawn?.story == null )
                 return false;
 
-            return !pawn.story.WorkTypeIsDisabled( WorkGiver.workType );
+            return !pawn.WorkTypeIsDisabled( WorkGiver.workType );
         }
 
         protected virtual void DrawWorkGiverBoxFor( Rect box, Pawn pawn, WorkGiverDef workgiver, bool incapable )
@@ -161,7 +161,7 @@ namespace WorkTab
             // replaced with HeaderInteractions
         }
 
-        public string Label => WorkGiver.label.NullOrEmpty() ? WorkGiver.gerund : WorkGiver.LabelCap;
+        public string Label => WorkGiver.label.NullOrEmpty() ? WorkGiver.gerund : WorkGiver.LabelCap.Resolve();
         
         public override void DoHeader(Rect rect, PawnTable table)
         {
@@ -257,7 +257,7 @@ namespace WorkTab
         {
             if ( pawn.workSettings == null || !pawn.workSettings.EverWork )
                 return -2f;
-            if ( pawn.story != null && pawn.story.WorkTypeIsDisabled( WorkGiver.workType ) )
+            if ( pawn.story != null && pawn.WorkTypeIsDisabled( WorkGiver.workType ) )
                 return -1f;
 
             return pawn.skills.AverageOfRelevantSkillsFor( WorkGiver.workType );

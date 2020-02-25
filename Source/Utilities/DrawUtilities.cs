@@ -3,13 +3,9 @@
 // 2017-05-25
 
 using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Configuration;
 using System.Reflection;
-using System.Text;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -90,7 +86,7 @@ namespace WorkTab
         public static string TipForPawnWorker(Pawn pawn, WorkGiverDef workgiver, bool incapableBecauseOfCapacities)
         {
             var tip = $"{workgiver.LabelCap} ({workgiver.workType.gerundLabel})";
-            if (pawn.story.WorkTypeIsDisabled(workgiver.workType))
+            if (pawn.WorkTypeIsDisabled(workgiver.workType))
                 tip += "\n\n" + "CannotDoThisWork".Translate( pawn.Name.ToStringShort );
             else
             {

@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -20,10 +20,13 @@ namespace WorkTab
             // prefix implied PawnColumnWorker_WorkType generation 
             // prefix get/set workPriorities
 #if DEBUG
-            HarmonyInstance.DEBUG = true;
+            Harmony.DEBUG = true;
 #endif
-            var harmony = HarmonyInstance.Create( "fluffy.worktab" );
+            var harmony = new Harmony( "fluffy.worktab" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
+
+//            if ( MP.enabled )
+//                MP.RegisterAll();
         }
         
         public override void DoSettingsWindowContents(Rect inRect)

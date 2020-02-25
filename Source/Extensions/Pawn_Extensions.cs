@@ -77,9 +77,9 @@ namespace WorkTab
         {
             if ( pawn?.story == null )
                 return true;
-            return !pawn.story.WorkTypeIsDisabled( workgiver.workType ) &&
-                   ( pawn.story.CombinedDisabledWorkTags & workgiver.workTags ) == WorkTags.None &&
-                   ( pawn.story.CombinedDisabledWorkTags & workgiver.workType.workTags ) == WorkTags.None;
+            return !pawn.WorkTypeIsDisabled( workgiver.workType ) &&
+                   ( pawn.CombinedDisabledWorkTags & workgiver.workTags ) == WorkTags.None &&
+                   ( pawn.CombinedDisabledWorkTags & workgiver.workType.workTags ) == WorkTags.None;
         }
     }
 }

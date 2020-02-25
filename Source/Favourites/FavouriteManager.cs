@@ -8,14 +8,13 @@ using FluffyUI;
 using FluffyUI.FloatMenu;
 using UnityEngine;
 using Verse;
-using Verse.AI;
+using Grid = FluffyUI.Grid;
 using Widgets = Verse.Widgets;
 
 namespace WorkTab
 {
     public class FavouriteManager : GameComponent
     {
-        private static int _nextId;
         private static FavouriteManager _instance;
         private static Dictionary<Pawn, Favourite> _favourites = new Dictionary<Pawn, Favourite>();
 
@@ -49,10 +48,6 @@ namespace WorkTab
             }
         }
 
-        public static int GetNextID()
-        {
-            return _nextId++;
-        }
 
         public static void FavouriteFloatMenuFor( Pawn pawn )
         {
@@ -103,7 +98,7 @@ namespace WorkTab
             Scribe.loader.initer.RegisterForPostLoadInit( favourite );
             Scribe.loader.FinalizeLoading();
 
-            favourite.SetLoadID();
+            favourite.SetLoadId();
             Favourites.Add(favourite);
             if ( pawn != null )
                 Get[pawn] = favourite;
@@ -174,7 +169,6 @@ namespace WorkTab
             base.ExposeData();
             Scribe_Collections.Look( ref Favourites, "Favourites", LookMode.Deep );
             Scribe_Collections.Look( ref _favourites, "FavouriteAssignments", LookMode.Reference, LookMode.Reference );
-            Scribe_Values.Look( ref _nextId, "NextId" );
         }
 
         private static bool IsValidFileName( string label )
@@ -186,13 +180,13 @@ namespace WorkTab
         public static FailReason IsValidLabel( string label, string curLabel = null )
         {
             if ( label.NullOrEmpty() )
-                return "Fluffy.WorkTab.FavouriteLabelCannotBeEmpty".Translate();
+                return "Fluffy.WorkTab.FavouriteLabelCannotBeEmpty".Translate().Resolve();
 
             if ( !IsValidFileName( label ) )
-                return "Fluffy.WorkTab.FavouriteInvalidFilename".Translate( label );
+                return "Fluffy.WorkTab.FavouriteInvalidFilename".Translate( label ).Resolve();
 
             if ( curLabel != label && File.Exists( FavouritePath( label ) ) )
-                return "Fluffy.WorkTab.FavouriteAlreadyExists".Translate( label );
+                return "Fluffy.WorkTab.FavouriteAlreadyExists".Translate( label ).Resolve();
 
             return true;
         }

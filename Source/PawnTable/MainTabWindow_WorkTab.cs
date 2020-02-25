@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -96,8 +96,7 @@ namespace WorkTab
             bool moveNextDown = false;
             foreach ( PawnColumnDef columnDef in columns )
             {
-                var worker = columnDef.Worker as IAlternatingColumn;
-                if ( worker != null )
+                if ( columnDef.Worker is IAlternatingColumn worker )
                 {
                     worker.MoveDown = moveNextDown;
                     moveNextDown = !moveNextDown;

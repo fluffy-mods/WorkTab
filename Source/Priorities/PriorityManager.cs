@@ -12,6 +12,7 @@ namespace WorkTab
     public class PriorityManager: GameComponent
     {
         private static Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
+        private static int _nextId;
         
         private static bool _showScheduler;
         public static bool ShowScheduler
@@ -89,7 +90,13 @@ namespace WorkTab
 
             Scribe_Collections.Look( ref priorities, "Priorities", LookMode.Reference, LookMode.Deep, ref pawnsScribe, ref pawnPriorityTrackersScribe );
             Scribe_Values.Look( ref _showScheduler, "ShowScheduler", false );
+            Scribe_Values.Look( ref _nextId, "NextId" );
         }
-        
+
+        public static int GetNextID()
+        {
+            return _nextId++;
+        }
+
     }
 }

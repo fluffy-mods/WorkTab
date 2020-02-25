@@ -7,6 +7,7 @@ using FluffyUI;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Grid = FluffyUI.Grid;
 using Widgets = FluffyUI.Widgets;
 
 namespace WorkTab

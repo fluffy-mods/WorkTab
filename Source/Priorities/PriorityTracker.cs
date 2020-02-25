@@ -8,11 +8,22 @@ using Verse;
 
 namespace WorkTab
 {
-    public class PriorityTracker: IExposable
+    public class PriorityTracker: IExposable, ILoadReferenceable
     {
         public virtual Pawn Pawn => null;
         protected Dictionary<WorkGiverDef, WorkPriority> priorities = new Dictionary<WorkGiverDef, WorkPriority>();
         protected List<WorkPriority> workPriorityTrackersScribe;
+        private int _loadId;
+
+        public PriorityTracker()
+        {
+            SetLoadId();
+        }
+
+        public virtual void SetLoadId()
+        {
+            _loadId = PriorityManager.GetNextID();
+        }
 
         public virtual WorkPriority this[WorkGiverDef workgiver]
         {
@@ -27,7 +38,6 @@ namespace WorkTab
             }
             set => priorities[workgiver] = value;
         }
-
 
         // caches for ever/partially scheduled
         private Dictionary<WorkGiverDef, bool> _everScheduledWorkGiver = new Dictionary<WorkGiverDef, bool>();
@@ -70,7 +80,7 @@ namespace WorkTab
 
         protected virtual void OnChange() { }
 
-        public void SetPriority(WorkGiverDef workgiver, int priority, int hour, bool recache = true )
+        public void SetPriority( WorkGiverDef workgiver, int priority, int hour, bool recache = true )
         {
             if (priority > Settings.maxPriority)
                 priority = 0;
@@ -237,7 +247,13 @@ namespace WorkTab
                     // reinstate the dictionary
                     .ToDictionary(k => k.Workgiver);
             }
+
+            Scribe_Values.Look( ref _loadId, "loadId" );
+        }
+
+        public string GetUniqueLoadID()
+        {
+            return $"Fluffy.PriorityTracker.{_loadId}";
         }
     }
-
 }
