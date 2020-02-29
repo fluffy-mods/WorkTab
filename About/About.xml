@@ -47,10 +47,11 @@ Mehni:    Compatibility with Numbers mod
 Silverside:    Fix UI scaling bug
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 3.14.290, for RimWorld 1.1.2552.
+This is version 3.14.290, for RimWorld 1.1.2558.
 
 </description>
   <supportedVersions>
-    <li>1.1</li>
+    <li>1</li>
   </supportedVersions>
+  <packageId>fluffy.worktab</packageId>
 </ModMetaData>

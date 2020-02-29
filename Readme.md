@@ -1,4 +1,4 @@
-[![RimWorld Alpha undefined](https://img.shields.io/badge/RimWorld-Alpha%20undefined-brightgreen.svg)](http://rimworldgame.com/)
+[![RimWorld 1](https://img.shields.io/badge/RimWorld-1-brightgreen.svg)](http://rimworldgame.com/)
 
 Provides a vastly more customizable work tab. 
 
@@ -61,4 +61,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![I Have a Black Dog](https://i.ibb.co/ss59Rwy/New-Project-2.png)](https://www.youtube.com/watch?v=XiCrniLQGYc)
 
 # Version
-This is version 3.14.290, for RimWorld 1.1.2552.
+This is version 3.14.290, for RimWorld 1.1.2558.
