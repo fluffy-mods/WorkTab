@@ -39,6 +39,7 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - rw-chaos:	German translation
  - Mehni:	Compatibility with Numbers mod
  - Silverside:	Fix UI scaling bug
+ - CoderChang65535: Chinese translation (update)
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
