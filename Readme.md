@@ -39,7 +39,7 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
  - rw-chaos:	German translation
  - Mehni:	Compatibility with Numbers mod
  - Silverside:	Fix UI scaling bug
- - CoderChang65535: Chinese translation (update)
+ - CoderChang65535:	Update chinese translations
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
@@ -62,4 +62,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![I Have a Black Dog](https://i.ibb.co/ss59Rwy/New-Project-2.png)](https://www.youtube.com/watch?v=XiCrniLQGYc)
 
 # Version
-This is version 3.17.293, for RimWorld 1.1.2559.
+This is version 3.18.294, for RimWorld 1.1.2579.
