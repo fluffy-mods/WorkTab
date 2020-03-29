@@ -57,7 +57,7 @@
     <Fluffy.WorkTab.UnloadFavourite>Décharger</Fluffy.WorkTab.UnloadFavourite>
     <Fluffy.WorkTab.DeleteFavourite>Décharger et supprimer</Fluffy.WorkTab.DeleteFavourite>
     <Fluffy.WorkTab.DefaultFavouriteLabel>Favoris</Fluffy.WorkTab.DefaultFavouriteLabel>
-    <Fluffy.WorkTab.CreateFavouritesDialogTitle>Créer un niuveau favori</Fluffy.WorkTab.CreateFavouritesDialogTitle>
+    <Fluffy.WorkTab.CreateFavouritesDialogTitle>Créer un nouveau favori</Fluffy.WorkTab.CreateFavouritesDialogTitle>
     <Fluffy.WorkTab.EditFavouritesDialogTitle>Modification de "{0}"</Fluffy.WorkTab.EditFavouritesDialogTitle>
 
     <Fluffy.WorkTab.FavouriteLabelCannotBeEmpty>Le nom du favori ne peut être vide</Fluffy.WorkTab.FavouriteLabelCannotBeEmpty>
