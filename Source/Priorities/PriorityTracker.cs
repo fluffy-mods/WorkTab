@@ -43,7 +43,6 @@ namespace WorkTab
         private Dictionary<WorkGiverDef, bool> _everScheduledWorkGiver = new Dictionary<WorkGiverDef, bool>();
         private Dictionary<WorkGiverDef, bool> _timeScheduledWorkGiver = new Dictionary<WorkGiverDef, bool>();
         private Dictionary<WorkGiverDef, string> _timeScheduledWorkGiverTip = new Dictionary<WorkGiverDef, string>();
-        private Dictionary<WorkTypeDef, bool> _everScheduledWorkType = new Dictionary<WorkTypeDef, bool>();
         private Dictionary<WorkTypeDef, bool> _timeScheduledWorkType = new Dictionary<WorkTypeDef, bool>();
         private Dictionary<WorkTypeDef, string> _timeScheduledWorkTypeTip = new Dictionary<WorkTypeDef, string>();
         private Dictionary<WorkTypeDef, bool> _partScheduledWorkType = new Dictionary<WorkTypeDef, bool>();
@@ -154,13 +153,6 @@ namespace WorkTab
             return _timeScheduledWorkGiverTip[workgiver];
         }
 
-        public bool EverScheduled(WorkTypeDef worktype)
-        {
-            if (!_everScheduledWorkType.ContainsKey(worktype))
-                Recache(worktype);
-            return _everScheduledWorkType[worktype];
-        }
-
         public bool TimeScheduled(WorkTypeDef worktype)
         {
             if (!_timeScheduledWorkType.ContainsKey(worktype))
@@ -194,7 +186,6 @@ namespace WorkTab
 
         public void InvalidateCache(WorkTypeDef worktype, bool bubble = true)
         {
-            _everScheduledWorkType.Remove(worktype);
             _timeScheduledWorkType.Remove(worktype);
             _timeScheduledWorkTypeTip.Remove(worktype);
 
@@ -222,7 +213,6 @@ namespace WorkTab
                     Recache(workgiver);
 
             // recache worktype stuff
-            _everScheduledWorkType[worktype] = workgivers.Any(wg => _everScheduledWorkGiver[wg]);
             _timeScheduledWorkType[worktype] = workgivers.Any(wg => _timeScheduledWorkGiver[wg]);
             _timeScheduledWorkTypeTip[worktype] = DrawUtilities.TimeScheduledTip( priorities, worktype.gerundLabel);
 

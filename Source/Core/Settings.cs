@@ -38,7 +38,6 @@ namespace WorkTab
         }
 
         // buffers
-        private static bool _fontFixBuffer = _fontFix;
         private static string _maxPriorityBuffer = maxPriority.ToString();
         private static string _defaultPriorityBuffer = defaultPriority.ToString();
 

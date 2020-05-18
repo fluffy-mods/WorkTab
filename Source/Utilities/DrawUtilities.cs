@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -85,46 +86,201 @@ namespace WorkTab
 
         public static string TipForPawnWorker(Pawn pawn, WorkGiverDef workgiver, bool incapableBecauseOfCapacities)
         {
-            var tip = $"{workgiver.LabelCap} ({workgiver.workType.gerundLabel})";
-            if (pawn.WorkTypeIsDisabled(workgiver.workType))
-                tip += "\n\n" + "CannotDoThisWork".Translate( pawn.Name.ToStringShort );
+            StringBuilder tip = new StringBuilder();
+            tip.Append( workgiver.LabelCap );
+            tip.Append( ": " + PriorityLabel( pawn.GetPriority( workgiver, -1 ) ) );
+            tip.AppendLine();
+
+            if ( pawn.WorkTypeIsDisabled( workgiver.workType ) || ( workgiver.workTags & pawn.story.DisabledWorkTagsBackstoryAndTraits ) != WorkTags.None )
+            {
+                tip.Append( "CannotDoThisWork".Translate( pawn.LabelShort, pawn ) );
+            }
             else
             {
-                if ( workgiver.workType.relevantSkills.Count > 0 )
+                float skill = pawn.skills.AverageOfRelevantSkillsFor( workgiver.workType );
+                if ( workgiver.workType.relevantSkills.Any<SkillDef>() )
                 {
-                    var skills = string.Join(", ",
-                                                  workgiver.workType.relevantSkills.Select(s => s.skillLabel)
-                                                           .ToArray());
-                    tip += "\n\n" + 
-                           "RelevantSkills".Translate( skills, pawn.skills.AverageOfRelevantSkillsFor( workgiver.workType ), 20 );
+                    tip.AppendLine( "RelevantSkills".Translate(
+                                        workgiver.workType.relevantSkills.Select( s => s.skillLabel ).ToCommaList(),
+                                        skill.ToString( "0.#" ), 20 ) );
+                }
+
+                if ( !workgiver.description.NullOrEmpty() )
+                {
+                    tip.AppendLine();
+                    tip.Append( workgiver.description );
+                }
+
+                if ( incapableBecauseOfCapacities )
+                {
+                    tip.AppendLine();
+                    tip.AppendLine();
+                    tip.Append( "IncapableOfWorkTypeBecauseOfCapacities".Translate() );
+                }
+
+                var tracker = PriorityManager.Get[pawn];
+                if ( tracker.TimeScheduled( workgiver ) )
+                {
+                    tip.AppendLine();
+                    tip.Append( "WorkTab.XIsAssignedToY".Translate( pawn.NameShortColored, workgiver.LabelCap ) );
+                    tip.Append( tracker.TimeScheduledTip( workgiver ) );
                 }
             }
 
-            if (incapableBecauseOfCapacities)
-                tip += "\n\n" + "IncapableOfWorkTypeBecauseOfCapacities".Translate();
-            
-            var tracker = PriorityManager.Get[pawn];
-            if (tracker.EverScheduled(workgiver))
-                tip += "\n\n" + "WorkTab.XIsAssignedToY".Translate(pawn.Name.ToStringShort, workgiver.label);
+            return tip.ToString();
+        }
 
-            if (tracker.TimeScheduled(workgiver))
-                tip += tracker.TimeScheduledTip(workgiver);
+        public static string PriorityLabel( int priority )
+        {
+            /**
+             *                  9   8   7   6   5   4
+             * top              1   1   1   1   1   1
+             * very high        2   2   2   2
+             * high             3   3   3   3   2   2
+             * above normal     4   4
+             * normal           5       4       3   3
+             * below normal     6   5
+             * low              7   6   5   4   4   4
+             * very low         8   7   6   5
+             * lowest           9   8   7   6   5
+             *
+             * KILL ME NOW.
+             */
 
-            return tip;
+            string label;
+            switch ( priority )
+            {
+                case 0:
+                    label = "Fluffy.WorkTab.Priority.None".Translate();
+                    break;
+                case 1:
+                    label = "Fluffy.WorkTab.Priority.Top".Translate();
+                    break;
+                case 2 when Settings.maxPriority >= 6:
+                    label = "Fluffy.WorkTab.Priority.VeryHigh".Translate();
+                    break;
+                case 2 when Settings.maxPriority <= 5:
+                    label = "Fluffy.WorkTab.Priority.High".Translate();
+                    break;
+                case 3 when !Find.PlaySettings.useWorkPriorities:
+                    label = "Fluffy.WorkTab.Priority.Normal".Translate();
+                    break;
+                case 3 when Settings.maxPriority >= 6:
+                    label = "Fluffy.WorkTab.Priority.High".Translate();
+                    break;
+                case 3 when Settings.maxPriority <= 5:
+                    label = "Fluffy.WorkTab.Priority.Normal".Translate();
+                    break;
+                case 4 when Settings.maxPriority >= 8:
+                    label = "Fluffy.WorkTab.Priority.AboveNormal".Translate();
+                    break;
+                case 4 when Settings.maxPriority == 7:
+                    label = "Fluffy.WorkTab.Priority.Normal".Translate();
+                    break;
+                case 4 when Settings.maxPriority <= 6:
+                    label = "Fluffy.WorkTab.Priority.Low".Translate();
+                    break;
+                case 5 when Settings.maxPriority == 9:
+                    label = "Fluffy.WorkTab.Priority.Normal".Translate();
+                    break;
+                case 5 when Settings.maxPriority == 8:
+                    label = "Fluffy.WorkTab.Priority.BelowNormal".Translate();
+                    break;
+                case 5 when Settings.maxPriority == 7:
+                    label = "Fluffy.WorkTab.Priority.Low".Translate();
+                    break;
+                case 5 when Settings.maxPriority == 6:
+                    label = "Fluffy.WorkTab.Priority.VeryLow".Translate();
+                    break;
+                case 5 when Settings.maxPriority == 5:
+                    label = "Fluffy.WorkTab.Priority.Lowest".Translate();
+                    break;
+                case 6 when Settings.maxPriority == 9:
+                    label = "Fluffy.WorkTab.Priority.BelowNormal".Translate();
+                    break;
+                case 6 when Settings.maxPriority == 8:
+                    label = "Fluffy.WorkTab.Priority.Low".Translate();
+                    break;
+                case 6 when Settings.maxPriority == 7:
+                    label = "Fluffy.WorkTab.Priority.VeryLow".Translate();
+                    break;
+                case 6 when Settings.maxPriority == 6:
+                    label = "Fluffy.WorkTab.Priority.Lowest".Translate();
+                    break;
+                case 7 when Settings.maxPriority == 9:
+                    label = "Fluffy.WorkTab.Priority.Low".Translate();
+                    break;
+                case 7 when Settings.maxPriority == 8:
+                    label = "Fluffy.WorkTab.Priority.VeryLow".Translate();
+                    break;
+                case 7 when Settings.maxPriority == 7:
+                    label = "Fluffy.WorkTab.Priority.Lowest".Translate();
+                    break;
+                case 8 when Settings.maxPriority == 9:
+                    label = "Fluffy.WorkTab.Priority.VeryLow".Translate();
+                    break;
+                case 8 when Settings.maxPriority == 8:
+                    label = "Fluffy.WorkTab.Priority.Lowest".Translate();
+                    break;
+                case 9:
+                    label = "Fluffy.WorkTab.Priority.Lowest".Translate();
+                    break;
+                default:
+                    label = "Fluffy.WorkTab.Priority.Unknown".Translate();
+                    break;
+            }
+
+            return label.Colorize( ColorOfPriority( priority ) );
         }
 
         public static string TipForPawnWorker(Pawn pawn, WorkTypeDef worktype, bool incapableBecauseOfCapacities)
         {
-            string tip = WidgetsWork.TipForPawnWorker(pawn, worktype, incapableBecauseOfCapacities);
+            StringBuilder tip = new StringBuilder();
+            tip.Append( worktype.gerundLabel.CapitalizeFirst() );
+            tip.Append( ": " + PriorityLabel( pawn.workSettings.GetPriority( worktype ) ) );
+            tip.AppendLine();
 
-            var tracker = PriorityManager.Get[pawn];
-            if (tracker.EverScheduled(worktype))
-                tip += "\n\n" + "WorkTab.XIsAssignedToY".Translate(pawn.Name.ToStringShort, worktype.gerundLabel);
+            if ( pawn.WorkTypeIsDisabled( worktype ) )
+            {
+                tip.Append( "CannotDoThisWork".Translate( pawn.LabelShort, pawn ) );
+            }
+            else
+            {
+                float num = pawn.skills.AverageOfRelevantSkillsFor( worktype );
+                if ( worktype.relevantSkills.Any<SkillDef>() )
+                {
+                    tip.AppendLine( "RelevantSkills".Translate(
+                                        worktype.relevantSkills.Select( s => s.skillLabel ).ToCommaList(),
+                                        num.ToString( "0.#" ), 20 ) );
+                }
 
-            if (tracker.TimeScheduled(worktype))
-                tip += tracker.TimeScheduledTip(worktype);
+                tip.AppendLine();
+                tip.Append( worktype.description );
 
-            return tip;
+                if ( incapableBecauseOfCapacities )
+                {
+                    tip.AppendLine();
+                    tip.AppendLine();
+                    tip.Append( "IncapableOfWorkTypeBecauseOfCapacities".Translate() );
+                }
+
+                if ( worktype.relevantSkills.Any<SkillDef>() && num <= 2f && pawn.workSettings.WorkIsActive( worktype ) )
+                {
+                    tip.AppendLine();
+                    tip.AppendLine();
+                    tip.Append( "SelectedWorkTypeWithVeryBadSkill".Translate() );
+                }
+
+                var tracker = PriorityManager.Get[pawn];
+                if ( tracker.TimeScheduled( worktype ) )
+                {
+                    tip.AppendLine();
+                    tip.Append( "WorkTab.XIsAssignedToY".Translate( pawn.NameShortColored, worktype.LabelCap ) );
+                    tip.Append( tracker.TimeScheduledTip( worktype ) );
+                }
+            }
+
+            return tip.ToString();
         }
 
         public static string TimeScheduledTip( int[] priorities, string label )
