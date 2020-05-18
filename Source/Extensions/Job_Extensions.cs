@@ -32,9 +32,7 @@ namespace WorkTab
 
         public static Texture2D StatusIcon( this JobDef job )
         {
-            if (JobIcons.TryGetValue(job, out var icon))
-                return icon;
-            return DefaultJobIcon;
+            return JobIcons.TryGetValue(job, out var icon) ? icon : DefaultJobIcon;
         }
 
         public static string DefaultIconPath(this JobDef job)
