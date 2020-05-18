@@ -17,7 +17,14 @@ namespace WorkTab
 
         public float GetValueToCompare( Pawn pawn )
         {
-            return pawn.needs.mood.CurLevelPercentage - pawn.mindState.mentalBreaker.BreakThresholdMinor;
+            return pawn.needs.mood?.CurLevelPercentage - pawn.mindState.mentalBreaker.BreakThresholdMinor ?? 0f;
+        }
+
+        public override void DoCell( Rect rect, Pawn pawn, PawnTable table )
+        {
+            if ( pawn.needs?.mood == null )
+                return;
+            base.DoCell( rect, pawn, table );
         }
 
         protected override Vector2 GetIconSize( Pawn pawn ) { return def.HeaderIconSize; }
@@ -29,7 +36,7 @@ namespace WorkTab
                 return Resources.MoodBroken;
 
             // current level
-            var mood = pawn.needs.mood.CurLevelPercentage;
+            var mood = pawn.needs.mood?.CurLevelPercentage;
             var softBreak = pawn.mindState.mentalBreaker.BreakThresholdMinor;
 
             // icon
@@ -45,7 +52,7 @@ namespace WorkTab
         protected override Color GetIconColor( Pawn pawn )
         {
             // broken
-            if ( pawn.mindState.mentalStateHandler?.CurStateDef != null )
+            if ( pawn.mindState?.mentalStateHandler?.CurStateDef != null )
             {
                 switch ( pawn.mindState.mentalStateHandler.CurStateDef.category )
                 {
@@ -61,6 +68,8 @@ namespace WorkTab
                 }
             }
 
+            if ( pawn.needs?.mood == null )
+                return Color.white;
             // current level
             var mood = pawn.needs.mood.CurLevelPercentage;
             var hardBreak = pawn.mindState.mentalBreaker.BreakThresholdExtreme;
@@ -79,6 +88,9 @@ namespace WorkTab
             return Color.green;
         }
 
-        protected override string GetIconTip( Pawn pawn ) { return pawn.needs.mood.GetTipString(); }
+        protected override string GetIconTip( Pawn pawn )
+        {
+            return pawn.needs.mood?.GetTipString() ?? string.Empty;
+        }
     }
 }
