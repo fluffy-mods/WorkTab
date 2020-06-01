@@ -1,5 +1,5 @@
 ﻿// Pawn_WorkSettings_DisableAll.cs
-// Copyright Karel Kroeze, 2018-2018
+// Copyright Karel Kroeze, 2020-2020
 
 using HarmonyLib;
 using RimWorld;

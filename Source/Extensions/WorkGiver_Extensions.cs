@@ -1,8 +1,6 @@
-﻿// Karel Kroeze
-// WorkGiver_Extensions.cs
-// 2017-05-28
+﻿// WorkGiver_Extensions.cs
+// Copyright Karel Kroeze, 2020-2020
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -21,31 +19,13 @@ namespace WorkTab
                 hour = GenLocalDate.HourOfDay( pawn );
 
             // get and decrement priority
-            int priority = pawn.GetPriority( workgiver, hour );
+            var priority = pawn.GetPriority( workgiver, hour );
             pawn.SetPriority( workgiver, priority - 1, hours );
 
             // play sounds
             if ( Settings.playSounds && playSound && priority > 1 )
                 SoundDefOf.Tick_High.PlayOneShotOnCamera();
             if ( Settings.playSounds && playSound && priority == 1 )
-                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
-        }
-
-        public static void IncrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour,
-                                              List<int> hours, bool playSound = true )
-        {
-            // get default hour if not specified
-            if ( hour < 0 )
-                hour = GenLocalDate.HourOfDay( pawn );
-
-            // get and increment priority
-            int priority = pawn.GetPriority( workgiver, hour );
-            pawn.SetPriority( workgiver, priority + 1, hours );
-
-            // play sounds
-            if ( Settings.playSounds && playSound && priority == 0 )
-                SoundDefOf.Tick_High.PlayOneShotOnCamera();
-            if ( Settings.playSounds && playSound && priority > 0 )
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
 
@@ -65,8 +45,26 @@ namespace WorkTab
                 SoundDefOf.Tick_High.PlayOneShotOnCamera();
 
             // decrease priorities that are not 1 only (no wrapping around once we're at max priority)
-            foreach ( Pawn pawn in pawns.Where( p => p.GetPriority( workgiver, hour ) != 1 ).DistinctTrackers() )
+            foreach ( var pawn in pawns.Where( p => p.GetPriority( workgiver, hour ) != 1 ).DistinctTrackers() )
                 DecrementPriority( workgiver, pawn, hour, hours, false );
+        }
+
+        public static void IncrementPriority( this WorkGiverDef workgiver, Pawn pawn, int hour,
+                                              List<int> hours, bool playSound = true )
+        {
+            // get default hour if not specified
+            if ( hour < 0 )
+                hour = GenLocalDate.HourOfDay( pawn );
+
+            // get and increment priority
+            var priority = pawn.GetPriority( workgiver, hour );
+            pawn.SetPriority( workgiver, priority + 1, hours );
+
+            // play sounds
+            if ( Settings.playSounds && playSound && priority == 0 )
+                SoundDefOf.Tick_High.PlayOneShotOnCamera();
+            if ( Settings.playSounds && playSound && priority > 0 )
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
 
         public static void IncrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour,
@@ -85,18 +83,16 @@ namespace WorkTab
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
 
             // increase priorities that are > 0 only (no wrapping around once we're at min priority
-            foreach ( Pawn pawn in pawns.Where( p => p.GetPriority( workgiver, hour ) > 0 ).DistinctTrackers() )
+            foreach ( var pawn in pawns.Where( p => p.GetPriority( workgiver, hour ) > 0 ).DistinctTrackers() )
                 IncrementPriority( workgiver, pawn, hour, hours, false );
         }
 
-        internal static IEnumerable<Pawn> DistinctTrackers(this IEnumerable<Pawn> pawns)
+        internal static IEnumerable<Pawn> DistinctTrackers( this IEnumerable<Pawn> pawns )
         {
-            HashSet<PriorityTracker> knownTrackers = new HashSet<PriorityTracker>();
-            foreach (var pawn in pawns)
-            {
+            var knownTrackers = new HashSet<PriorityTracker>();
+            foreach ( var pawn in pawns )
                 if ( knownTrackers.Add( PriorityManager.Get[pawn] ) )
                     yield return pawn;
-            }
         }
     }
 }

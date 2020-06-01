@@ -3,39 +3,36 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
-using Verse;
 
 namespace WorkTab
 {
-
     [HarmonyPatch( typeof( Pawn_WorkSettings ), nameof( Pawn_WorkSettings.EnableAndInitialize ) )]
     public class Pawn_WorkSettings_EnableAndInitialize
     {
-        static int GetDefaultPriority()
+        private static int GetDefaultPriority()
         {
             return Settings.defaultPriority;
         }
 
-        static IEnumerable<CodeInstruction> Transpiler( IEnumerable<CodeInstruction> _instr )
+        private static IEnumerable<CodeInstruction> Transpiler( IEnumerable<CodeInstruction> _instr )
         {
             var instructions = _instr.ToList();
-            var setPriorityMI = AccessTools.Method( typeof( Pawn_WorkSettings ), nameof( Pawn_WorkSettings.SetPriority ) );
-            var getDefaultPriorityMI = AccessTools.Method( typeof( Pawn_WorkSettings_EnableAndInitialize ), nameof( GetDefaultPriority ) );
+            var setPriorityMI =
+                AccessTools.Method( typeof( Pawn_WorkSettings ), nameof( Pawn_WorkSettings.SetPriority ) );
+            var getDefaultPriorityMI =
+                AccessTools.Method( typeof( Pawn_WorkSettings_EnableAndInitialize ), nameof( GetDefaultPriority ) );
 
-            for ( int i = 0; i < instructions.Count; i++ )
+            for ( var i = 0; i < instructions.Count; i++ )
             {
                 if ( instructions[i].opcode == OpCodes.Ldc_I4_3 )
-                {
-                    if ( instructions[i+1].Calls( setPriorityMI ) )
+                    if ( instructions[i + 1].Calls( setPriorityMI ) )
                     {
                         yield return new CodeInstruction( OpCodes.Call, getDefaultPriorityMI );
                         continue;
                     }
-                }
 
                 yield return instructions[i];
             }

@@ -1,29 +1,25 @@
-﻿// Karel Kroeze
-// PriorityTracker.cs
-// 2017-05-22
+﻿// PawnPriorityTracker.cs
+// Copyright Karel Kroeze, 2018-2020
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Cache;
 using RimWorld;
 using Verse;
 
 namespace WorkTab
 {
     // todo; implement IExposable
-    public class PawnPriorityTracker: PriorityTracker
+    public class PawnPriorityTracker : PriorityTracker
     {
         private Pawn pawn;
-        
-        public PawnPriorityTracker(){
+
+        public PawnPriorityTracker()
+        {
             // Scribe
         }
 
         public PawnPriorityTracker( Pawn pawn )
         {
             this.pawn = pawn;
-            foreach ( WorkGiverDef workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
+            foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                 priorities.Add( workgiver, new WorkPriority( this, workgiver ) );
         }
 

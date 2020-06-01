@@ -1,6 +1,8 @@
-﻿using System;
+﻿// PawnColumnWorker_WorkTabLabel.cs
+// Copyright Karel Kroeze, 2020-2020
+
+using System;
 using RimWorld;
-using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -10,19 +12,67 @@ namespace WorkTab
 {
     public class PawnColumnWorker_WorkTabLabel : PawnColumnWorker_Label
     {
-        public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
+        public override int Compare( Pawn a, Pawn b )
+        {
+            return string.Compare( a.Name.ToStringShort, b.Name.ToStringShort,
+                                   StringComparison.CurrentCultureIgnoreCase );
+        }
+
+        public void Decrement( Pawn pawn )
+        {
+            var actionTaken = false;
+            // just go over all workgivers and lower their priority number by one, with a minimum of 1
+            foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
+            {
+                if ( pawn.WorkTypeIsDisabled( workgiver.workType ) )
+                    continue;
+
+                // get current priority
+                var priority = pawn.GetPriority( workgiver, MainTabWindow_WorkTab.VisibleHour );
+
+                // detailed mode
+                if ( PriorityManager.ShowPriorities )
+                {
+                    if ( priority == 0 )
+                    {
+                        priority    = Settings.maxPriority;
+                        actionTaken = true;
+                    }
+                    else if ( priority != 1 )
+                    {
+                        priority--;
+                        actionTaken = true;
+                    }
+                }
+                else // simple mode
+                {
+                    if ( priority == 0 )
+                        actionTaken = true;
+                    priority = 3;
+                }
+
+                // apply new priority
+                pawn.SetPriority( workgiver, priority, MainTabWindow_WorkTab.SelectedHours );
+            }
+
+            if ( actionTaken && Settings.playSounds )
+                SoundDefOf.Tick_High.PlayOneShotOnCamera();
+        }
+
+        public override void DoCell( Rect rect, Pawn pawn, PawnTable table )
         {
             // intercept interactions before base has a chance to act on them
-            if ( Shift && Mouse.IsOver(rect))
+            if ( Shift && Mouse.IsOver( rect ) )
             {
-                if (RightClicked(rect) || ScrolledUp(rect))
+                if ( RightClicked( rect ) || ScrolledUp( rect ) )
                 {
-                    Increment(pawn);
+                    Increment( pawn );
                     return;
                 }
-                if (LeftClicked(rect) || ScrolledDown(rect))
+
+                if ( LeftClicked( rect ) || ScrolledDown( rect ) )
                 {
-                    Decrement(pawn);
+                    Decrement( pawn );
                     return;
                 }
             }
@@ -31,82 +81,36 @@ namespace WorkTab
             base.DoCell( rect, pawn, table );
 
             // override tooltip
-            TooltipHandler.ClearTooltipsFrom(rect);
-            TooltipHandler.TipRegion(rect, GetTooltip(pawn));
+            TooltipHandler.ClearTooltipsFrom( rect );
+            TooltipHandler.TipRegion( rect, GetTooltip( pawn ) );
         }
 
-        public override int Compare(Pawn a, Pawn b)
-        {
-            return String.Compare( a.Name.ToStringShort, b.Name.ToStringShort, StringComparison.CurrentCultureIgnoreCase );
-        }
-
-        public string GetTooltip(Pawn pawn)
+        public string GetTooltip( Pawn pawn )
         {
             return "WorkTab.LabelCellTip".Translate() + "\n\n" + pawn.GetTooltip().text;
         }
 
-        public void Decrement(Pawn pawn)
+        public void Increment( Pawn pawn )
         {
-            bool actionTaken = false;
-            // just go over all workgivers and lower their priority number by one, with a minimum of 1
-            foreach (var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading)
-            {
-                if (pawn.WorkTypeIsDisabled(workgiver.workType))
-                    continue;
-
-                // get current priority
-                var priority = pawn.GetPriority(workgiver, MainTabWindow_WorkTab.VisibleHour);
-
-                // detailed mode
-                if (PriorityManager.ShowPriorities)
-                {
-                    if (priority == 0)
-                    {
-                        priority = Settings.maxPriority;
-                        actionTaken = true;
-                    }
-                    else if (priority != 1)
-                    {
-                        priority--;
-                        actionTaken = true;
-                    }
-                }
-                else // simple mode
-                {
-                    if (priority == 0)
-                        actionTaken = true;
-                    priority = 3;
-                }
-
-                // apply new priority
-                pawn.SetPriority(workgiver, priority, MainTabWindow_WorkTab.SelectedHours);
-            }
-
-            if (actionTaken && Settings.playSounds)
-                SoundDefOf.Tick_High.PlayOneShotOnCamera();
-        }
-
-        public void Increment(Pawn pawn)
-        {
-            bool actionTaken = false;
+            var actionTaken = false;
             // just go over all workgivers and increase their priority number by one, with a maximum of maxPriority
-            foreach (var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading)
+            foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
             {
-                if (pawn.WorkTypeIsDisabled(workgiver.workType))
+                if ( pawn.WorkTypeIsDisabled( workgiver.workType ) )
                     continue;
 
                 // get current priority
-                var priority = pawn.GetPriority(workgiver, MainTabWindow_WorkTab.VisibleHour);
+                var priority = pawn.GetPriority( workgiver, MainTabWindow_WorkTab.VisibleHour );
 
                 // detailed mode
-                if (PriorityManager.ShowPriorities)
+                if ( PriorityManager.ShowPriorities )
                 {
-                    if (priority == Settings.maxPriority)
+                    if ( priority == Settings.maxPriority )
                     {
-                        priority = 0;
+                        priority    = 0;
                         actionTaken = true;
                     }
-                    else if (priority != 0)
+                    else if ( priority != 0 )
                     {
                         priority++;
                         actionTaken = true;
@@ -114,17 +118,17 @@ namespace WorkTab
                 }
                 else // simple mode
                 {
-                    if (priority != 0)
+                    if ( priority != 0 )
                         actionTaken = true;
                     priority = 0;
                 }
 
 
                 // apply new priority
-                pawn.SetPriority(workgiver, priority, MainTabWindow_WorkTab.SelectedHours);
+                pawn.SetPriority( workgiver, priority, MainTabWindow_WorkTab.SelectedHours );
             }
 
-            if (actionTaken && Settings.playSounds)
+            if ( actionTaken && Settings.playSounds )
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
     }

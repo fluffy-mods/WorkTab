@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Int_Extensions.cs
+// Copyright Karel Kroeze, 2017-2020
+
 using RimWorld;
 using Verse;
 
@@ -16,7 +15,7 @@ namespace WorkTab
                 return hour.ToString( "D2" ) + ":00";
 
             // noon/midnight are special
-            int noon = GenDate.HoursPerDay / 2;
+            var noon = GenDate.HoursPerDay / 2;
             if ( hour == 0 )
                 return "midnight".Translate();
             if ( hour == noon )

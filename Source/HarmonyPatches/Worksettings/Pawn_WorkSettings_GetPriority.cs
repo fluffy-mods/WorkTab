@@ -1,19 +1,16 @@
-﻿// Karel Kroeze
-// Pawn_WorkSettings_GetPriority.cs
-// 2017-05-22
+﻿// Pawn_WorkSettings_GetPriority.cs
+// Copyright Karel Kroeze, 2020-2020
 
-using System;
-using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
 
 namespace WorkTab
 {
-    [HarmonyPatch( typeof( Pawn_WorkSettings), "GetPriority" )]
+    [HarmonyPatch( typeof( Pawn_WorkSettings ), "GetPriority" )]
     public class Pawn_WorkSettings_GetPriority
     {
-        static bool Prefix( WorkTypeDef w, Pawn_WorkSettings __instance, ref int __result )
+        private static bool Prefix( WorkTypeDef w, Pawn_WorkSettings __instance, ref int __result )
         {
             __result = __instance.Pawn().GetPriority( w, -1 );
             return false;

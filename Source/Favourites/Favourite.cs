@@ -1,5 +1,5 @@
 ﻿// Favourite.cs
-// Copyright Karel Kroeze, 2018-2018
+// Copyright Karel Kroeze, 2020-2020
 
 using RimWorld;
 using UnityEngine;
@@ -7,12 +7,13 @@ using Verse;
 
 namespace WorkTab
 {
-    public class Favourite: PriorityTracker
+    public class Favourite : PriorityTracker
     {
-        private string _label;
-        private string _iconPath;
-        private int _loadId;
         private Texture2D _icon;
+        private string    _iconPath;
+        private string    _label;
+        private int       _loadId;
+
         public Texture2D Icon
         {
             get
@@ -23,7 +24,7 @@ namespace WorkTab
             }
             set
             {
-                _icon = value;
+                _icon     = value;
                 _iconPath = "UI/Icons/Various/" + _icon.name;
             }
         }
@@ -34,18 +35,10 @@ namespace WorkTab
             set => _label = value;
         }
 
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_Values.Look( ref _loadId, "ID" );
-            Scribe_Values.Look( ref _label, "Label" );
-            Scribe_Values.Look( ref _iconPath, "IconPath" );
-        }
-
         public static Favourite From( Pawn pawn, bool apply = false )
         {
             // create from pawn
-            var favourite = new Favourite();
+            var favourite  = new Favourite();
             var priorities = PriorityManager.Get[pawn];
             foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                 favourite.priorities[workgiver] = priorities[workgiver].Clone( favourite );
@@ -62,6 +55,14 @@ namespace WorkTab
             var priorities = PriorityManager.Get[pawn];
             foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
                 priorities[workgiver] = this[workgiver].Clone( priorities );
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look( ref _loadId, "ID" );
+            Scribe_Values.Look( ref _label, "Label" );
+            Scribe_Values.Look( ref _iconPath, "IconPath" );
         }
 
         protected override void OnChange()

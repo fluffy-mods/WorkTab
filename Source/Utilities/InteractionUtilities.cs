@@ -1,9 +1,7 @@
-﻿// Karel Kroeze
-// InteractionUtilities.cs
-// 2017-05-25
+﻿// InteractionUtilities.cs
+// Copyright Karel Kroeze, 2017-2020
 
 using System;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -14,46 +12,16 @@ namespace WorkTab
         Up,
         Down
     }
+
     public static class InteractionUtilities
     {
-        public static bool Clicked( Rect rect, int button = 0 )
-        {
-            return Event.current.type == EventType.MouseDown && Event.current.button == button && Mouse.IsOver( rect );
-        }
-
-        public static bool LeftClicked( Rect rect )
-        {
-            return Clicked( rect, 0 );
-        }
-
-        public static bool RightClicked( Rect rect )
-        {
-            return Clicked( rect, 1 );
-        }
-
-        public static bool Scrolled( Rect rect, ScrollDirection direction, bool stopPropagation )
-        {
-            if (Settings.disableScrollwheel)
-                return false;
-
-            bool scrolled = Event.current.type == EventType.ScrollWheel &&
-                   ( ( Event.current.delta.y > 0 && direction == ScrollDirection.Up ) ||
-                     ( Event.current.delta.y < 0 && direction == ScrollDirection.Down ) ) &&
-                   Mouse.IsOver( rect );
-
-            if (scrolled && stopPropagation)
-                Event.current.Use();
-
-            return scrolled;
-        }
-
-        public static bool Shift => Input.GetKey( KeyCode.LeftShift ) || Input.GetKey( KeyCode.RightShift );
-        public static bool Ctrl => Input.GetKey( KeyCode.LeftCommand )  || Input.GetKey( KeyCode.LeftControl ) ||
-                                   Input.GetKey( KeyCode.RightCommand ) || Input.GetKey( KeyCode.RightControl );
         public static bool Alt => Input.GetKey( KeyCode.AltGr ) || Input.GetKey( KeyCode.LeftAlt ) ||
                                   Input.GetKey( KeyCode.RightAlt );
-        public static bool ScrolledUp( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Up, stopPropagation ); }
-        public static bool ScrolledDown( Rect rect, bool stopPropagation = false ) { return Scrolled( rect, ScrollDirection.Down, stopPropagation ); }
+
+        public static bool Ctrl => Input.GetKey( KeyCode.LeftCommand )  || Input.GetKey( KeyCode.LeftControl ) ||
+                                   Input.GetKey( KeyCode.RightCommand ) || Input.GetKey( KeyCode.RightControl );
+
+        public static bool Shift => Input.GetKey( KeyCode.LeftShift ) || Input.GetKey( KeyCode.RightShift );
 
         public static void ButtonImageToggle( Func<bool> getter, Action<bool> setter, Rect canvas,
                                               string tipOn, Texture2D texOn,
@@ -65,6 +33,47 @@ namespace WorkTab
             TooltipHandler.TipRegion( canvas, getter() ? tipOff : tipOn );
             if ( Widgets.ButtonImage( canvas, getter() ? texOff : texOn, Color.white, GenUI.MouseoverColor ) )
                 setter( !getter() );
+        }
+
+        public static bool Clicked( Rect rect, int button = 0 )
+        {
+            return Event.current.type == EventType.MouseDown && Event.current.button == button && Mouse.IsOver( rect );
+        }
+
+        public static bool LeftClicked( Rect rect )
+        {
+            return Clicked( rect );
+        }
+
+        public static bool RightClicked( Rect rect )
+        {
+            return Clicked( rect, 1 );
+        }
+
+        public static bool Scrolled( Rect rect, ScrollDirection direction, bool stopPropagation )
+        {
+            if ( Settings.disableScrollwheel )
+                return false;
+
+            var scrolled = Event.current.type == EventType.ScrollWheel &&
+                           ( Event.current.delta.y > 0 && direction == ScrollDirection.Up ||
+                             Event.current.delta.y < 0 && direction == ScrollDirection.Down ) &&
+                           Mouse.IsOver( rect );
+
+            if ( scrolled && stopPropagation )
+                Event.current.Use();
+
+            return scrolled;
+        }
+
+        public static bool ScrolledDown( Rect rect, bool stopPropagation = false )
+        {
+            return Scrolled( rect, ScrollDirection.Down, stopPropagation );
+        }
+
+        public static bool ScrolledUp( Rect rect, bool stopPropagation = false )
+        {
+            return Scrolled( rect, ScrollDirection.Up, stopPropagation );
         }
     }
 }

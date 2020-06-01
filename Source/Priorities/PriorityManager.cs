@@ -1,6 +1,5 @@
-﻿// Karel Kroeze
-// PriorityManager.cs
-// 2017-05-22
+﻿// PriorityManager.cs
+// Copyright Karel Kroeze, 2020-2020
 
 using System;
 using System.Collections.Generic;
@@ -9,15 +8,55 @@ using Verse;
 
 namespace WorkTab
 {
-    public class PriorityManager: GameComponent
+    public class PriorityManager : GameComponent
     {
+        private static PriorityManager _instance;
+        private static int             _nextId;
+
+        private static bool                                  _showScheduler;
         private static Dictionary<Pawn, PawnPriorityTracker> priorities = new Dictionary<Pawn, PawnPriorityTracker>();
-        private static int _nextId;
-        
-        private static bool _showScheduler;
+        private        List<PawnPriorityTracker>             pawnPriorityTrackersScribe;
+        private        List<Pawn>                            pawnsScribe;
+
+        public PriorityManager( Game game ) : this()
+        {
+        }
+
+        public PriorityManager()
+        {
+            _instance = this;
+        }
+
+        public static PriorityManager Get
+        {
+            get
+            {
+                if ( _instance == null )
+                    throw new NullReferenceException( "Accessing PriorityManager before it was constructed." );
+                return _instance;
+            }
+        }
+
+        public static bool ShowPriorities
+        {
+            get => Find.PlaySettings.useWorkPriorities;
+            set
+            {
+                if ( value == Find.PlaySettings.useWorkPriorities )
+                    return;
+
+                // update setting
+                Find.PlaySettings.useWorkPriorities = value;
+
+                // force re-cache of all pawns
+                foreach ( var pawn in priorities.Keys.ToList() )
+                    pawn?.workSettings?.Notify_UseWorkPrioritiesChanged();
+            }
+        }
+
         public static bool ShowScheduler
         {
-            get { return _showScheduler; }
+            get => _showScheduler;
             set
             {
                 if ( value == _showScheduler )
@@ -28,39 +67,7 @@ namespace WorkTab
             }
         }
 
-        public static bool ShowPriorities
-        {
-            get { return Find.PlaySettings.useWorkPriorities; }
-            set
-            {
-                if ( value == Find.PlaySettings.useWorkPriorities )
-                    return;
-
-                // update setting
-                Find.PlaySettings.useWorkPriorities = value;
-
-                // force re-cache of all pawns
-                foreach (var pawn in priorities.Keys.ToList())
-                    pawn?.workSettings?.Notify_UseWorkPrioritiesChanged();   
-            }
-        }
-        private List<Pawn> pawnsScribe;
-        private List<PawnPriorityTracker> pawnPriorityTrackersScribe;
-        private static PriorityManager _instance;
-
-        public static PriorityManager Get
-        {
-            get
-            {
-                if ( _instance == null )
-                {
-                    throw new NullReferenceException( "Accessing PriorityManager before it was constructed." );
-                }
-                return _instance;
-            }
-        }
-
-        public PriorityTracker this[Pawn pawn]
+        public PriorityTracker this[ Pawn pawn ]
         {
             get
             {
@@ -75,28 +82,26 @@ namespace WorkTab
                 return tracker;
             }
         }
-        
-        public PriorityManager( Game game ) : this() {}
-        public PriorityManager() { _instance = this; }
-
-        public override void ExposeData(){
-            base.ExposeData();
-
-            // purge null pawn elements, note that this also neatly keeps track of periodic garbage collection on autosaves
-            var pawns = priorities.Keys.ToList();
-            foreach( Pawn pawn in pawns )
-                if ( pawn?.Destroyed ?? true ) // null or destroyed
-                    priorities.Remove( pawn );
-
-            Scribe_Collections.Look( ref priorities, "Priorities", LookMode.Reference, LookMode.Deep, ref pawnsScribe, ref pawnPriorityTrackersScribe );
-            Scribe_Values.Look( ref _showScheduler, "ShowScheduler", false );
-            Scribe_Values.Look( ref _nextId, "NextId" );
-        }
 
         public static int GetNextID()
         {
             return _nextId++;
         }
 
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            // purge null pawn elements, note that this also neatly keeps track of periodic garbage collection on autosaves
+            var pawns = priorities.Keys.ToList();
+            foreach ( var pawn in pawns )
+                if ( pawn?.Destroyed ?? true ) // null or destroyed
+                    priorities.Remove( pawn );
+
+            Scribe_Collections.Look( ref priorities, "Priorities", LookMode.Reference, LookMode.Deep, ref pawnsScribe,
+                                     ref pawnPriorityTrackersScribe );
+            Scribe_Values.Look( ref _showScheduler, "ShowScheduler" );
+            Scribe_Values.Look( ref _nextId, "NextId" );
+        }
     }
 }

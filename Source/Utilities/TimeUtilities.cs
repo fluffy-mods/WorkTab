@@ -1,7 +1,7 @@
-﻿using System;
+﻿// TimeUtilities.cs
+// Copyright Karel Kroeze, 2017-2020
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using RimWorld;
 using Verse;
 
@@ -15,12 +15,13 @@ namespace WorkTab
         {
             get
             {
-                if (_day.NullOrEmpty())
+                if ( _day.NullOrEmpty() )
                 {
                     _day = new List<int>();
-                    for (int hour = 0; hour < GenDate.HoursPerDay; hour++)
-                        _day.Add(hour);
+                    for ( var hour = 0; hour < GenDate.HoursPerDay; hour++ )
+                        _day.Add( hour );
                 }
+
                 return new List<int>( _day );
             }
         }

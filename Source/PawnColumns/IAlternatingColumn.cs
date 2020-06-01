@@ -1,6 +1,5 @@
-﻿// Karel Kroeze
-// IAlternatingColumn.cs
-// 2017-05-28
+﻿// IAlternatingColumn.cs
+// Copyright Karel Kroeze, 2017-2020
 
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace WorkTab
 {
     public interface IAlternatingColumn
     {
-        bool MoveDown { get; set; }
         Vector2 LabelSize { get; }
+        bool    MoveDown  { get; set; }
     }
 }

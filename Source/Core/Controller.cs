@@ -1,6 +1,5 @@
-﻿// Karel Kroeze
-// Controller.cs
-// 2017-05-22
+﻿// Controller.cs
+// Copyright Karel Kroeze, 2020-2020
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,9 +10,12 @@ using Verse;
 
 namespace WorkTab
 {
-    public class Controller: Mod
+    public class Controller : Mod
     {
-        public Controller( ModContentPack content ) : base( content ) {
+        public static List<PawnColumnDef> allColumns;
+
+        public Controller( ModContentPack content ) : base( content )
+        {
             // initialize settings
             GetSettings<Settings>();
 
@@ -28,18 +30,16 @@ namespace WorkTab
 //            if ( MP.enabled )
 //                MP.RegisterAll();
         }
-        
-        public override void DoSettingsWindowContents(Rect inRect)
+
+        public override void DoSettingsWindowContents( Rect inRect )
         {
-            base.DoSettingsWindowContents(inRect);
-            Settings.DoWindowContents(inRect);
+            base.DoSettingsWindowContents( inRect );
+            Settings.DoWindowContents( inRect );
         }
 
         public override string SettingsCategory()
         {
             return "WorkTab".Translate();
         }
-
-        public static List<PawnColumnDef> allColumns;
     }
 }
