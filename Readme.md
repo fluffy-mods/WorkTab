@@ -2,6 +2,10 @@
 
 Provides a vastly more customizable work tab.
 
+Multiplayer support added:
+- Favourites are not working yet (more investigatinon needed in to architecture) (probably cause desync if a favourite is loaded)
+- Everything else seems to be working, needs more testing
+- Consider this "alpha"
 
   
   
