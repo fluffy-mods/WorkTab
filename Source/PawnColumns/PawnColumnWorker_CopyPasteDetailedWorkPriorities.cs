@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using RimWorld;
+using Multiplayer.API;
 using Verse;
 
 namespace WorkTab
@@ -12,6 +13,7 @@ namespace WorkTab
         private static     Dictionary<WorkGiverDef, int[]> clipboard;
         protected override bool                            AnythingInClipboard => clipboard != null;
 
+        [SyncMethod]
         protected override void CopyFrom( Pawn pawn )
         {
             if ( clipboard == null )
@@ -21,6 +23,7 @@ namespace WorkTab
                 clipboard[workgiver] = pawn.GetPriorities( workgiver );
         }
 
+        [SyncMethod]
         protected override void PasteTo( Pawn pawn )
         {
             foreach ( var worktype in DefDatabase<WorkTypeDef>.AllDefsListForReading )

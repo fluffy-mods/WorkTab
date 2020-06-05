@@ -26,9 +26,6 @@ namespace WorkTab
 #endif
             var harmony = new Harmony( "fluffy.worktab" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
-
-//            if ( MP.enabled )
-//                MP.RegisterAll();
         }
 
         public override void DoSettingsWindowContents( Rect inRect )

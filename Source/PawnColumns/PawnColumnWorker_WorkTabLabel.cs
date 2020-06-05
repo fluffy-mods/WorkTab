@@ -6,6 +6,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
+using Multiplayer.API;
 using static WorkTab.InteractionUtilities;
 
 namespace WorkTab
@@ -18,6 +19,7 @@ namespace WorkTab
                                    StringComparison.CurrentCultureIgnoreCase );
         }
 
+        [SyncMethod]
         public void Decrement( Pawn pawn )
         {
             var actionTaken = false;
@@ -90,6 +92,7 @@ namespace WorkTab
             return "WorkTab.LabelCellTip".Translate() + "\n\n" + pawn.GetTooltip().text;
         }
 
+        [SyncMethod]
         public void Increment( Pawn pawn )
         {
             var actionTaken = false;

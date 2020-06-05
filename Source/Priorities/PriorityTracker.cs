@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using Multiplayer.API;
 using Verse;
 
 namespace WorkTab
@@ -170,6 +171,7 @@ namespace WorkTab
             _loadId = PriorityManager.GetNextID();
         }
 
+        [SyncMethod]
         public void SetPriority( WorkGiverDef workgiver, int priority, int hour, bool recache = true )
         {
             if ( priority > Settings.maxPriority )
@@ -186,6 +188,7 @@ namespace WorkTab
             }
         }
 
+        [SyncMethod]
         public void SetPriority( WorkGiverDef workgiver, int priority, List<int> hours )
         {
             if ( hours.NullOrEmpty() )
@@ -198,6 +201,7 @@ namespace WorkTab
             OnChange();
         }
 
+        [SyncMethod]
         public void SetPriority( WorkTypeDef worktype, int priority, int hour, bool recache = true )
         {
             foreach ( var workgiver in worktype.WorkGivers() )
@@ -210,6 +214,7 @@ namespace WorkTab
             }
         }
 
+        [SyncMethod]
         public void SetPriority( WorkTypeDef worktype, int priority, List<int> hours )
         {
             if ( hours.NullOrEmpty() )

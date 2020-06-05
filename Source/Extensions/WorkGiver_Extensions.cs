@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
+using Multiplayer.API;
 using Verse.Sound;
 
 namespace WorkTab
@@ -29,6 +30,7 @@ namespace WorkTab
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
 
+        [SyncMethod]
         public static void DecrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour,
                                               List<int> hours, bool playSound = true )
         {
@@ -67,6 +69,7 @@ namespace WorkTab
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
         }
 
+        [SyncMethod]
         public static void IncrementPriority( this WorkGiverDef workgiver, List<Pawn> pawns, int hour,
                                               List<int> hours, bool playSound = true )
         {

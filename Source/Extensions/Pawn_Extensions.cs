@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using RimWorld;
+using Multiplayer.API;
 using Verse;
 
 namespace WorkTab
@@ -55,11 +56,13 @@ namespace WorkTab
             return PriorityManager.Get[pawn].GetPriority( workgiver, hour );
         }
 
+        [SyncMethod]
         public static void SetPriority( this Pawn pawn, WorkTypeDef worktype, int priority, List<int> hours )
         {
             PriorityManager.Get[pawn].SetPriority( worktype, priority, hours );
         }
 
+        [SyncMethod]
         public static void SetPriority( Pawn pawn, WorkTypeDef worktype, int priority, int hour, bool recache = true )
         {
             if ( hour < 0 )
@@ -68,11 +71,13 @@ namespace WorkTab
             PriorityManager.Get[pawn].SetPriority( worktype, priority, hour, recache );
         }
 
+        [SyncMethod]
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, List<int> hours )
         {
             PriorityManager.Get[pawn].SetPriority( workgiver, priority, hours );
         }
 
+        [SyncMethod]
         public static void SetPriority( this Pawn pawn, WorkGiverDef workgiver, int priority, int hour,
                                         bool recache = true )
         {
