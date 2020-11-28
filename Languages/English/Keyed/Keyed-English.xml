@@ -27,6 +27,8 @@
     <WorkTab.PlayCrunchTip>Play a crunchy sound when a pawn is assigned to a job they are not skilled at?</WorkTab.PlayCrunchTip>
     <WorkTab.DisableScrollwheel>Disable Scrollwheel</WorkTab.DisableScrollwheel>
     <WorkTab.DisableScrollwheelTip>Disable the scrollwheel functions (when hovering over skills)</WorkTab.DisableScrollwheelTip>
+    <WorkTab.DisableShiftOnRows>Shift+Click name should de/select pawn</WorkTab.DisableShiftOnRows>
+    <WorkTab.DisableShiftOnRowsTip>Shift+clicking on pawn names will select/unselect them, instead of incrementing/decrementing all their jobs at once.</WorkTab.DisableShiftOnRowsTip>
     <WorkTab.VerticalLabels>Vertical labels</WorkTab.VerticalLabels>
     <WorkTab.VerticalLabelsTip>Display work labels vertically</WorkTab.VerticalLabelsTip>
     <WorkTab.FontFix>Fix vertical fonts</WorkTab.FontFix>
