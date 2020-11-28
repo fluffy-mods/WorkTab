@@ -10,6 +10,7 @@ namespace WorkTab
     {
         public static  int    defaultPriority = 3;
         public static  bool   disableScrollwheel;
+        public static  bool   disableShiftOnRows;
         public static  int    maxPriority            = 9;
         public static  bool   playCrunch             = true;
         public static  bool   playSounds             = true;
@@ -57,6 +58,8 @@ namespace WorkTab
                                      "WorkTab.PlayCrunchTip".Translate() );
             options.CheckboxLabeled( "WorkTab.DisableScrollwheel".Translate(), ref disableScrollwheel,
                                      "WorkTab.DisableScrollwheelTip".Translate() );
+            options.CheckboxLabeled( "WorkTab.DisableShiftOnRows".Translate(), ref disableShiftOnRows,
+                                     "WorkTab.DisableShiftOnRowsTip".Translate() );
             var verticalLabelsBuffer = verticalLabels;
             options.CheckboxLabeled( "WorkTab.VerticalLabels".Translate(), ref verticalLabelsBuffer,
                                      "WorkTab.VerticalLabelsTip".Translate() );
@@ -92,6 +95,7 @@ namespace WorkTab
             Scribe_Values.Look( ref playSounds, "PlaySounds", true );
             Scribe_Values.Look( ref playCrunch, "PlayCrunch", true );
             Scribe_Values.Look( ref disableScrollwheel, "DisableScrollwheel" );
+            Scribe_Values.Look( ref disableShiftOnRows, "DisableShiftOnRows" );
             Scribe_Values.Look( ref verticalLabels, "VerticalLabels", true );
             Scribe_Values.Look( ref _fontFix, "FontFix", true );
 
