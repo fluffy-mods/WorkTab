@@ -187,6 +187,7 @@ namespace WorkTab
             // force recache of table sizes: set the table to be dirty, then get the size - which calls the private recache routine.
             Instance.Table.SetDirty();
             var tmp = Instance.Table.Size;
+            Instance.windowRect.width = Math.Min( tmp.x, UI.screenWidth);
 
             // force recache of timeBarRect
             Instance._timeBarRect = default;
