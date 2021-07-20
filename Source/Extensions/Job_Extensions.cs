@@ -48,11 +48,13 @@ namespace WorkTab
                  job == JobDefOf.ReleasePrisoner          ||
                  job == JobDefOf.TakeWoundedPrisonerToBed ||
                  job == JobDefOf.Kidnap                   ||
-                 job == JobDefOf.CarryDownedPawnToExit )
+                 job == JobDefOf.CarryDownedPawnToExit    ||
+                 job == JobDefOf.GuiltyColonistExecution ) //new
                 return "UI/Icons/Various/handcuffs";
 
             // trade 
-            if ( job == JobDefOf.PrepareCaravan_GatherPawns ||
+            if ( job == JobDefOf.PrepareCaravan_GatherItems      || //new 
+                 job == JobDefOf.PrepareCaravan_GatherDownedPawns || //replaced JobDefOf.PrepareCaravan_GatherPawns
                  job == JobDefOf.TradeWithPawn )
                 return "UI/Icons/Various/business";
 
@@ -122,7 +124,14 @@ namespace WorkTab
                  job == JobDefOf.Shear     ||
                  job == JobDefOf.Slaughter ||
                  job == JobDefOf.Tame      ||
-                 job == JobDefOf.Train )
+                 job == JobDefOf.Train     ||
+                 job == JobDefOf.PrepareCaravan_CollectAnimals || // new, maybe with other caravan stuff, maybe remove
+                 job == JobDefOf.PrepareCaravan_GatherAnimals  || // new, maybe with other caravan stuff, maybe remove
+                 job == JobDefOf.ReturnedCaravan_PenAnimals    || //new, pen stuff, maybe remove
+                 job == JobDefOf.RopeToPen                     || //new, pen stuff
+                 job == JobDefOf.RopeRoamerToUnenclosedPen     || //new, pen stuff
+                 job == JobDefOf.Unrope                        || //new, pen stuff
+                 job == JobDefOf.ReleaseAnimalToWild )            //new
                 return "UI/Icons/Various/livestock";
 
             // hunting

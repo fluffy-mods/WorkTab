@@ -177,7 +177,16 @@ namespace WorkTab
                                    .Select( f => new FloatMenuOption( f.label,
                                                                       () => LoadFavourite( f.path, pawn ) ) )
                                    .ToList();
-            Find.WindowStack.Add( new FloatMenu( options ) );
+            if (options.Count() > 0)
+            {
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+            else
+            {
+                var noneLabel = new List<FloatMenuOption>();
+                noneLabel.Add(new FloatMenuOption("No new favourites", null));
+                Find.WindowStack.Add(new FloatMenu(noneLabel));
+            }
         }
 
         public override void ExposeData()
