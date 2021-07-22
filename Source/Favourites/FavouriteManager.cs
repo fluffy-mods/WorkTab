@@ -129,7 +129,7 @@ namespace WorkTab
 
         private static bool ExtraPart(Rect rect, Favourite favourite)
         {
-            var rects = new Grid(rect, gutters: Vector2.zero).Columns(1, 1);
+            var rects = new FluffyUI.Grid(rect, gutters: Vector2.zero).Columns(1, 1);
             var size = Mathf.Min(16f, rects[0].Rect.width, rects[0].Rect.height);
             var iconRect = new Rect(0f, 0f, size, size);
             GUI.DrawTexture(iconRect.CenteredIn(rects[0]), favourite.Icon);
