@@ -6,7 +6,7 @@
     "version": {
         "major": 4,
         "minor": 0,
-        "build": 314
+        "build": 315
     },
     "author": {
         "name": "Fluffy",
@@ -19,6 +19,15 @@
         "url": "https://github.com/fluffy-mods/WorkTab"
     },
     "changelog": [
+        {
+            "date": "2021-07-22T19:43:40.000Z",
+            "message": "remove some unnecessary references",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "d07b9b4344da07ffbaf4e40c21819f4a533463cb"
+        },
         {
             "date": "2021-07-22T19:42:19.000Z",
             "message": "reposition mood and current job right of faction, guest, ideo columns",
