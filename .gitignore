@@ -254,3 +254,4 @@ paket-files/
 /.mailmap
 /Source/StuffedFloors.sln
 /Source/ModConfig.json
+.vscode/
