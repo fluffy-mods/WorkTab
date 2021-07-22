@@ -5,8 +5,8 @@
     "url": "https://github.com/fluffy-mods/WorkTab",
     "version": {
         "major": 4,
-        "minor": 0,
-        "build": 315
+        "minor": 1,
+        "build": 316
     },
     "author": {
         "name": "Fluffy",
@@ -29,6 +29,15 @@
             "hash": "d07b9b4344da07ffbaf4e40c21819f4a533463cb"
         },
         {
+            "date": "2021-07-22T19:43:40.000Z",
+            "message": "remove some unnecessary references",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "46a267d92bd08fee5b6f29b0f2c49322d15ef552"
+        },
+        {
             "date": "2021-07-22T19:42:19.000Z",
             "message": "reposition mood and current job right of faction, guest, ideo columns",
             "author": {
@@ -36,6 +45,15 @@
                 "email": "fluffy.l2032@gmail.com"
             },
             "hash": "a9c410183ba30f21f75128b821a7cd441fec883f"
+        },
+        {
+            "date": "2021-07-22T19:42:19.000Z",
+            "message": "reposition mood and current job right of faction, guest, ideo columns",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "5defaf1a42aa167c9fa6dd97d2f7ff86b39e8de5"
         },
         {
             "date": "2021-07-22T19:30:43.000Z",
@@ -47,6 +65,15 @@
             "hash": "cd4424d1301c00708fe56d544311a0eb5588709d"
         },
         {
+            "date": "2021-07-22T19:30:43.000Z",
+            "message": "tweak some job defs, remove some hardcoded references",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "eccc0dd88144d413ed477c3a2d62f2d000119898"
+        },
+        {
             "date": "2021-07-22T19:09:05.000Z",
             "message": "move refs to nuget package, update FluffyUI",
             "author": {
@@ -54,6 +81,15 @@
                 "email": "fluffy.l2032@gmail.com"
             },
             "hash": "155a675d76f07f181f055f970889341eed3721e2"
+        },
+        {
+            "date": "2021-07-22T19:09:05.000Z",
+            "message": "move refs to nuget package, update FluffyUI",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "50f3c62718129d107e4a7a83eaa1a32207fa7d57"
         },
         {
             "date": "2021-07-22T18:51:58.000Z",
@@ -65,6 +101,15 @@
             "hash": "8dd7b6e100467e195fe93cdc6b40ba30ab367da8"
         },
         {
+            "date": "2021-07-22T18:51:58.000Z",
+            "message": "tweak no favourites logic, add translation",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "7c9c0eb9a57cedaa7ae7d348abe8c7accd8fc461"
+        },
+        {
             "date": "2021-07-20T01:02:00.000Z",
             "message": "1.3 Fixes",
             "author": {
@@ -72,6 +117,15 @@
                 "email": "Phenrei@gmail.com"
             },
             "hash": "a5e7ecb4971b1f27865372eed5a6c9d1b397fffd"
+        },
+        {
+            "date": "2021-07-20T01:02:00.000Z",
+            "message": "1.3 Fixes",
+            "author": {
+                "name": "Phenrei",
+                "email": "Phenrei@gmail.com"
+            },
+            "hash": "380d0d18ea56c1e8424774cc535b5586dc85a0de"
         }
     ]
 }
