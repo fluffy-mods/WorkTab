@@ -9,13 +9,16 @@ namespace WorkTab
     [DefOf]
     public static class PawnColumnDefOf
     {
-        public static PawnColumnDef CopyPasteDetailedWorkPriorities;
-        public static PawnColumnDef CopyPasteWorkPriorities;
-        public static PawnColumnDef Favourite;
-        public static PawnColumnDef Job;
-        public static PawnColumnDef Label;
-        public static PawnColumnDef Mood;
-        public static PawnColumnDef WorkTabLabel;
+        public static                      PawnColumnDef CopyPasteDetailedWorkPriorities;
+        public static                      PawnColumnDef CopyPasteWorkPriorities;
+        public static                      PawnColumnDef Faction;
+        public static                      PawnColumnDef Favourite;
+        [MayRequireIdeology] public static PawnColumnDef Guest;
+        [MayRequireIdeology] public static PawnColumnDef Ideo;
+        public static                      PawnColumnDef Job;
+        public static                      PawnColumnDef Label;
+        public static                      PawnColumnDef Mood;
+        public static                      PawnColumnDef WorkTabLabel;
     }
 
     [DefOf]

@@ -24,9 +24,11 @@ namespace WorkTab
             workTable.columns.RemoveAt(labelIndex);
             workTable.columns.Insert(labelIndex, PawnColumnDefOf.WorkTabLabel);
 
-            // insert mood and job columns after name
-            workTable.columns.Insert(labelIndex + 1, PawnColumnDefOf.Job);
-            workTable.columns.Insert(labelIndex + 2, PawnColumnDefOf.Mood);
+            // insert mood and job columns before first work column name
+            var firstWorkindex =
+                workTable.columns.FindIndex(d => d.workerClass == typeof(PawnColumnWorker_WorkPriority));
+            workTable.columns.Insert(firstWorkindex, PawnColumnDefOf.Job);
+            workTable.columns.Insert(firstWorkindex + 1, PawnColumnDefOf.Mood);
 
             // go over PawnColumnDefs and replace all PawnColumnWorker_WorkPriority
             foreach (var column in DefDatabase<PawnColumnDef>.AllDefs)
