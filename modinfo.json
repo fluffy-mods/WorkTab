@@ -1,0 +1,50 @@
+{
+    "name": "Work Tab",
+    "sourceDir": ".",
+    "targetDir": "WorkTab",
+    "url": "https://github.com/fluffy-mods/WorkTab",
+    "version": {
+        "major": 4,
+        "minor": 0,
+        "build": 312
+    },
+    "author": {
+        "name": "Fluffy",
+        "url": "https://github.com/fluffy-mods/",
+        "email": "fluffy.l2032@gmail.com"
+    },
+    "git": {
+        "owner": "fluffy-mods",
+        "repo": "WorkTab",
+        "url": "https://github.com/fluffy-mods/WorkTab"
+    },
+    "changelog": [
+        {
+            "date": "2021-07-22T19:09:05.000Z",
+            "message": "move refs to nuget package, update FluffyUI",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "155a675d76f07f181f055f970889341eed3721e2"
+        },
+        {
+            "date": "2021-07-22T18:51:58.000Z",
+            "message": "tweak no favourites logic, add translation",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "8dd7b6e100467e195fe93cdc6b40ba30ab367da8"
+        },
+        {
+            "date": "2021-07-20T01:02:00.000Z",
+            "message": "1.3 Fixes",
+            "author": {
+                "name": "Phenrei",
+                "email": "Phenrei@gmail.com"
+            },
+            "hash": "a5e7ecb4971b1f27865372eed5a6c9d1b397fffd"
+        }
+    ]
+}

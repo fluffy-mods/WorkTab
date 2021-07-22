@@ -1,5 +1,5 @@
-﻿// DefOf.cs
-// Copyright Karel Kroeze, 2018-2020
+﻿// Copyright Karel Kroeze, 2020-2021.
+// WorkTab/WorkTab/DefOf.cs
 
 using RimWorld;
 using Verse;
@@ -9,6 +9,9 @@ namespace WorkTab
     [DefOf]
     public static class PawnColumnDefOf
     {
+        public static PawnColumnDef CopyPasteDetailedWorkPriorities;
+        public static PawnColumnDef CopyPasteWorkPriorities;
+        public static PawnColumnDef Favourite;
         public static PawnColumnDef Job;
         public static PawnColumnDef Label;
         public static PawnColumnDef Mood;
@@ -31,5 +34,11 @@ namespace WorkTab
         public static JobDef ViewArt;
         public static JobDef VisitGrave;
         public static JobDef WatchTelevision;
+    }
+
+    [DefOf]
+    public static class MainButtonDefOf
+    {
+        public static MainButtonDef Work;
     }
 }
