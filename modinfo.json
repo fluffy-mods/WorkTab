@@ -6,7 +6,7 @@
     "version": {
         "major": 4,
         "minor": 0,
-        "build": 312
+        "build": 314
     },
     "author": {
         "name": "Fluffy",
@@ -19,6 +19,24 @@
         "url": "https://github.com/fluffy-mods/WorkTab"
     },
     "changelog": [
+        {
+            "date": "2021-07-22T19:42:19.000Z",
+            "message": "reposition mood and current job right of faction, guest, ideo columns",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "a9c410183ba30f21f75128b821a7cd441fec883f"
+        },
+        {
+            "date": "2021-07-22T19:30:43.000Z",
+            "message": "tweak some job defs, remove some hardcoded references",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "cd4424d1301c00708fe56d544311a0eb5588709d"
+        },
         {
             "date": "2021-07-22T19:09:05.000Z",
             "message": "move refs to nuget package, update FluffyUI",
