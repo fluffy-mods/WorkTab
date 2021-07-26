@@ -390,5 +390,13 @@
                 "description": "Russian translation (#26)"
             }
         ]
-    }
+    },
+    "attributions": [
+        {
+            "description": "helmet preview image",
+            "author": "Freepik / flaticon.com",
+            "license": "BY-NC",
+            "url": "https://www.freepik.com/"
+        }
+    ]
 }
