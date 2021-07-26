@@ -282,7 +282,7 @@ namespace WorkTab
                 foreach (string reason in pawn.GetReasonsForDisabledWorkType(worktype))
                 {
                     tip.AppendLine();
-                    tip.Append("- " + reason.Translate());
+                    tip.Append("- " + reason);
                 }
             }
             else
