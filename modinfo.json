@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/WorkTab",
     "version": {
         "major": 4,
-        "minor": 2,
+        "minor": 3,
         "build": 317
     },
     "author": {
@@ -19,6 +19,15 @@
         "url": "https://github.com/fluffy-mods/WorkTab"
     },
     "changelog": [
+        {
+            "date": "2021-07-26T08:03:27.000Z",
+            "message": "update refs, fix descriptions",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "2b805d4be27ed2e420f187bec7740ebe55d7f16e"
+        },
         {
             "date": "2021-07-22T20:08:35.000Z",
             "message": "release v4.2.316",
