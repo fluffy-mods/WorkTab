@@ -20,6 +20,24 @@
     },
     "changelog": [
         {
+            "date": "2021-07-26T20:11:17.000Z",
+            "message": "update preview image",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "cae92c0f6460855f9256b5bc8fb0fd15719ca75e"
+        },
+        {
+            "date": "2021-07-26T20:00:37.000Z",
+            "message": "release v4.4.319",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "a1f6c4f1472c86200cbb24dd1324bf851a4eb927"
+        },
+        {
             "date": "2021-07-26T19:54:28.000Z",
             "message": "list reasons for disabled worktypes",
             "author": {
