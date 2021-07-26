@@ -24,24 +24,41 @@ Finally, there will never be an 'autolabour' mode where a mod sets priorities fo
 ![Powered by Harmony](https://camo.githubusercontent.com/074bf079275fa90809f51b74e9dd0deccc70328f/68747470733a2f2f7332342e706f7374696d672e6f72672f3538626c31727a33392f6c6f676f2e706e67)
 
 ![Contributors](https://banners.karel-kroeze.nl/title/Contributors.png)  
-- Phenrei: 1.3 Fixes
-- Téo Bouttier: French translation (#135)
-- CoderChang65535: update Chinese translations (#131)
-- Silverside: Fixed UI Scaling (#125)
-- Mehni: compatibility with Numbers (#108)
-- rw-chaos: German translation (#105)
-- Suh. Junmin: Add Korean translation (#102)
-- Alex TD: fix mod conflict with Hospitality, perhaps any mod that makes non-colonists work. (#101)
-- mora145: Spanish translation (#90)
-- Arex-rus: Fix Russian translation (#81)
-- Bugo: Update Russian translation
-- MrClon: Russian translation (#76)
-- mercutiodesign: make scrollwheel usage optional (#69)
-- Duduluu: Add Chinese translations (#63)
-- DoctorVanGogh: Fix Readme badge (#59)
-- Duduluu: Add Chinese translations
-- Eric Swanson: Show the end hour in time-dependent tooltip (#27)
-- Bronytamin: Russian translation (#26)
+- Phenrei
+    - [1.3 Fixes](https://github.com/fluffy-mods/WorkTab/commit/380d0d1)
+- Téo Bouttier
+    - [French translation (#135)](https://github.com/fluffy-mods/WorkTab/commit/fb17737)
+- CoderChang65535
+    - [update Chinese translations (#131)](https://github.com/fluffy-mods/WorkTab/commit/8307bcb)
+- Silverside
+    - [Fixed UI Scaling (#125)](https://github.com/fluffy-mods/WorkTab/commit/837c92e)
+- Mehni
+    - [compatibility with Numbers (#108)](https://github.com/fluffy-mods/WorkTab/commit/59a63ab)
+- rw-chaos
+    - [German translation (#105)](https://github.com/fluffy-mods/WorkTab/commit/0e11f2c)
+- Suh. Junmin
+    - [Add Korean translation (#102)](https://github.com/fluffy-mods/WorkTab/commit/800b18b)
+- Alex TD
+    - [fix mod conflict with Hospitality, perhaps any mod that makes non-colonists work. (#101)](https://github.com/fluffy-mods/WorkTab/commit/6be87fc)
+- mora145
+    - [Spanish translation (#90)](https://github.com/fluffy-mods/WorkTab/commit/0728fbe)
+- Arex-rus
+    - [Fix Russian translation (#81)](https://github.com/fluffy-mods/WorkTab/commit/43b7fb9)
+- Bugo
+    - [Update Russian translation](https://github.com/fluffy-mods/WorkTab/commit/99b6373)
+- MrClon
+    - [Russian translation (#76)](https://github.com/fluffy-mods/WorkTab/commit/1c90c18)
+- mercutiodesign
+    - [make scrollwheel usage optional (#69)](https://github.com/fluffy-mods/WorkTab/commit/545cb20)
+- Duduluu
+    - [Add Chinese translations (#63)](https://github.com/fluffy-mods/WorkTab/commit/ca121c2)
+    - [Add Chinese translations](https://github.com/fluffy-mods/WorkTab/commit/11ad41a)
+- DoctorVanGogh
+    - [Fix Readme badge (#59)](https://github.com/fluffy-mods/WorkTab/commit/1c9053c)
+- Eric Swanson
+    - [Show the end hour in time-dependent tooltip (#27)](https://github.com/fluffy-mods/WorkTab/commit/168e9ac)
+- Bronytamin
+    - [Russian translation (#26)](https://github.com/fluffy-mods/WorkTab/commit/bf92eab)
 
 
 ![Think you found a bug?](https://banners.karel-kroeze.nl/title/Think%20you%20found%20a%20bug%3F.png)  
