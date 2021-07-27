@@ -20,6 +20,15 @@
     },
     "changelog": [
         {
+            "date": "2021-07-27T08:35:17.000Z",
+            "message": "move to SDK style project",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "73caee2b70ba5b84dad9e8402d5532ce42d35004"
+        },
+        {
             "date": "2021-07-27T07:15:49.000Z",
             "message": "fix description, fiddle with contributions list",
             "author": {
