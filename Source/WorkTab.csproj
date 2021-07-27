@@ -1,112 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C909B0F-E82A-46B1-AE39-E56285B236A2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkTab</RootNamespace>
-    <AssemblyName>WorkTab</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>net472</TargetFramework>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
+    <AssemblyTitle>WorkTab</AssemblyTitle>
+    <Product>WorkTab</Product>
+    <Copyright>Copyright © 2017-2021</Copyright>
+    <DebugType>portable</DebugType>
+    <OutputPath>..\Assemblies\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\Assemblies\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Assemblies\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants />
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Core\Constants.cs" />
-    <Compile Include="Favourites\Dialog_CreateFavourite.cs" />
-    <Compile Include="Favourites\Dialog_EditFavourite.cs" />
-    <Compile Include="Favourites\Dialog_Favourite.cs" />
-    <Compile Include="Favourites\FavouriteManager.cs" />
-    <Compile Include="Core\MapComponent_TimeKeeper.cs" />
-    <Compile Include="Core\Resources.cs" />
-    <Compile Include="Extensions\Int_Extensions.cs" />
-    <Compile Include="Extensions\Job_Extensions.cs" />
-    <Compile Include="Extensions\Listing_Extensions.cs" />
-    <Compile Include="Extensions\String_Extensions.cs" />
-    <Compile Include="Extensions\WorkGiver_Extensions.cs" />
-    <Compile Include="Favourites\Favourite.cs" />
-    <Compile Include="HarmonyPatches\PawnTable\PawnTable_PawnTableOnGUI.cs" />
-    <Compile Include="HarmonyPatches\PawnTable\PawnTable_RecacheIfDirty.cs" />
-    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_CacheWorkGiversInOrder.cs" />
-    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_DisableAll.cs" />
-    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_EnableAndInitialize.cs" />
-    <Compile Include="PawnColumns\IAlternatingColumn.cs" />
-    <Compile Include="PawnColumns\IExpandableColumn.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_CopyPasteDetailedWorkPriorities.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_Favourite.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_Job.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_Mood.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_WorkTabLabel.cs" />
-    <Compile Include="Priorities\PriorityTracker.cs" />
-    <Compile Include="Utilities\DefOf.cs" />
-    <Compile Include="Utilities\InteractionUtilities.cs" />
-    <Compile Include="Utilities\Logger.cs" />
-    <Compile Include="Core\Controller.cs" />
-    <Compile Include="Priorities\PriorityManager.cs" />
-    <Compile Include="Priorities\PawnPriorityTracker.cs" />
-    <Compile Include="Priorities\WorkPriority.cs" />
-    <Compile Include="Core\Settings.cs" />
-    <Compile Include="Utilities\TimeUtilities.cs" />
-    <Compile Include="Core\VanillaWorkSettings.cs" />
-    <Compile Include="Utilities\LabelUtilities.cs" />
-    <Compile Include="Utilities\DrawUtilities.cs" />
-    <Compile Include="Extensions\Pawn_Extensions.cs" />
-    <Compile Include="Extensions\WorkType_Extensions.cs" />
-    <Compile Include="HarmonyPatches\DefGenerator_GenerateImpliedDefs_PreResolve.cs" />
-    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_GetPriority.cs" />
-    <Compile Include="HarmonyPatches\Worksettings\Pawn_WorkSettings_SetPriority.cs" />
-    <Compile Include="PawnColumns\PawnColumnDef_WorkGiver.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_WorkGiver.cs" />
-    <Compile Include="PawnColumns\PawnColumnWorker_WorkType.cs" />
-    <Compile Include="PawnTable\MainTabWindow_WorkTab.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TOOLS\FluffyUI\FluffyUI\FluffyUI.csproj">
-      <Project>{3e905175-2540-4c06-b4c6-f955836c0451}</Project>
-      <Name>FluffyUI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.3.3071</Version>
-    </PackageReference>
-    <PackageReference Include="Lib.Harmony">
-      <Version>2.1.1</Version>
-      <ExcludeAssets>runtime</ExcludeAssets>
-      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="RimWorld.MultiplayerAPI">
-      <Version>0.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mod update</PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TOOLS\FluffyUI\FluffyUI\FluffyUI.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3072" />
+    <PackageReference Include="Lib.Harmony" Version="2.1.1" ExcludeAssets="runtime" />
+    <PackageReference Include="RimWorld.MultiplayerAPI" Version="0.3.0" />
+  </ItemGroup>
 </Project>
