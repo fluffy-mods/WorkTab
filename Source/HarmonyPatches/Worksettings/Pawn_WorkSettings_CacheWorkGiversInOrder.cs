@@ -59,7 +59,7 @@ namespace WorkTab
                 // lowest priority non-emergency job
                 var maxEmergPrio = allWorkgivers
                                   .Where( wg => !wg.def.emergency )
-                                  .Min( wg => pawn.GetPriority( wg.def, -1 ) );
+                                  .Min( wg => (int?)pawn.GetPriority( wg.def, -1 ) ) ?? 0;
 
                 // create lists of workgivers
                 normalWorkgivers = allWorkgivers
