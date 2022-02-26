@@ -6,7 +6,7 @@
     "version": {
         "major": 4,
         "minor": 4,
-        "build": 335
+        "build": 338
     },
     "author": {
         "name": "Fluffy",
@@ -19,6 +19,15 @@
         "url": "https://github.com/fluffy-mods/WorkTab"
     },
     "changelog": [
+        {
+            "date": "2021-07-27T08:36:32.000Z",
+            "message": "release v4.4.335",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "6afeab4fbc95a33659be594aa2791c8f62c53f8c"
+        },
         {
             "date": "2021-07-27T08:35:17.000Z",
             "message": "move to SDK style project",
