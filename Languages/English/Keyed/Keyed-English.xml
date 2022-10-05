@@ -21,6 +21,8 @@
     <WorkTab.24HourModeTip>Should times be shown in 12h (e.g. noon, 9p.m.) or 24h (e.g. 12:00, 21:00) mode?</WorkTab.24HourModeTip>
     <WorkTab.MaxPriority>Levels of priority</WorkTab.MaxPriority>
     <WorkTab.MaxPriorityTip>How many levels of priority should we use? (Limited to between 4 and 9)</WorkTab.MaxPriorityTip>
+    <WorkTab.DefaultPriority>Default priority</WorkTab.DefaultPriority>
+    <WorkTab.DefaultPriorityTip>Which level of priority is assigned by default?</WorkTab.DefaultPriorityTip>
     <WorkTab.PlaySounds>Sounds</WorkTab.PlaySounds>
     <WorkTab.PlaySoundsTip>Play sounds when a priority is changed?</WorkTab.PlaySoundsTip>
     <WorkTab.PlayCrunch>Crunchy sounds</WorkTab.PlayCrunch>
