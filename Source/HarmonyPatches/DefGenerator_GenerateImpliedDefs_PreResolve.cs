@@ -17,7 +17,7 @@ namespace WorkTab {
             PawnTableDef workTable = PawnTableDefOf.Work;
 
             // replace label column
-            int labelIndex = workTable.columns.IndexOf(PawnColumnDefOf.Label);
+            int labelIndex = workTable.columns.IndexOf(PawnColumnDefOf.LabelShortWithIcon);
             workTable.columns.RemoveAt(labelIndex);
             workTable.columns.Insert(labelIndex, PawnColumnDefOf.WorkTabLabel);
 
