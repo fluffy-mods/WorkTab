@@ -1,13 +1,11 @@
-﻿// Constants.cs
+// Constants.cs
 // Copyright Karel Kroeze, 2017-2020
 
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WorkTab
-{
-    public static class Constants
-    {
+namespace WorkTab {
+    public static class Constants {
         public const           int                        ExtraTopSpace           = 40;
         public const           int                        HorizontalHeaderHeight  = 50;
         public const           int                        Margin                  = 4;

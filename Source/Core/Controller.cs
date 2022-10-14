@@ -1,4 +1,4 @@
-﻿// Controller.cs
+// Controller.cs
 // Copyright Karel Kroeze, 2020-2020
 
 using System.Collections.Generic;
@@ -8,14 +8,11 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace WorkTab
-{
-    public class Controller : Mod
-    {
+namespace WorkTab {
+    public class Controller: Mod {
         public static List<PawnColumnDef> allColumns;
 
-        public Controller( ModContentPack content ) : base( content )
-        {
+        public Controller(ModContentPack content) : base(content) {
             // initialize settings
             GetSettings<Settings>();
 
@@ -24,21 +21,19 @@ namespace WorkTab
 #if DEBUG
             Harmony.DEBUG = true;
 #endif
-            var harmony = new Harmony( "fluffy.worktab" );
-            harmony.PatchAll( Assembly.GetExecutingAssembly() );
+            Harmony harmony = new Harmony( "fluffy.worktab" );
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-//            if ( MP.enabled )
-//                MP.RegisterAll();
+            //            if ( MP.enabled )
+            //                MP.RegisterAll();
         }
 
-        public override void DoSettingsWindowContents( Rect inRect )
-        {
-            base.DoSettingsWindowContents( inRect );
-            Settings.DoWindowContents( inRect );
+        public override void DoSettingsWindowContents(Rect inRect) {
+            base.DoSettingsWindowContents(inRect);
+            Settings.DoWindowContents(inRect);
         }
 
-        public override string SettingsCategory()
-        {
+        public override string SettingsCategory() {
             return "WorkTab".Translate();
         }
     }

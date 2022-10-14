@@ -1,33 +1,29 @@
-﻿// PawnPriorityTracker.cs
+// PawnPriorityTracker.cs
 // Copyright Karel Kroeze, 2018-2020
 
 using RimWorld;
 using Verse;
 
-namespace WorkTab
-{
+namespace WorkTab {
     // todo; implement IExposable
-    public class PawnPriorityTracker : PriorityTracker
-    {
+    public class PawnPriorityTracker: PriorityTracker {
         private Pawn pawn;
 
-        public PawnPriorityTracker()
-        {
+        public PawnPriorityTracker() {
             // Scribe
         }
 
-        public PawnPriorityTracker( Pawn pawn )
-        {
+        public PawnPriorityTracker(Pawn pawn) {
             this.pawn = pawn;
-            foreach ( var workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading )
-                priorities.Add( workgiver, new WorkPriority( this, workgiver ) );
+            foreach (WorkGiverDef workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading) {
+                priorities.Add(workgiver, new WorkPriority(this, workgiver));
+            }
         }
 
         public override Pawn Pawn => pawn;
 
-        public override void ExposeData()
-        {
-            Scribe_References.Look( ref pawn, "Pawn" );
+        public override void ExposeData() {
+            Scribe_References.Look(ref pawn, "Pawn");
             base.ExposeData();
         }
     }

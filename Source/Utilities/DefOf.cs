@@ -1,14 +1,12 @@
-﻿// Copyright Karel Kroeze, 2020-2021.
+// Copyright Karel Kroeze, 2020-2021.
 // WorkTab/WorkTab/DefOf.cs
 
 using RimWorld;
 using Verse;
 
-namespace WorkTab
-{
+namespace WorkTab {
     [DefOf]
-    public static class PawnColumnDefOf
-    {
+    public static class PawnColumnDefOf {
         public static                      PawnColumnDef CopyPasteDetailedWorkPriorities;
         public static                      PawnColumnDef CopyPasteWorkPriorities;
         public static                      PawnColumnDef Faction;
@@ -22,8 +20,7 @@ namespace WorkTab
     }
 
     [DefOf]
-    public static class JobDefOf2
-    {
+    public static class JobDefOf2 {
         public static JobDef BuildSnowman;
         public static JobDef GoForWalk;
         public static JobDef Meditate;
@@ -40,8 +37,7 @@ namespace WorkTab
     }
 
     [DefOf]
-    public static class MainButtonDefOf
-    {
+    public static class MainButtonDefOf {
         public static MainButtonDef Work;
     }
 }
