@@ -65,7 +65,7 @@ namespace WorkTab {
 
             // get fields
             Vector2 cachedSize              = __instance.Size;
-            var columns                 = __instance.ColumnsListForReading;
+            var columns                 = __instance.Columns;
             List<float> cachedColumnWidths      = cachedColumnWidthsField.GetValue( __instance ) as List<float>;
             float cachedHeaderHeight      = __instance.HeaderHeight;
             float cachedHeightNoScrollbar = __instance.HeightNoScrollbar;

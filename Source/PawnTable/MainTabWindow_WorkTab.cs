@@ -187,7 +187,7 @@ namespace WorkTab {
 
         public void RecacheTimeBarRect() {
             List<float> widths  = Traverse.Create( Table ).Field( "cachedColumnWidths" ).GetValue<List<float>>();
-            var   columns = Table.ColumnsListForReading;
+            var   columns = Table.Columns;
             float start   = 0;
             float width   = 0;
 

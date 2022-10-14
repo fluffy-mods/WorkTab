@@ -41,7 +41,7 @@ namespace WorkTab {
 
             // loop over columns to check that they satisfy their minimum width.
             List<float> columnWidths      = cachecColumnWidthsField.GetValue( __instance ) as List<float>;
-            var columns           = __instance.ColumnsListForReading;
+            var columns           = __instance.Columns;
             bool anyColumnAdjusted = false;
             float tableWidth        = 0f;
             for (int i = 0; i < columns.Count; i++) {

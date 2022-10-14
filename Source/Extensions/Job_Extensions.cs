@@ -172,7 +172,9 @@ namespace WorkTab {
 
             // fire extinguishing
             if (job == JobDefOf.BeatFire ||
-                job == JobDefOf.TriggerFirefoamPopper ||
+                // TODO: figure out where triggering firefoam poppers went in 1.4.
+                // posibly a subclass of generic "UseThing"? 
+                // job == JobDefOf.TriggerFirefoamPopper ||
                 job == JobDefOf.ExtinguishSelf) {
                 return "UI/Icons/Various/extinguish";
             }
