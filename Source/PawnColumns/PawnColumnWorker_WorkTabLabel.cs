@@ -19,7 +19,7 @@ namespace WorkTab {
             bool actionTaken = false;
             // just go over all workgivers and lower their priority number by one, with a minimum of 1
             foreach (WorkGiverDef workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading) {
-                if (pawn.WorkTypeIsDisabled(workgiver.workType)) {
+                if (workgiver.workType == null || pawn.WorkTypeIsDisabled(workgiver.workType)) {
                     continue;
                 }
 
@@ -83,7 +83,7 @@ namespace WorkTab {
             bool actionTaken = false;
             // just go over all workgivers and increase their priority number by one, with a maximum of maxPriority
             foreach (WorkGiverDef workgiver in DefDatabase<WorkGiverDef>.AllDefsListForReading) {
-                if (pawn.WorkTypeIsDisabled(workgiver.workType)) {
+                if (workgiver.workType == null || pawn.WorkTypeIsDisabled(workgiver.workType)) {
                     continue;
                 }
 

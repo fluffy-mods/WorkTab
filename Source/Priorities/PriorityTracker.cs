@@ -93,6 +93,10 @@ namespace WorkTab {
         }
 
         public int GetPriority(WorkTypeDef worktype, int hour) {
+            if (worktype == null) {
+                return 0;
+            }
+
             IEnumerable<int> priorities = worktype.WorkGivers()
                                      .Select( wg => this[wg][hour] )
                                      .Where( p => p > 0 );
@@ -115,6 +119,10 @@ namespace WorkTab {
         }
 
         public void InvalidateCache(WorkTypeDef worktype, bool bubble = true) {
+            if (worktype == null) {
+                return;
+            }
+
             _timeScheduledWorkType.Remove(worktype);
             _timeScheduledWorkTypeTip.Remove(worktype);
 
@@ -140,6 +148,10 @@ namespace WorkTab {
         }
 
         public void Recache(WorkTypeDef worktype) {
+            if (worktype == null) {
+                return;
+            }
+
             List<WorkGiverDef> workgivers = worktype.WorkGivers();
             int[] priorities = GetPriorities( worktype );
 
@@ -197,6 +209,10 @@ namespace WorkTab {
         }
 
         public void SetPriority(WorkTypeDef worktype, int priority, int hour, bool recache = true) {
+            if (worktype == null) {
+                return;
+            }
+
             foreach (WorkGiverDef workgiver in worktype.WorkGivers()) {
                 SetPriority(workgiver, priority, hour, false);
             }
@@ -208,6 +224,10 @@ namespace WorkTab {
         }
 
         public void SetPriority(WorkTypeDef worktype, int priority, List<int> hours) {
+            if (worktype == null) {
+                return;
+            }
+
             if (hours.NullOrEmpty()) {
                 hours = TimeUtilities.WholeDay;
             }
@@ -229,6 +249,10 @@ namespace WorkTab {
         }
 
         public bool TimeScheduled(WorkTypeDef worktype) {
+            if (worktype == null) {
+                return false;
+            }
+
             if (!_timeScheduledWorkType.ContainsKey(worktype)) {
                 Recache(worktype);
             }
@@ -245,6 +269,10 @@ namespace WorkTab {
         }
 
         public string TimeScheduledTip(WorkTypeDef worktype) {
+            if (worktype == null) {
+                return string.Empty;
+            }
+
             if (!_timeScheduledWorkTypeTip.ContainsKey(worktype)) {
                 Recache(worktype);
             }

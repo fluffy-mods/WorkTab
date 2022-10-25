@@ -19,9 +19,10 @@ namespace WorkTab {
         public WorkPriority(PriorityTracker parent, WorkGiverDef workgiver) : this(parent) {
             this.workgiver = workgiver;
             Priorities = new int[GenDate.HoursPerDay];
-            int priority = parent.Pawn?.GetVanillaPriority( workgiver.workType ) ?? 0;
             Logger.Debug(
-                $"Initiating worktracker for {parent.Pawn.LabelShort}, Priority: {priority}, default: {Settings.defaultPriority}");
+                $"Initiating worktracker for {workgiver.defName}/{workgiver.workType?.defName ?? "NULL"} ({parent.Pawn.LabelShort})");
+            int priority = parent.Pawn?.GetVanillaPriority( workgiver.workType ) ?? 0;
+            Logger.Debug($"Vanilla priority: {priority}, default: {Settings.defaultPriority}");
             if (priority > 0) {
                 priority = Settings.defaultPriority;
             }

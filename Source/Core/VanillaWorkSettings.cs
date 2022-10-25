@@ -4,30 +4,28 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
+using JetBrains.Annotations;
 using RimWorld;
 using Verse;
 
 namespace WorkTab {
     public static class VanillaWorkSettings {
         private static FieldInfo pawnFieldInfo;
-        private static FieldInfo prioritiesFieldInfo;
 
         public static int GetVanillaPriority(this Pawn pawn, WorkTypeDef worktype) {
             //public override float GetPriority(Pawn pawn)
-            if (pawn.workSettings == null || !pawn.workSettings.EverWork) {
+            if (worktype == null || pawn.workSettings == null || !pawn.workSettings.EverWork) {
                 return 0;
             }
 
-            if (prioritiesFieldInfo == null) {
-                prioritiesFieldInfo = typeof(Pawn_WorkSettings).GetField("priorities", AccessTools.all);
-                if (prioritiesFieldInfo == null) {
-                    throw new NullReferenceException("priorities field not found");
-                }
+            DefMap<WorkTypeDef, int> priorities = Traverse.Create(pawn.workSettings).Field<DefMap<WorkTypeDef, int>>("priorities").Value;
+            if (priorities == null) {
+                throw new Exception("priorities field not found, or value is null");
             }
 
             int priority;
             try {
-                priority = (prioritiesFieldInfo.GetValue(pawn.workSettings) as DefMap<WorkTypeDef, int>)[worktype];
+                priority = priorities[worktype];
             } catch (ArgumentOutOfRangeException) {
                 priority = 0;
                 Logger.Message(

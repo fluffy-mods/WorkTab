@@ -18,7 +18,7 @@ namespace WorkTab {
 
             return !pawn.WorkTypeIsDisabled(workgiver.workType) &&
                    (pawn.CombinedDisabledWorkTags & workgiver.workTags) == WorkTags.None &&
-                   (pawn.CombinedDisabledWorkTags & workgiver.workType.workTags) == WorkTags.None;
+                   (pawn.CombinedDisabledWorkTags & workgiver.workType?.workTags) == WorkTags.None;
         }
 
         public static bool CapableOf(this Pawn pawn, WorkGiverDef workgiver) {
