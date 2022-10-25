@@ -4,8 +4,8 @@
     "targetDir": "WorkTab",
     "url": "https://github.com/fluffy-mods/WorkTab",
     "version": {
-        "major": 4,
-        "minor": 4,
+        "major": 5,
+        "minor": 0,
         "build": 353
     },
     "author": {
@@ -19,6 +19,15 @@
         "url": "https://github.com/fluffy-mods/WorkTab"
     },
     "changelog": [
+        {
+            "date": "2022-10-25T20:27:09.000Z",
+            "message": "make amends for workgivers without worktypes now being a thing",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "9c7d9b4646e079407fc946bc06c6fba872670fd8"
+        },
         {
             "date": "2022-10-25T19:20:31.000Z",
             "message": "implement #188",
