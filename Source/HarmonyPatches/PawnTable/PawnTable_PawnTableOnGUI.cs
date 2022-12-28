@@ -8,6 +8,7 @@ using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using WorkTab.Extensions;
 
 namespace WorkTab {
     [HarmonyPatch(typeof(PawnTable), nameof(PawnTable.PawnTableOnGUI))]
@@ -79,7 +80,11 @@ namespace WorkTab {
             // Instead, we want to limit outRect to the available view area, so a horizontal scrollbar can appear.
             float labelWidth = cachedColumnWidths[0];
             var labelCol   = columns[0];
-            float outWidth   = Mathf.Min( cachedSize.x - labelWidth, UI.screenWidth - (standardWindowMargin * 2f) );
+            // ideally this method would be called with a Rect outRect
+            // indicating the window it is being drawn in instead
+            // of a Vector2 position
+            var outRect = __instance.get_OutRect();
+            float outWidth   = outRect.width - labelWidth;
             float viewWidth  = cachedSize.x - labelWidth - 16f;
 
             Rect labelHeaderRect = new Rect(
