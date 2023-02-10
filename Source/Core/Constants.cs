@@ -12,6 +12,7 @@ namespace WorkTab {
         public const           float                      MinTimeBarLabelSpacing  = 50f;
         public const           int                        TimeBarHeight           = 40;
         public const           int                        VerticalHeaderHeight    = 100;
+        public const           int                        JobTextWidth            = 150;
         public const           int                        WorkGiverBoxSize        = 20;
         public const           int                        WorkGiverWidth          = 25;
         public const           int                        WorkTypeBoxSize         = 25;

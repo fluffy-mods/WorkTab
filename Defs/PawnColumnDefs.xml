@@ -20,6 +20,14 @@
   </PawnColumnDef>
 
   <PawnColumnDef>
+    <defName>JobText</defName>
+    <workerClass>WorkTab.PawnColumnWorker_JobText</workerClass>
+    <sortable>true</sortable>
+    <label>Current job</label>
+    <headerTip>Current job</headerTip>    
+  </PawnColumnDef>
+
+  <PawnColumnDef>
     <defName>CopyPasteDetailedWorkPriorities</defName>
     <workerClass>WorkTab.PawnColumnWorker_CopyPasteDetailedWorkPriorities</workerClass>
   </PawnColumnDef>
