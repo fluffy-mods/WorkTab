@@ -16,11 +16,15 @@ namespace WorkTab {
         private        List<PawnPriorityTracker>             pawnPriorityTrackersScribe;
         private        List<Pawn>                            pawnsScribe;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "RimWorld requires a constructor with parameter")]
         public PriorityManager(Game game) : this() {
         }
 
         public PriorityManager() {
             _instance = this;
+            _nextId = 0;
+            _showScheduler = false;
+            priorities = new Dictionary<Pawn, PawnPriorityTracker>();
         }
 
         public static PriorityManager Get {
@@ -90,7 +94,7 @@ namespace WorkTab {
             List<Pawn> pawns = priorities.Keys.ToList();
             foreach (Pawn pawn in pawns) {
                 if (pawn?.Destroyed ?? true) // null or destroyed
-{
+                {
                     priorities.Remove(pawn);
                 }
             }
