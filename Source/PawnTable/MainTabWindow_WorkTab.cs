@@ -10,6 +10,7 @@ using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
+using WorkTab.Extensions;
 using static WorkTab.Constants;
 using static WorkTab.InteractionUtilities;
 using static WorkTab.Resources;
@@ -122,6 +123,7 @@ namespace WorkTab {
         }
 
         public override void DoWindowContents(Rect rect) {
+            Instance.Table.set_OutRect(rect);
             if (_columnsChanged) {
                 RebuildTable();
             }
