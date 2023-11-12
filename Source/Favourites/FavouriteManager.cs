@@ -179,7 +179,7 @@ namespace WorkTab {
                                                                      () => LoadFavourite(f.path, pawn)))
                                    .ToList();
             if (options.Count == 0) {
-                options.Add(new FloatMenuOption("Fluffy.WorkTab.NoStoredFavourites", null));
+                options.Add(new FloatMenuOption("Fluffy.WorkTab.NoStoredFavourites".Translate(), null));
             }
             Find.WindowStack.Add(new FloatMenu(options));
         }
