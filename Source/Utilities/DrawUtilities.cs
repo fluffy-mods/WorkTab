@@ -78,7 +78,7 @@ namespace WorkTab {
             {
                 return activeHighlightBox;
             }
-            Color color = Color.magenta;
+            Color color = Color.Lerp(Color.black, Color.magenta, 0.7f);
             Texture2D startingExample = WidgetsWork.WorkBoxOverlay_PreceptWarning;
             int width = startingExample.width;
             int height = startingExample.height;
