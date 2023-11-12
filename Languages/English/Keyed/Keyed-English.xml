@@ -11,7 +11,7 @@
     <WorkTab.CollapseAll>Click to collapse all priorities\nCtrl-click headers to toggle expanding individual priorities</WorkTab.CollapseAll>
 
     <!-- column header tooltips -->
-    <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to increase priorities\nShift + right click or scroll down to decrease priorities</WorkTab.DetailedColumnTip>
+    <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to raise priorities\nShift + right click or scroll down to lower priorities</WorkTab.DetailedColumnTip>
     <WorkTab.ToggleColumnTip>Shift + left-click or scroll up to toggle priorities on\nShift + right click or scroll down to toggle priorities off</WorkTab.ToggleColumnTip>
     <WorkTab.ExpandWorkgiversColumnTip>Ctrl + click to expand list of detailed priorities</WorkTab.ExpandWorkgiversColumnTip>
     <WorkTab.CollapseWorkgiversColumnTip>Ctrl + click to collapse list of detailed priorities</WorkTab.CollapseWorkgiversColumnTip>
@@ -54,7 +54,7 @@
     <WorkTab.XIsAssignedToY>{0} is assigned to {1}</WorkTab.XIsAssignedToY>
 
     <!-- pawn label tooltip  -->
-    <WorkTab.LabelCellTip>Click to jump to\nShift-left-click or scroll up to increment priorities\nShift-right-click or scroll down to decrement priorities</WorkTab.LabelCellTip>
+    <WorkTab.LabelCellTip>Click to jump to\nShift-left-click or scroll up to raise priorities\nShift-right-click or scroll down to lower priorities</WorkTab.LabelCellTip>
 
     <!-- Favourites -->
     <Fluffy.WorkTab.CreateFavourite>Create new favourite</Fluffy.WorkTab.CreateFavourite>
