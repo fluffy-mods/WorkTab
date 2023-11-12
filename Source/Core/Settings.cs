@@ -14,6 +14,7 @@ namespace WorkTab {
         public static  bool   playSounds             = true;
         public static  bool   TwentyFourHourMode     = true;
         public static  bool   verticalLabels         = true;
+        public static  bool   highlightActiveWorkCells;
         private static string _defaultPriorityBuffer = defaultPriority.ToString();
 
         // public static bool sharedFavourites = true;
@@ -54,6 +55,8 @@ namespace WorkTab {
                                      "WorkTab.DisableScrollwheelTip".Translate());
             options.CheckboxLabeled("WorkTab.JobTextMode".Translate(), ref jobTextMode,
                                      "WorkTab.JobTextModeTip".Translate());
+            options.CheckboxLabeled("WorkTab.HighlightActiveWorkCells".Translate(), ref highlightActiveWorkCells,
+                                     "WorkTab.HighlightActiveWorkCellsTip".Translate());
             bool verticalLabelsBuffer = verticalLabels;
             options.CheckboxLabeled("WorkTab.VerticalLabels".Translate(), ref verticalLabelsBuffer,
                                      "WorkTab.VerticalLabelsTip".Translate());
@@ -91,6 +94,7 @@ namespace WorkTab {
             Scribe_Values.Look(ref disableScrollwheel, "DisableScrollwheel");
             Scribe_Values.Look(ref jobTextMode, "JobTextMode");
             Scribe_Values.Look(ref verticalLabels, "VerticalLabels", true);
+            Scribe_Values.Look(ref highlightActiveWorkCells, "HighlightActiveWorkCells");
             Scribe_Values.Look(ref _fontFix, "FontFix", true);
 
             // apply font-fix on load

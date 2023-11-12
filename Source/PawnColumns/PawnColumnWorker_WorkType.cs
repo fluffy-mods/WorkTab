@@ -82,6 +82,16 @@ namespace WorkTab {
             bool incapable = IncapableOfWholeWorkType( pawn );
             WorkTypeDef worktype  = def.workType;
 
+            if (Settings.highlightActiveWorkCells)
+            {
+                bool doingNow = (pawn.CurJob?.workGiverDef?.workType?.defName == worktype?.defName);
+                if (doingNow)
+                {
+                    GUI.color = Color.white;
+                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.getActiveHighlightBox());
+                }
+            }
+
             // create rect in centre of cell
             Vector2 pos = rect.center - (new Vector2( WorkTypeBoxSize, WorkTypeBoxSize ) / 2f);
             Rect box = new Rect( pos.x, pos.y, WorkTypeBoxSize, WorkTypeBoxSize );

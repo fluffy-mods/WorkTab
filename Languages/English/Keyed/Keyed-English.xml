@@ -31,6 +31,8 @@
     <WorkTab.DisableScrollwheelTip>Disable the scrollwheel functions (when hovering over skills)</WorkTab.DisableScrollwheelTip>
     <WorkTab.JobTextMode>Current job column as text (requires restart)</WorkTab.JobTextMode>
     <WorkTab.JobTextModeTip>Render the current job column as a text column with the whole job, instead of just an icon.\n\n(Due to a technical limitation, you must restart the game after enabling this option.)</WorkTab.JobTextModeTip>
+    <WorkTab.HighlightActiveWorkCells>Highlight Active Work Cells</WorkTab.HighlightActiveWorkCells>
+    <WorkTab.HighlightActiveWorkCellsTip>Highlight the grid squares in the work tab when the pawn is actually working that job right now.</WorkTab.HighlightActiveWorkCellsTip>
     <WorkTab.VerticalLabels>Vertical labels</WorkTab.VerticalLabels>
     <WorkTab.VerticalLabelsTip>Display work labels vertically</WorkTab.VerticalLabelsTip>
     <WorkTab.FontFix>Fix vertical fonts</WorkTab.FontFix>

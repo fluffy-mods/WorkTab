@@ -70,6 +70,25 @@ namespace WorkTab {
             _drawWorkBoxBackgroundMethodInfo.Invoke(null, new object[] { box, pawn, worktype });
         }
 
+        private static Texture2D activeHighlightBox;
+        public static Texture2D getActiveHighlightBox()
+        {
+            if (activeHighlightBox != null)
+            {
+                return activeHighlightBox;
+            }
+            Color color = Color.magenta;
+            Texture2D startingExample = WidgetsWork.WorkBoxOverlay_PreceptWarning;
+            int width = startingExample.width;
+            int height = startingExample.height;
+            Texture2D texture = new Texture2D(width, height);
+            Color[] pixels = Enumerable.Repeat(color, width * height).ToArray();
+            texture.SetPixels(pixels);
+            texture.Apply();
+            activeHighlightBox = texture;
+            return activeHighlightBox;
+        }
+
         public static string PriorityLabel(int priority) {
             /**
              *                  9   8   7   6   5   4
