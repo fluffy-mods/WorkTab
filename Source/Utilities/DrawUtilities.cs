@@ -72,7 +72,7 @@ namespace WorkTab {
         }
 
         private static Texture2D activeHighlightBox;
-        public static Texture2D getActiveHighlightBox()
+        public static Texture2D GetActiveHighlightBox()
         {
             if (activeHighlightBox != null)
             {

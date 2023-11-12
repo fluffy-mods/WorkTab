@@ -63,7 +63,7 @@ namespace WorkTab {
                 if (doingNow)
                 {
                     GUI.color = Color.white;
-                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.getActiveHighlightBox());
+                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetActiveHighlightBox());
                 }
             }
 
