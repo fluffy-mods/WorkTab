@@ -11,6 +11,7 @@ using UnityEngine;
 using Verse;
 
 namespace WorkTab {
+    [StaticConstructorOnStartup]
     public static class DrawUtilities {
         private static MethodInfo _drawWorkBoxBackgroundMethodInfo;
 
