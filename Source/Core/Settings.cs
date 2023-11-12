@@ -6,15 +6,15 @@ using Verse;
 
 namespace WorkTab {
     public class Settings: ModSettings {
-        public static  int    defaultPriority = 3;
-        public static  bool   disableScrollwheel;
-        public static  bool   jobTextMode            = false;
-        public static  int    maxPriority            = 9;
-        public static  bool   playCrunch             = true;
-        public static  bool   playSounds             = true;
-        public static  bool   TwentyFourHourMode     = true;
-        public static  bool   verticalLabels         = true;
-        public static  bool   highlightActiveWorkCells;
+        public static int  maxPriority             = 9;
+        public static int  defaultPriority         = 3;
+        public static bool TwentyFourHourMode      = true;
+        public static bool playSounds              = true;
+        public static bool playCrunch              = true;
+        public static bool disableScrollwheel      = false;
+        public static bool jobTextMode             = false;
+        public static bool highlightCurrentJobCell = true;
+        public static bool verticalLabels          = true;
         private static string _defaultPriorityBuffer = defaultPriority.ToString();
 
         // public static bool sharedFavourites = true;
@@ -55,8 +55,8 @@ namespace WorkTab {
                                      "WorkTab.DisableScrollwheelTip".Translate());
             options.CheckboxLabeled("WorkTab.JobTextMode".Translate(), ref jobTextMode,
                                      "WorkTab.JobTextModeTip".Translate());
-            options.CheckboxLabeled("WorkTab.HighlightActiveWorkCells".Translate(), ref highlightActiveWorkCells,
-                                     "WorkTab.HighlightActiveWorkCellsTip".Translate());
+            options.CheckboxLabeled("WorkTab.HighlightCurrentJobCell".Translate(), ref highlightCurrentJobCell,
+                                     "WorkTab.HighlightCurrentJobCellTip".Translate());
             bool verticalLabelsBuffer = verticalLabels;
             options.CheckboxLabeled("WorkTab.VerticalLabels".Translate(), ref verticalLabelsBuffer,
                                      "WorkTab.VerticalLabelsTip".Translate());
@@ -70,7 +70,7 @@ namespace WorkTab {
             options.CheckboxLabeled("WorkTab.FontFix".Translate(), ref _fontFixBuffer,
                                      "WorkTab.FontFixTip".Translate());
             _fontFixBuffer =
-                verticalLabels && _fontFixBuffer; // disabling vertical labels makes the font fix unnecesary.
+                verticalLabels && _fontFixBuffer; // disabling vertical labels makes the font fix unnecessary.
 
             // apply any changes.
             if (_fontFixBuffer != _fontFix) {
@@ -94,7 +94,7 @@ namespace WorkTab {
             Scribe_Values.Look(ref disableScrollwheel, "DisableScrollwheel");
             Scribe_Values.Look(ref jobTextMode, "JobTextMode");
             Scribe_Values.Look(ref verticalLabels, "VerticalLabels", true);
-            Scribe_Values.Look(ref highlightActiveWorkCells, "HighlightActiveWorkCells");
+            Scribe_Values.Look(ref highlightCurrentJobCell, "HighlightCurrentJobCell", true);
             Scribe_Values.Look(ref _fontFix, "FontFix", true);
 
             // apply font-fix on load

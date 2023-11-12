@@ -71,12 +71,12 @@ namespace WorkTab {
             _drawWorkBoxBackgroundMethodInfo.Invoke(null, new object[] { box, pawn, worktype });
         }
 
-        private static Texture2D activeHighlightBox;
-        public static Texture2D GetActiveHighlightBox()
+        private static Texture2D currentJobHighlightBox;
+        public static Texture2D GetCurrentJobHighlightBox()
         {
-            if (activeHighlightBox != null)
+            if (currentJobHighlightBox != null)
             {
-                return activeHighlightBox;
+                return currentJobHighlightBox;
             }
             Color color = Color.Lerp(Color.black, Color.magenta, 0.7f);
             Texture2D startingExample = WidgetsWork.WorkBoxOverlay_PreceptWarning;
@@ -86,8 +86,8 @@ namespace WorkTab {
             Color[] pixels = Enumerable.Repeat(color, width * height).ToArray();
             texture.SetPixels(pixels);
             texture.Apply();
-            activeHighlightBox = texture;
-            return activeHighlightBox;
+            currentJobHighlightBox = texture;
+            return currentJobHighlightBox;
         }
 
         public static string PriorityLabel(int priority) {

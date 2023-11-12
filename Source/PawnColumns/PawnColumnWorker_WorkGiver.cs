@@ -57,13 +57,13 @@ namespace WorkTab {
 
             WorkGiverDef workgiver = WorkGiver;
 
-            if (Settings.highlightActiveWorkCells)
+            if (Settings.highlightCurrentJobCell)
             {
                 bool doingNow = (pawn.CurJob?.workGiverDef?.defName == workgiver?.defName);
                 if (doingNow)
                 {
                     GUI.color = Color.white;
-                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetActiveHighlightBox());
+                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetCurrentJobHighlightBox());
                 }
             }
 

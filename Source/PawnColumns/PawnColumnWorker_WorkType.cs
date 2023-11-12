@@ -82,13 +82,13 @@ namespace WorkTab {
             bool incapable = IncapableOfWholeWorkType( pawn );
             WorkTypeDef worktype  = def.workType;
 
-            if (Settings.highlightActiveWorkCells)
+            if (Settings.highlightCurrentJobCell)
             {
                 bool doingNow = (pawn.CurJob?.workGiverDef?.workType?.defName == worktype?.defName);
                 if (doingNow)
                 {
                     GUI.color = Color.white;
-                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetActiveHighlightBox());
+                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetCurrentJobHighlightBox());
                 }
             }
 
