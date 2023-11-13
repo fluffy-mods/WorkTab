@@ -15,13 +15,8 @@ namespace WorkTab {
         public static bool jobTextMode             = false;
         public static bool highlightCurrentJobCell = true;
         public static bool verticalLabels          = true;
-        private static string _defaultPriorityBuffer = defaultPriority.ToString();
-
-        // public static bool sharedFavourites = true;
         private static bool _fontFix = true;
-
-        // buffers
-        private static string _maxPriorityBuffer = maxPriority.ToString();
+        // public static bool sharedFavourites = true;
 
         public Settings() {
             ApplyFontFix(_fontFix);
@@ -39,10 +34,12 @@ namespace WorkTab {
         public static void DoWindowContents(Rect rect) {
             Listing_Standard options = new Listing_Standard();
             options.Begin(rect);
-            options.TextFieldNumericLabeled("WorkTab.MaxPriority".Translate(), ref maxPriority, ref _maxPriorityBuffer,
+            string maxPriorityBuffer = null;
+            options.TextFieldNumericLabeled("WorkTab.MaxPriority".Translate(), ref maxPriority, ref maxPriorityBuffer,
                                              4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
+            string defaultPriorityBuffer = null;
             options.TextFieldNumericLabeled("WorkTab.DefaultPriority".Translate(), ref defaultPriority,
-                                             ref _defaultPriorityBuffer, 1, 9, "WorkTab.DefaultPriorityTip".Translate(),
+                                             ref defaultPriorityBuffer, 1, 9, "WorkTab.DefaultPriorityTip".Translate(),
                                              1 / 8f);
             options.CheckboxLabeled("WorkTab.24HourMode".Translate(), ref TwentyFourHourMode,
                                      "WorkTab.24HourModeTip".Translate());
