@@ -1,4 +1,4 @@
-// Settings.cs
+﻿// Settings.cs
 // Copyright Karel Kroeze, 2020-2020
 
 using UnityEngine;
@@ -18,6 +18,11 @@ namespace WorkTab {
         private static bool _fontFix = true;
         // public static bool sharedFavourites = true;
 
+        // Buffers will be initialized with current settings as soon as
+        // DoWindowContents() → Listing_Standard.TextFieldNumericLabeled() → Widgets.TextFieldNumeric() will be called.
+        private static string maxPriorityBuffer = null;
+        private static string defaultPriorityBuffer = null;
+
         public Settings() {
             ApplyFontFix(_fontFix);
         }
@@ -34,10 +39,8 @@ namespace WorkTab {
         public static void DoWindowContents(Rect rect) {
             Listing_Standard options = new Listing_Standard();
             options.Begin(rect);
-            string maxPriorityBuffer = null;
             options.TextFieldNumericLabeled("WorkTab.MaxPriority".Translate(), ref maxPriority, ref maxPriorityBuffer,
                                              4, 9, "WorkTab.MaxPriorityTip".Translate(), 1 / 8f);
-            string defaultPriorityBuffer = null;
             options.TextFieldNumericLabeled("WorkTab.DefaultPriority".Translate(), ref defaultPriority,
                                              ref defaultPriorityBuffer, 1, 9, "WorkTab.DefaultPriorityTip".Translate(),
                                              1 / 8f);
