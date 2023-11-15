@@ -14,6 +14,7 @@ namespace WorkTab {
         [MayRequireIdeology] public static PawnColumnDef Guest;
         [MayRequireIdeology] public static PawnColumnDef Ideo;
         public static                      PawnColumnDef Job;
+        public static                      PawnColumnDef JobText;
         public static                      PawnColumnDef LabelShortWithIcon;
         public static                      PawnColumnDef Mood;
         public static                      PawnColumnDef WorkTabLabel;

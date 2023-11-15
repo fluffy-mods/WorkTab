@@ -57,6 +57,16 @@ namespace WorkTab {
 
             WorkGiverDef workgiver = WorkGiver;
 
+            if (Settings.highlightCurrentJobCell)
+            {
+                bool doingNow = (pawn.CurJob?.workGiverDef?.defName == workgiver?.defName);
+                if (doingNow)
+                {
+                    GUI.color = Color.white;
+                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetCurrentJobHighlightBox());
+                }
+            }
+
             // create rect in centre of cell, slightly offsetting left to give the appearance of aligning to worktype.
             Vector2 pos = rect.center - (new Vector2( WorkGiverBoxSize, WorkGiverBoxSize ) / 2f);
             Rect box = new Rect( pos.x - 2f, pos.y, WorkGiverBoxSize, WorkGiverBoxSize );

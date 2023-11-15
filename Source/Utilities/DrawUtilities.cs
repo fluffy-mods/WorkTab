@@ -11,6 +11,7 @@ using UnityEngine;
 using Verse;
 
 namespace WorkTab {
+    [StaticConstructorOnStartup]
     public static class DrawUtilities {
         private static MethodInfo _drawWorkBoxBackgroundMethodInfo;
 
@@ -68,6 +69,25 @@ namespace WorkTab {
             }
 
             _drawWorkBoxBackgroundMethodInfo.Invoke(null, new object[] { box, pawn, worktype });
+        }
+
+        private static Texture2D currentJobHighlightBox;
+        public static Texture2D GetCurrentJobHighlightBox()
+        {
+            if (currentJobHighlightBox != null)
+            {
+                return currentJobHighlightBox;
+            }
+            Color color = Color.Lerp(Color.black, Color.magenta, 0.7f);
+            Texture2D startingExample = WidgetsWork.WorkBoxOverlay_PreceptWarning;
+            int width = startingExample.width;
+            int height = startingExample.height;
+            Texture2D texture = new Texture2D(width, height);
+            Color[] pixels = Enumerable.Repeat(color, width * height).ToArray();
+            texture.SetPixels(pixels);
+            texture.Apply();
+            currentJobHighlightBox = texture;
+            return currentJobHighlightBox;
         }
 
         public static string PriorityLabel(int priority) {

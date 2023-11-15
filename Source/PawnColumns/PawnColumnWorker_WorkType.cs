@@ -82,6 +82,16 @@ namespace WorkTab {
             bool incapable = IncapableOfWholeWorkType( pawn );
             WorkTypeDef worktype  = def.workType;
 
+            if (Settings.highlightCurrentJobCell)
+            {
+                bool doingNow = (pawn.CurJob?.workGiverDef?.workType?.defName == worktype?.defName);
+                if (doingNow)
+                {
+                    GUI.color = Color.white;
+                    GUI.DrawTexture(rect.ContractedBy(-2f), DrawUtilities.GetCurrentJobHighlightBox());
+                }
+            }
+
             // create rect in centre of cell
             Vector2 pos = rect.center - (new Vector2( WorkTypeBoxSize, WorkTypeBoxSize ) / 2f);
             Rect box = new Rect( pos.x, pos.y, WorkTypeBoxSize, WorkTypeBoxSize );
@@ -381,7 +391,7 @@ namespace WorkTab {
         }
 
         private void HandleInteractionsToggle(Rect rect, Pawn pawn) {
-            if ((Event.current.type == EventType.MouseDown || Event.current.type == EventType.ScrollWheel)
+            if ((Event.current.type == EventType.MouseDown || (Event.current.type == EventType.ScrollWheel && !Settings.disableScrollwheel))
               && Mouse.IsOver(rect)) {
                 // track priority so we can play appropriate sounds
                 bool active = pawn.GetPriority( def.workType, VisibleHour ) > 0;

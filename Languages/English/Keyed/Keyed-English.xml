@@ -11,7 +11,7 @@
     <WorkTab.CollapseAll>Click to collapse all priorities\nCtrl-click headers to toggle expanding individual priorities</WorkTab.CollapseAll>
 
     <!-- column header tooltips -->
-    <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to increase priorities\nShift + right click or scroll down to decrease priorities</WorkTab.DetailedColumnTip>
+    <WorkTab.DetailedColumnTip>Shift + left-click or scroll up to raise priorities\nShift + right click or scroll down to lower priorities</WorkTab.DetailedColumnTip>
     <WorkTab.ToggleColumnTip>Shift + left-click or scroll up to toggle priorities on\nShift + right click or scroll down to toggle priorities off</WorkTab.ToggleColumnTip>
     <WorkTab.ExpandWorkgiversColumnTip>Ctrl + click to expand list of detailed priorities</WorkTab.ExpandWorkgiversColumnTip>
     <WorkTab.CollapseWorkgiversColumnTip>Ctrl + click to collapse list of detailed priorities</WorkTab.CollapseWorkgiversColumnTip>
@@ -21,12 +21,18 @@
     <WorkTab.24HourModeTip>Should times be shown in 12h (e.g. noon, 9p.m.) or 24h (e.g. 12:00, 21:00) mode?</WorkTab.24HourModeTip>
     <WorkTab.MaxPriority>Levels of priority</WorkTab.MaxPriority>
     <WorkTab.MaxPriorityTip>How many levels of priority should we use? (Limited to between 4 and 9)</WorkTab.MaxPriorityTip>
+    <WorkTab.DefaultPriority>Default priority</WorkTab.DefaultPriority>
+    <WorkTab.DefaultPriorityTip>Which level of priority is assigned by default?</WorkTab.DefaultPriorityTip>
     <WorkTab.PlaySounds>Sounds</WorkTab.PlaySounds>
     <WorkTab.PlaySoundsTip>Play sounds when a priority is changed?</WorkTab.PlaySoundsTip>
     <WorkTab.PlayCrunch>Crunchy sounds</WorkTab.PlayCrunch>
     <WorkTab.PlayCrunchTip>Play a crunchy sound when a pawn is assigned to a job they are not skilled at?</WorkTab.PlayCrunchTip>
     <WorkTab.DisableScrollwheel>Disable Scrollwheel</WorkTab.DisableScrollwheel>
     <WorkTab.DisableScrollwheelTip>Disable the scrollwheel functions (when hovering over skills)</WorkTab.DisableScrollwheelTip>
+    <WorkTab.JobTextMode>Current job column as text (requires restart)</WorkTab.JobTextMode>
+    <WorkTab.JobTextModeTip>Render the current job column as a text description of current activity.\nWhen disabled, an icon is displayed.\n\n(Due to a technical limitation, you must restart the game after changing this option.)</WorkTab.JobTextModeTip>
+    <WorkTab.HighlightCurrentJobCell>Highlight current job cell</WorkTab.HighlightCurrentJobCell>
+    <WorkTab.HighlightCurrentJobCellTip>Highlight the grid square in the work tab when the pawn is actually working that job right now.</WorkTab.HighlightCurrentJobCellTip>
     <WorkTab.VerticalLabels>Vertical labels</WorkTab.VerticalLabels>
     <WorkTab.VerticalLabelsTip>Display work labels vertically</WorkTab.VerticalLabelsTip>
     <WorkTab.FontFix>Fix vertical fonts</WorkTab.FontFix>
@@ -48,7 +54,7 @@
     <WorkTab.XIsAssignedToY>{0} is assigned to {1}</WorkTab.XIsAssignedToY>
 
     <!-- pawn label tooltip  -->
-    <WorkTab.LabelCellTip>Click to jump to\nShift-left-click or scroll up to increment priorities\nShift-right-click or scroll down to decrement priorities</WorkTab.LabelCellTip>
+    <WorkTab.LabelCellTip>Click to jump to\nShift-left-click or scroll up to raise priorities\nShift-right-click or scroll down to lower priorities</WorkTab.LabelCellTip>
 
     <!-- Favourites -->
     <Fluffy.WorkTab.CreateFavourite>Create new favourite</Fluffy.WorkTab.CreateFavourite>

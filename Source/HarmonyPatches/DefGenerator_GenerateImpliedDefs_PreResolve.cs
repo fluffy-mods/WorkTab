@@ -24,7 +24,11 @@ namespace WorkTab {
             // insert mood and job columns before first work column name
             int firstWorkindex =
                 workTable.columns.FindIndex(d => d.workerClass == typeof(PawnColumnWorker_WorkPriority));
-            workTable.columns.Insert(firstWorkindex, PawnColumnDefOf.Job);
+            if (Settings.jobTextMode) {
+                workTable.columns.Insert(firstWorkindex, PawnColumnDefOf.JobText);
+            } else {
+                workTable.columns.Insert(firstWorkindex, PawnColumnDefOf.Job);
+            }
             workTable.columns.Insert(firstWorkindex + 1, PawnColumnDefOf.Mood);
 
             // go over PawnColumnDefs and replace all PawnColumnWorker_WorkPriority
