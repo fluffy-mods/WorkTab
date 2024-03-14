@@ -18,8 +18,18 @@ namespace WorkTab {
 
             // replace label column
             int labelIndex = workTable.columns.IndexOf(PawnColumnDefOf.LabelShortWithIcon);
-            workTable.columns.RemoveAt(labelIndex);
-            workTable.columns.Insert(labelIndex, PawnColumnDefOf.WorkTabLabel);
+            // Fix for 1.5 returning invalid index
+            if (labelIndex != -1)
+            {
+                workTable.columns.RemoveAt(labelIndex);
+                workTable.columns.Insert(labelIndex, PawnColumnDefOf.WorkTabLabel);
+            }
+            else
+            {
+                //Logger.Debug($"Invalid work table index for {PawnColumnDefOf.LabelShortWithIcon.LabelCap}.");
+                workTable.columns.RemoveAt(0);
+                workTable.columns.Insert(0, PawnColumnDefOf.WorkTabLabel);
+            }
 
             // insert mood and job columns before first work column name
             int firstWorkindex =

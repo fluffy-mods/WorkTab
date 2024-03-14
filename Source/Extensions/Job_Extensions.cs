@@ -157,7 +157,7 @@ namespace WorkTab {
             }
 
             // social
-            if (job == JobDefOf.SocialRelax ||
+            if (//job == JobDefOf.SocialRelax || // Missing in 1.5
                 job == JobDefOf.SpectateCeremony ||
                 job == JobDefOf.StandAndBeSociallyActive ||
                 job == JobDefOf.Insult ||
@@ -265,7 +265,7 @@ namespace WorkTab {
             if (job == JobDefOf.Open ||
                 job == JobDefOf.EnterCryptosleepCasket ||
                 job == JobDefOf.UseNeurotrainer ||
-                job == JobDefOf.UseArtifact ||
+                //job == JobDefOf.UseArtifact || // Missing in 1.5
                 job == JobDefOf.Flick ||
                 job == JobDefOf.EnterTransporter ||
                 job == JobDefOf2.UseItem ||
